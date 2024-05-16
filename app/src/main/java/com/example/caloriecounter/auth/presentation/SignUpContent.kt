@@ -1,5 +1,8 @@
 package com.example.caloriecounter.auth.presentation
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -31,6 +34,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.example.caloriecounter.R
 import kotlinx.coroutines.CoroutineScope
@@ -40,7 +44,7 @@ import kotlinx.coroutines.launch
 @Composable
 fun SignUpContent(
     authScreenVM: AuthScreenVM,
-    scope: CoroutineScope = rememberCoroutineScope()
+    scope: CoroutineScope = rememberCoroutineScope(),
 ) {
     Column(
         modifier = Modifier
@@ -56,6 +60,8 @@ fun SignUpContent(
         var emailError by rememberSaveable { mutableStateOf(false) }
         var passwordError by rememberSaveable { mutableStateOf(false) }
         var confirmPasswordError by rememberSaveable { mutableStateOf(false) }
+
+        var authenticationError by rememberSaveable { mutableStateOf(false) }
 
         TextField(
             value = email,
@@ -158,7 +164,9 @@ fun SignUpContent(
                         confirmPasswordError = true
                     }
                     if((!emailError) && (!passwordError) && (!confirmPasswordError)) {
-                        authScreenVM.createUser(email, password)
+                        if(!authScreenVM.createUser(email, password)) {
+                            authenticationError = true
+                        }
                     }
                 }
             },
@@ -181,6 +189,24 @@ fun SignUpContent(
             Text(
                 text = "Create account"
             )
+        }
+        
+        Spacer(modifier = Modifier.weight(1f))
+
+        AnimatedVisibility(
+            visible = authenticationError,
+            enter = slideInVertically(
+                initialOffsetY = {
+                    it / 2
+                },
+            ),
+            exit = slideOutVertically(
+                targetOffsetY = {
+                    it / 2
+                },
+            )
+        ) {
+            ErrorMessage()
         }
     }
 }
