@@ -8,7 +8,7 @@ plugins {
     //Hilt
     id("com.google.dagger.hilt.android")
     //Firebase
-//    id("com.google.gms.google-services")
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -76,7 +76,7 @@ dependencies {
     implementation(libs.coil.compose)
     //Firebase impl
     implementation(libs.firebase.auth.ktx)
-//    implementation(libs.play.services.auth)
+    implementation(libs.play.services.auth)
     implementation(platform(libs.firebase.bom))
     //DataStore impl
     implementation(libs.androidx.datastore.preferences)

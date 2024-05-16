@@ -16,7 +16,8 @@ private val DarkColorScheme = darkColorScheme(
     secondary = Color(0xff6bd7e5),
     onBackground = Color(0xffa2a2ac),
     onSurface = Color(0xffd8d8da),
-    tertiary = Color(0xfff9df80)
+    tertiary = Color(0xfff9df80),
+    error = Color(0xfffb8989)
 )
 
 private val LightColorScheme = lightColorScheme(

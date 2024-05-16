@@ -1,4 +1,4 @@
-package com.example.caloriecounter.app
+package com.example.caloriecounter.auth.di
 
 import com.google.firebase.auth.FirebaseAuth
 import dagger.Module
@@ -9,7 +9,7 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object AppModule {
+object AuthModule {
 
     @Provides
     @Singleton
