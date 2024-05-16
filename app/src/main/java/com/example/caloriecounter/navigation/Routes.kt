@@ -1,4 +1,6 @@
 package com.example.caloriecounter.navigation
 
-object Routes {
-}
+import kotlinx.serialization.Serializable
+
+@Serializable
+object AuthScreen

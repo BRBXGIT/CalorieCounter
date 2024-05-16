@@ -1,6 +1,14 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
+    //Navigation
+    alias(libs.plugins.kotlin.serialization)
+    //Kapt
+    id("kotlin-kapt")
+    //Hilt
+    id("com.google.dagger.hilt.android")
+    //Firebase
+//    id("com.google.gms.google-services")
 }
 
 android {
@@ -53,7 +61,32 @@ dependencies {
 
     //Animated splash screen
     implementation(libs.androidx.core.splashscreen)
+    //Retrofit impl
+    implementation(libs.retrofit)
+    implementation(libs.converter.gson)
+    //Room db impl
+    implementation(libs.androidx.room.ktx)
+    implementation(libs.firebase.storage.ktx)
+    kapt(libs.androidx.room.compiler)
+    //Hilt impl
+    implementation(libs.hilt.android)
+    kapt(libs.hilt.android.compiler)
+    implementation(libs.androidx.hilt.navigation.compose)
+    //Coil impl
+    implementation(libs.coil.compose)
+    //Firebase impl
+    implementation(libs.firebase.auth.ktx)
+//    implementation(libs.play.services.auth)
+    implementation(platform(libs.firebase.bom))
+    //DataStore impl
+    implementation(libs.androidx.datastore.preferences)
+    //Adaptivity impl
+    implementation("androidx.compose.material3:material3-window-size-class:1.2.1")
+    //Nav impl
+    implementation(libs.navigation.compose)
+    implementation(libs.kotlinx.serialization.json)
 
+    //Basic impl
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
@@ -69,4 +102,8 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+}
+
+kapt {
+    correctErrorTypes = true
 }
