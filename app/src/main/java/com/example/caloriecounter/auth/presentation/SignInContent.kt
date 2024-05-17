@@ -1,5 +1,6 @@
 package com.example.caloriecounter.auth.presentation
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -22,6 +23,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.rememberCoroutineScope
@@ -40,6 +42,9 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.example.caloriecounter.R
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 @Composable
 fun SignInContent(
@@ -47,30 +52,44 @@ fun SignInContent(
     scope: CoroutineScope = rememberCoroutineScope(),
 ) {
     Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(start = 16.dp, end = 16.dp),
+        modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(32.dp),
     ) {
         var email by rememberSaveable { mutableStateOf("") }
         var password by rememberSaveable { mutableStateOf("") }
+
+        var emailError by rememberSaveable { mutableStateOf(false) }
+        var passwordError by rememberSaveable { mutableStateOf(false) }
+        var authenticationError by rememberSaveable { mutableStateOf(false) }
+
+        LaunchedEffect(key1 = emailError, key2 = passwordError) {
+            delay(3000)
+            emailError = false
+            passwordError = false
+        }
+
         TextField(
             value = email,
             onValueChange = { email = it },
             label = { Text(text = "Email") },
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(start = 16.dp, end = 16.dp),
             colors = TextFieldDefaults.colors(
                 focusedContainerColor = Color.Transparent,
                 unfocusedContainerColor = Color.Transparent,
                 focusedLeadingIconColor = MaterialTheme.colorScheme.primary,
+                errorContainerColor = Color.Transparent,
+                errorLeadingIconColor = MaterialTheme.colorScheme.error
             ),
             leadingIcon = {
                 Icon(
                     painter = painterResource(id = R.drawable.ic_email),
                     contentDescription = null
                 )
-            }
+            },
+            isError = emailError
         )
 
         var passwordVisible by rememberSaveable { mutableStateOf(false) }
@@ -78,12 +97,15 @@ fun SignInContent(
             value = password,
             onValueChange = { password = it },
             label = { Text(text = "Password") },
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(start = 16.dp, end = 16.dp),
             colors = TextFieldDefaults.colors(
                 focusedContainerColor = Color.Transparent,
                 unfocusedContainerColor = Color.Transparent,
                 focusedLeadingIconColor = MaterialTheme.colorScheme.primary,
-                focusedTrailingIconColor = MaterialTheme.colorScheme.primary
+                errorContainerColor = Color.Transparent,
+                errorLeadingIconColor = MaterialTheme.colorScheme.error
             ),
             leadingIcon = {
                 Icon(
@@ -91,6 +113,7 @@ fun SignInContent(
                     contentDescription = null
                 )
             },
+            isError = passwordError,
             trailingIcon = {
                 val icon = if(passwordVisible) {
                     R.drawable.ic_eye_open
@@ -115,9 +138,24 @@ fun SignInContent(
         Spacer(modifier = Modifier.height(0.dp))
 
         Button(
-            onClick = { /*TODO*/ },
+            onClick = {
+                scope.launch(Dispatchers.IO) {
+                    if(email.isBlank()) {
+                        emailError = true
+                    }
+                    if(password.isBlank()) {
+                        passwordError = true
+                    }
+                    if((!passwordError) && (!emailError)) {
+                        if(!authScreenVM.signIn(email, password)) {
+                            authenticationError = true
+                        }
+                    }
+                }
+            },
             modifier = Modifier
                 .fillMaxWidth()
+                .padding(start = 16.dp, end = 16.dp)
                 .height(48.dp)
                 .clip(RoundedCornerShape(100.dp))
                 .background(
@@ -138,7 +176,9 @@ fun SignInContent(
         }
 
         Row(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(start = 16.dp, end = 16.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
@@ -164,6 +204,7 @@ fun SignInContent(
             shape = RoundedCornerShape(100.dp),
             modifier = Modifier
                 .fillMaxWidth()
+                .padding(start = 16.dp, end = 16.dp)
                 .height(48.dp)
                 .clip(RoundedCornerShape(100.dp))
                 .background(Color.Transparent)
@@ -204,5 +245,13 @@ fun SignInContent(
             text = "Lost password?",
             fontWeight = FontWeight.Bold
         )
+
+        Spacer(modifier = Modifier.weight(1f))
+
+        AnimatedVisibility(visible = authenticationError) {
+            ErrorMessage(
+                onTimeEnds = { authenticationError = false }
+            )
+        }
     }
 }
