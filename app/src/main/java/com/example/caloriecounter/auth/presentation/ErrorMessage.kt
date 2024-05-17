@@ -11,14 +11,27 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.layout
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.example.caloriecounter.R
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 @Composable
-fun ErrorMessage() {
+fun ErrorMessage(
+    onTimeEnds: () -> Unit
+) {
+    LaunchedEffect(key1 = true) {
+        delay(4000)
+        onTimeEnds()
+    }
+
     Box(
         modifier = Modifier
             .fillMaxWidth()

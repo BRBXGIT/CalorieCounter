@@ -1,9 +1,12 @@
 package com.example.caloriecounter.auth.presentation
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.tween
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -21,13 +24,16 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.composed
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
@@ -39,6 +45,7 @@ import androidx.compose.ui.unit.dp
 import com.example.caloriecounter.R
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @Composable
@@ -47,9 +54,7 @@ fun SignUpContent(
     scope: CoroutineScope = rememberCoroutineScope(),
 ) {
     Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(start = 16.dp, end = 16.dp),
+        modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(32.dp),
     ) {
@@ -63,11 +68,20 @@ fun SignUpContent(
 
         var authenticationError by rememberSaveable { mutableStateOf(false) }
 
+        LaunchedEffect(key1 = emailError, key2 = passwordError, key3 = confirmPasswordError) {
+            delay(3000)
+            emailError = false
+            passwordError = false
+            confirmPasswordError = false
+        }
+        
         TextField(
             value = email,
             onValueChange = { email = it },
             label = { Text(text = "Email") },
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(start = 16.dp, end = 16.dp),
             colors = TextFieldDefaults.colors(
                 focusedContainerColor = Color.Transparent,
                 unfocusedContainerColor = Color.Transparent,
@@ -81,7 +95,7 @@ fun SignUpContent(
                     painter = painterResource(id = R.drawable.ic_email),
                     contentDescription = null
                 )
-            }
+            },
         )
 
         var passwordVisible by rememberSaveable { mutableStateOf(false) }
@@ -89,7 +103,9 @@ fun SignUpContent(
             value = password,
             onValueChange = { password = it },
             label = { Text(text = "Password") },
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(start = 16.dp, end = 16.dp),
             colors = TextFieldDefaults.colors(
                 focusedContainerColor = Color.Transparent,
                 unfocusedContainerColor = Color.Transparent,
@@ -130,7 +146,9 @@ fun SignUpContent(
             value = confirmPassword,
             onValueChange = { confirmPassword = it },
             label = { Text(text = "Confirm password") },
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(start = 16.dp, end = 16.dp),
             colors = TextFieldDefaults.colors(
                 focusedContainerColor = Color.Transparent,
                 unfocusedContainerColor = Color.Transparent,
@@ -172,6 +190,7 @@ fun SignUpContent(
             },
             modifier = Modifier
                 .fillMaxWidth()
+                .padding(start = 16.dp, end = 16.dp)
                 .height(48.dp)
                 .clip(RoundedCornerShape(100.dp))
                 .background(
@@ -195,18 +214,10 @@ fun SignUpContent(
 
         AnimatedVisibility(
             visible = authenticationError,
-            enter = slideInVertically(
-                initialOffsetY = {
-                    it / 2
-                },
-            ),
-            exit = slideOutVertically(
-                targetOffsetY = {
-                    it / 2
-                },
-            )
         ) {
-            ErrorMessage()
+            ErrorMessage(
+                onTimeEnds = { authenticationError = false }
+            )
         }
     }
 }
