@@ -34,17 +34,26 @@ class GoogleAuthUiClient(
         return result?.pendingIntent?.intentSender
     }
 
-    suspend fun signInWithIntent(intent: Intent): FirebaseUser? {
+    suspend fun signInWithIntent(intent: Intent): SignInState {
         val credential = oneTapClient.getSignInCredentialFromIntent(intent)
         val googleIdToken = credential.googleIdToken
         val googleCredentials = GoogleAuthProvider.getCredential(googleIdToken, null)
 
         return try {
-            firebaseAuth.signInWithCredential(googleCredentials).await().user
+            SignInState(
+                isSignInSuccessful = firebaseAuth.signInWithCredential(googleCredentials).await().user != null,
+                signInErrorMessage = null
+            )
         } catch(e: Exception) {
             e.printStackTrace()
-            if(e is CancellationException) throw e
-            null
+            if(e is CancellationException) {
+                throw e
+            } else {
+                SignInState(
+                    isSignInSuccessful = false,
+                    signInErrorMessage = e.message
+                )
+            }
         }
     }
 

@@ -230,13 +230,14 @@ fun SignInContent(
             }
         )
 
-        LaunchedEffect(key1 = state.isSignInSuccessful) {
+        LaunchedEffect(key1 = state.isSignInSuccessful, key2 = state.signInErrorMessage != null) {
             if(state.isSignInSuccessful) {
                 googleSignInVM.resetState()
             }
+            if(state.signInErrorMessage != null) {
+                authenticationError = true
+            }
         }
-
-
 
         Button(
             onClick = {

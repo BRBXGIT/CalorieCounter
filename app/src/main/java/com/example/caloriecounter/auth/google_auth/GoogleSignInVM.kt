@@ -11,9 +11,10 @@ class GoogleSignInVM: ViewModel() {
     private val _state = MutableStateFlow(SignInState())
     val state = _state.asStateFlow()
 
-    fun onSignInResult(result: FirebaseUser?) {
+    fun onSignInResult(result: SignInState?) {
         _state.update { it.copy(
-            result != null,
+            isSignInSuccessful = result != null,
+            signInErrorMessage = result?.signInErrorMessage
         ) }
     }
 
