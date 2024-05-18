@@ -38,9 +38,9 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.example.caloriecounter.R
+import com.example.caloriecounter.ui.theme.dimens
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -54,7 +54,7 @@ fun SignInContent(
     Column(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(32.dp),
+        verticalArrangement = Arrangement.spacedBy(MaterialTheme.dimens.authScreensSpacer),
     ) {
         var email by rememberSaveable { mutableStateOf("") }
         var password by rememberSaveable { mutableStateOf("") }
@@ -239,7 +239,7 @@ fun SignInContent(
             }
         }
         
-        Spacer(modifier = Modifier.height(64.dp))
+        Spacer(modifier = Modifier.height(MaterialTheme.dimens.signInScreenBottomSpacer))
         
         Text(
             text = "Lost password?",
