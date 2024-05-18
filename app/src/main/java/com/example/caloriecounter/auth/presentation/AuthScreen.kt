@@ -22,6 +22,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import com.example.caloriecounter.auth.google_auth.GoogleAuthUiClient
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
@@ -29,7 +30,8 @@ import kotlinx.coroutines.launch
 @Composable
 fun AuthScreen(
     scope: CoroutineScope = rememberCoroutineScope(),
-    authScreenVM: AuthScreenVM
+    authScreenVM: AuthScreenVM,
+    googleAuthUiClient: GoogleAuthUiClient
 ) {
     Scaffold(
         modifier = Modifier.fillMaxSize(),
@@ -80,8 +82,8 @@ fun AuthScreen(
                     .weight(1f)
             ) { currentPage ->
                 when(currentPage) {
-                    0 -> SignTabs.entries[0].content(authScreenVM)
-                    1 -> SignTabs.entries[1].content(authScreenVM)
+                    0 -> SignTabs.entries[0].content(authScreenVM, googleAuthUiClient)
+                    1 -> SignTabs.entries[1].content(authScreenVM, null)
                 }
             }
         }
@@ -90,14 +92,17 @@ fun AuthScreen(
 
 enum class SignTabs(
     val text: String,
-    val content: @Composable (authScreenVM: AuthScreenVM) -> Unit
+    val content: @Composable (
+        authScreenVM: AuthScreenVM,
+        googleAuthUiClient: GoogleAuthUiClient?
+    ) -> Unit
 ) {
     SignIn(
         text = "Sign in",
-        content = { authScreenVM -> SignInContent(authScreenVM) }
+        content = { authScreenVM, googleAuthUiClient -> SignInContent(authScreenVM, googleAuthUiClient!!) }
     ),
     SignUp(
         text = "Sign up",
-        content = { authScreenVM -> SignUpContent(authScreenVM) }
+        content = { authScreenVM, _ -> SignUpContent(authScreenVM) }
     )
 }

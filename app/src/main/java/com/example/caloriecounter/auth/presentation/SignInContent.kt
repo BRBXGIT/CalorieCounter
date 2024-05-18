@@ -1,5 +1,10 @@
 package com.example.caloriecounter.auth.presentation
 
+import android.app.Activity.RESULT_OK
+import android.widget.Toast
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.IntentSenderRequest
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -34,12 +39,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.caloriecounter.R
+import com.example.caloriecounter.auth.google_auth.GoogleAuthUiClient
+import com.example.caloriecounter.auth.google_auth.GoogleSignInVM
 import com.example.caloriecounter.ui.theme.dimens
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -49,8 +59,13 @@ import kotlinx.coroutines.launch
 @Composable
 fun SignInContent(
     authScreenVM: AuthScreenVM,
+    googleAuthUiClient: GoogleAuthUiClient,
+    googleSignInVM: GoogleSignInVM = viewModel<GoogleSignInVM>(),
     scope: CoroutineScope = rememberCoroutineScope(),
 ) {
+
+    authScreenVM.getUser()
+
     Column(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -199,8 +214,41 @@ fun SignInContent(
             )
         }
 
+        val state by googleSignInVM.state.collectAsStateWithLifecycle()
+
+        val launcher = rememberLauncherForActivityResult(
+            contract = ActivityResultContracts.StartIntentSenderForResult(),
+            onResult = { result ->
+                if(result.resultCode == RESULT_OK) {
+                    scope.launch {
+                        val signInResult = googleAuthUiClient.signInWithIntent(
+                            intent = result.data ?: return@launch
+                        )
+                        googleSignInVM.onSignInResult(signInResult)
+                    }
+                }
+            }
+        )
+
+        LaunchedEffect(key1 = state.isSignInSuccessful) {
+            if(state.isSignInSuccessful) {
+                googleSignInVM.resetState()
+            }
+        }
+
+
+
         Button(
-            onClick = { /*TODO*/ },
+            onClick = {
+                scope.launch(Dispatchers.IO) {
+                    val signInIntentSender = googleAuthUiClient.signInWithGoogle()
+                    launcher.launch(
+                        IntentSenderRequest.Builder(
+                            signInIntentSender ?: return@launch
+                        ).build()
+                    )
+                }
+            },
             shape = RoundedCornerShape(100.dp),
             modifier = Modifier
                 .fillMaxWidth()
