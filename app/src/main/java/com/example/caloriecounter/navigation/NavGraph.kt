@@ -1,6 +1,8 @@
 package com.example.caloriecounter.navigation
 
+import android.content.SharedPreferences
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -16,7 +18,8 @@ import com.google.firebase.auth.FirebaseAuth
 @Composable
 fun NavGraph(
     googleAuthUiClient: GoogleAuthUiClient,
-    firebaseAuth: FirebaseAuth
+    firebaseAuth: FirebaseAuth,
+    sharedPreferences: SharedPreferences
 ) {
     val navController = rememberNavController()
 
@@ -24,10 +27,13 @@ fun NavGraph(
     val startScreenVM = hiltViewModel<StartScreenVM>()
 
     val userSignIn = firebaseAuth.currentUser != null
+    val calorieData = sharedPreferences.getBoolean("calorieDataReceived", false)
     NavHost(
         navController = navController,
-        startDestination = if(userSignIn) {
+        startDestination = if(userSignIn && calorieData) {
             HomeScreen
+        } else if((!calorieData) && (userSignIn)) {
+            StartScreen
         } else {
             AuthScreen
         }
@@ -43,7 +49,8 @@ fun NavGraph(
         composable<StartScreen> {
             StartScreen(
                 startScreenVM = startScreenVM,
-                navController = navController
+                navController = navController,
+                sharedPreferences = sharedPreferences
             )
         }
 

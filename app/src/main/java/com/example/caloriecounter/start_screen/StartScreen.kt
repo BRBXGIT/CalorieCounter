@@ -1,5 +1,6 @@
 package com.example.caloriecounter.start_screen
 
+import android.content.SharedPreferences
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -55,7 +56,8 @@ import kotlinx.coroutines.delay
 @Composable
 fun StartScreen(
     startScreenVM: StartScreenVM,
-    navController: NavHostController
+    navController: NavHostController,
+    sharedPreferences: SharedPreferences
 ) {
     val mainColumnScroll = rememberScrollState()
     Scaffold(
@@ -77,7 +79,7 @@ fun StartScreen(
             Text(
                 text = "Thank you for registering!",
                 fontSize = 25.sp,
-                color = MaterialTheme.colorScheme.onPrimary,
+                color = MaterialTheme.colorScheme.onSurface,
                 fontWeight = FontWeight.Bold
             )
 
@@ -311,7 +313,7 @@ fun StartScreen(
                 text = "What you want to get?",
                 fontWeight = FontWeight.Bold,
                 fontSize = 20.sp,
-                color = MaterialTheme.colorScheme.onPrimary
+                color = MaterialTheme.colorScheme.onSurface,
             )
 
             var userTarget by rememberSaveable { mutableIntStateOf(0) }
@@ -362,6 +364,10 @@ fun StartScreen(
                             sex = sex,
                             target = userTarget
                         )
+                        sharedPreferences.edit().apply {
+                            putBoolean("calorieDataReceived", true)
+                            apply()
+                        }
                         navController.navigate(HomeScreen) {
                             popUpTo(0)
                         }

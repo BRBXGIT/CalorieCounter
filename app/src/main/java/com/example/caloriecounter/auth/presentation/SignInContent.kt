@@ -23,6 +23,7 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
@@ -122,7 +123,8 @@ fun SignInContent(
                 unfocusedContainerColor = Color.Transparent,
                 focusedLeadingIconColor = MaterialTheme.colorScheme.primary,
                 errorContainerColor = Color.Transparent,
-                errorLeadingIconColor = MaterialTheme.colorScheme.error
+                errorLeadingIconColor = MaterialTheme.colorScheme.error,
+                focusedTrailingIconColor = MaterialTheme.colorScheme.primary
             ),
             leadingIcon = {
                 Icon(
@@ -260,7 +262,7 @@ fun SignInContent(
             }
         }
 
-        Button(
+        OutlinedButton(
             onClick = {
                 scope.launch(Dispatchers.IO) {
                     val signInIntentSender = googleAuthUiClient.signInWithGoogle()
