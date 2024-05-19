@@ -9,6 +9,7 @@ import com.example.caloriecounter.auth.google_auth.GoogleAuthUiClient
 import com.example.caloriecounter.auth.presentation.AuthScreen
 import com.example.caloriecounter.auth.presentation.AuthScreenVM
 import com.example.caloriecounter.start_screen.StartScreen
+import com.example.caloriecounter.start_screen.StartScreenVM
 
 @Composable
 fun NavGraph(
@@ -17,6 +18,7 @@ fun NavGraph(
     val navController = rememberNavController()
 
     val authScreenVM = hiltViewModel<AuthScreenVM>()
+    val startScreenVM = hiltViewModel<StartScreenVM>()
     NavHost(
         navController = navController,
         startDestination = StartScreen
@@ -30,7 +32,7 @@ fun NavGraph(
         }
 
         composable<StartScreen> {
-            StartScreen()
+            StartScreen(startScreenVM = startScreenVM)
         }
     }
 }

@@ -1,9 +1,9 @@
 package com.example.caloriecounter.start_screen
 
-import android.inputmethodservice.Keyboard
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.size
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -12,7 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun PhysicalActivity(
+fun UserTarget(
     isSelected: Boolean,
     text: String,
     onClick: () -> Unit
@@ -28,7 +28,12 @@ fun PhysicalActivity(
         )
 
         Text(
-            text = text
+            text = text,
+            color = if(isSelected) {
+                MaterialTheme.colorScheme.primary
+            } else {
+                MaterialTheme.colorScheme.onBackground
+            }
         )
     }
 }
