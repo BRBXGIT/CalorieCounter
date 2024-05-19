@@ -50,6 +50,7 @@ import androidx.navigation.NavHostController
 import com.example.caloriecounter.R
 import com.example.caloriecounter.auth.google_auth.GoogleAuthUiClient
 import com.example.caloriecounter.auth.google_auth.GoogleSignInVM
+import com.example.caloriecounter.navigation.HomeScreen
 import com.example.caloriecounter.navigation.StartScreen
 import com.example.caloriecounter.ui.theme.dimens
 import kotlinx.coroutines.CoroutineScope
@@ -170,6 +171,10 @@ fun SignInContent(
                                 navController.navigate(StartScreen) {
                                     popUpTo(0)
                                 }
+                            } else {
+                                navController.navigate(HomeScreen) {
+                                    popUpTo(0)
+                                }
                             }
                         }
                     }
@@ -242,6 +247,10 @@ fun SignInContent(
                 googleSignInVM.resetState()
                 if(userCalorieData == null) {
                     navController.navigate(StartScreen) {
+                        popUpTo(0)
+                    }
+                } else {
+                    navController.navigate(HomeScreen) {
                         popUpTo(0)
                     }
                 }

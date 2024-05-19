@@ -7,3 +7,6 @@ object AuthScreen
 
 @Serializable
 object StartScreen
+
+@Serializable
+object HomeScreen

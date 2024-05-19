@@ -8,20 +8,29 @@ import androidx.navigation.compose.rememberNavController
 import com.example.caloriecounter.auth.google_auth.GoogleAuthUiClient
 import com.example.caloriecounter.auth.presentation.AuthScreen
 import com.example.caloriecounter.auth.presentation.AuthScreenVM
+import com.example.caloriecounter.home_screen.presentation.HomeScreen
 import com.example.caloriecounter.start_screen.StartScreen
 import com.example.caloriecounter.start_screen.StartScreenVM
+import com.google.firebase.auth.FirebaseAuth
 
 @Composable
 fun NavGraph(
-    googleAuthUiClient: GoogleAuthUiClient
+    googleAuthUiClient: GoogleAuthUiClient,
+    firebaseAuth: FirebaseAuth
 ) {
     val navController = rememberNavController()
 
     val authScreenVM = hiltViewModel<AuthScreenVM>()
     val startScreenVM = hiltViewModel<StartScreenVM>()
+
+    val userSignIn = firebaseAuth.currentUser != null
     NavHost(
         navController = navController,
-        startDestination = StartScreen
+        startDestination = if(userSignIn) {
+            HomeScreen
+        } else {
+            AuthScreen
+        }
     ) {
         composable<AuthScreen> {
             AuthScreen(
@@ -32,7 +41,14 @@ fun NavGraph(
         }
 
         composable<StartScreen> {
-            StartScreen(startScreenVM = startScreenVM)
+            StartScreen(
+                startScreenVM = startScreenVM,
+                navController = navController
+            )
+        }
+
+        composable<HomeScreen> {
+            HomeScreen()
         }
     }
 }

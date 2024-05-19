@@ -11,8 +11,10 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.DropdownMenuItem
@@ -44,14 +46,18 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import com.example.caloriecounter.R
+import com.example.caloriecounter.navigation.HomeScreen
 import kotlinx.coroutines.delay
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun StartScreen(
-    startScreenVM: StartScreenVM
+    startScreenVM: StartScreenVM,
+    navController: NavHostController
 ) {
+    val mainColumnScroll = rememberScrollState()
     Scaffold(
         modifier = Modifier.fillMaxSize()
     ) { innerPadding ->
@@ -63,7 +69,8 @@ fun StartScreen(
                     bottom = innerPadding.calculateBottomPadding(),
                     start = 16.dp,
                     end = 16.dp
-                ),
+                )
+                .verticalScroll(mainColumnScroll),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(32.dp)
         ) {
@@ -115,7 +122,7 @@ fun StartScreen(
                     OutlinedTextField(
                         value = weight,
                         onValueChange = { weight = it },
-                        label = { Text(text = "Enter your weight") },
+                        label = { Text(text = "Weight") },
                         modifier = Modifier
                             .fillMaxWidth()
                             .weight(0.5f),
@@ -131,7 +138,7 @@ fun StartScreen(
                     OutlinedTextField(
                         value = height,
                         onValueChange = { height = it },
-                        label = { Text(text = "Enter your height") },
+                        label = { Text(text = "Height") },
                         modifier = Modifier
                             .fillMaxWidth()
                             .weight(0.5f),
@@ -148,7 +155,7 @@ fun StartScreen(
                 OutlinedTextField(
                     value = age,
                     onValueChange = { age = it },
-                    label = { Text(text = "Enter your age") },
+                    label = { Text(text = "Age") },
                     modifier = Modifier.fillMaxWidth(),
                     colors = TextFieldDefaults.colors(
                         focusedContainerColor = Color.Transparent,
@@ -355,6 +362,9 @@ fun StartScreen(
                             sex = sex,
                             target = userTarget
                         )
+                        navController.navigate(HomeScreen) {
+                            popUpTo(0)
+                        }
                     }
                 },
                 modifier = Modifier
