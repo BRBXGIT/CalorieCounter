@@ -22,6 +22,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import com.example.caloriecounter.auth.google_auth.GoogleAuthUiClient
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -31,7 +32,8 @@ import kotlinx.coroutines.launch
 fun AuthScreen(
     scope: CoroutineScope = rememberCoroutineScope(),
     authScreenVM: AuthScreenVM,
-    googleAuthUiClient: GoogleAuthUiClient
+    googleAuthUiClient: GoogleAuthUiClient,
+    navController: NavHostController
 ) {
     Scaffold(
         modifier = Modifier.fillMaxSize(),
@@ -82,8 +84,8 @@ fun AuthScreen(
                     .weight(1f)
             ) { currentPage ->
                 when(currentPage) {
-                    0 -> SignTabs.entries[0].content(authScreenVM, googleAuthUiClient)
-                    1 -> SignTabs.entries[1].content(authScreenVM, null)
+                    0 -> SignTabs.entries[0].content(authScreenVM, googleAuthUiClient, navController)
+                    1 -> SignTabs.entries[1].content(authScreenVM, null, navController)
                 }
             }
         }
@@ -94,15 +96,16 @@ enum class SignTabs(
     val text: String,
     val content: @Composable (
         authScreenVM: AuthScreenVM,
-        googleAuthUiClient: GoogleAuthUiClient?
+        googleAuthUiClient: GoogleAuthUiClient?,
+        navController: NavHostController
     ) -> Unit
 ) {
     SignIn(
         text = "Sign in",
-        content = { authScreenVM, googleAuthUiClient -> SignInContent(authScreenVM, googleAuthUiClient!!) }
+        content = { authScreenVM, googleAuthUiClient, navController -> SignInContent(authScreenVM, googleAuthUiClient!!, navController) }
     ),
     SignUp(
         text = "Sign up",
-        content = { authScreenVM, _ -> SignUpContent(authScreenVM) }
+        content = { authScreenVM, _, navController -> SignUpContent(authScreenVM, navController) }
     )
 }

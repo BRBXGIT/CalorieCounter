@@ -1,6 +1,5 @@
 package com.example.caloriecounter.navigation
 
-import android.content.SharedPreferences
 import androidx.compose.runtime.Composable
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
@@ -9,6 +8,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.caloriecounter.auth.google_auth.GoogleAuthUiClient
 import com.example.caloriecounter.auth.presentation.AuthScreen
 import com.example.caloriecounter.auth.presentation.AuthScreenVM
+import com.example.caloriecounter.start_screen.StartScreen
 
 @Composable
 fun NavGraph(
@@ -19,13 +19,18 @@ fun NavGraph(
     val authScreenVM = hiltViewModel<AuthScreenVM>()
     NavHost(
         navController = navController,
-        startDestination = AuthScreen
+        startDestination = StartScreen
     ) {
         composable<AuthScreen> {
             AuthScreen(
                 authScreenVM = authScreenVM,
-                googleAuthUiClient = googleAuthUiClient
+                googleAuthUiClient = googleAuthUiClient,
+                navController = navController
             )
+        }
+
+        composable<StartScreen> {
+            StartScreen()
         }
     }
 }

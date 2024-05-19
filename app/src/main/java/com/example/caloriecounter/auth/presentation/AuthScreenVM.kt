@@ -3,16 +3,20 @@ package com.example.caloriecounter.auth.presentation
 import android.content.IntentSender
 import android.util.Log
 import androidx.lifecycle.ViewModel
+import com.example.caloriecounter.app.data.repository.AppRepositoryImpl
+import com.example.caloriecounter.app.data.userCalorieDb.UserCalorieData
 import com.example.caloriecounter.auth.google_auth.GoogleAuthUiClient
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CompletableDeferred
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 @HiltViewModel
 class AuthScreenVM @Inject constructor(
-    private val firebaseAuth: FirebaseAuth
+    private val firebaseAuth: FirebaseAuth,
+    private val appRepositoryImpl: AppRepositoryImpl
 ): ViewModel() {
 
     suspend fun createUser(email: String, password: String): Boolean {
@@ -31,7 +35,7 @@ class AuthScreenVM @Inject constructor(
         return result.await()
     }
 
-    fun getUser() {
-        Log.d("XXXX", firebaseAuth.currentUser?.email.toString())
+    fun getUserCalorieData(): Flow<UserCalorieData?> {
+        return appRepositoryImpl.getUserCalorieData()
     }
 }

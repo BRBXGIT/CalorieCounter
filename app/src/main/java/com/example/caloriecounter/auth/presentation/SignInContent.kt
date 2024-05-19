@@ -1,7 +1,6 @@
 package com.example.caloriecounter.auth.presentation
 
 import android.app.Activity.RESULT_OK
-import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.IntentSenderRequest
 import androidx.activity.result.contract.ActivityResultContracts
@@ -29,6 +28,7 @@ import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.rememberCoroutineScope
@@ -39,7 +39,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -47,9 +46,11 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavHostController
 import com.example.caloriecounter.R
 import com.example.caloriecounter.auth.google_auth.GoogleAuthUiClient
 import com.example.caloriecounter.auth.google_auth.GoogleSignInVM
+import com.example.caloriecounter.navigation.StartScreen
 import com.example.caloriecounter.ui.theme.dimens
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -60,12 +61,12 @@ import kotlinx.coroutines.launch
 fun SignInContent(
     authScreenVM: AuthScreenVM,
     googleAuthUiClient: GoogleAuthUiClient,
+    navController: NavHostController,
     googleSignInVM: GoogleSignInVM = viewModel<GoogleSignInVM>(),
     scope: CoroutineScope = rememberCoroutineScope(),
 ) {
 
-    authScreenVM.getUser()
-
+    val userCalorieData = authScreenVM.getUserCalorieData().collectAsState(initial = null).value
     Column(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -154,7 +155,7 @@ fun SignInContent(
 
         Button(
             onClick = {
-                scope.launch(Dispatchers.IO) {
+                scope.launch(Dispatchers.Main) {
                     if(email.isBlank()) {
                         emailError = true
                     }
@@ -164,6 +165,12 @@ fun SignInContent(
                     if((!passwordError) && (!emailError)) {
                         if(!authScreenVM.signIn(email, password)) {
                             authenticationError = true
+                        } else {
+                            if(userCalorieData == null) {
+                                navController.navigate(StartScreen) {
+                                    popUpTo(0)
+                                }
+                            }
                         }
                     }
                 }
@@ -233,6 +240,11 @@ fun SignInContent(
         LaunchedEffect(key1 = state.isSignInSuccessful, key2 = state.signInErrorMessage != null) {
             if(state.isSignInSuccessful) {
                 googleSignInVM.resetState()
+                if(userCalorieData == null) {
+                    navController.navigate(StartScreen) {
+                        popUpTo(0)
+                    }
+                }
             }
             if(state.signInErrorMessage != null) {
                 authenticationError = true
