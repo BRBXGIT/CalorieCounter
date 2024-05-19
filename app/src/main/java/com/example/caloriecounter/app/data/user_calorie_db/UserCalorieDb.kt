@@ -1,4 +1,4 @@
-package com.example.caloriecounter.app.data.userCalorieDb
+package com.example.caloriecounter.app.data.user_calorie_db
 
 import androidx.room.Database
 import androidx.room.RoomDatabase

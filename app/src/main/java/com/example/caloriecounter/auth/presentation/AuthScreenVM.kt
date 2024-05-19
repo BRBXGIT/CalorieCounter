@@ -1,13 +1,9 @@
 package com.example.caloriecounter.auth.presentation
 
-import android.content.IntentSender
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.example.caloriecounter.app.data.repository.AppRepositoryImpl
-import com.example.caloriecounter.app.data.userCalorieDb.UserCalorieData
-import com.example.caloriecounter.auth.google_auth.GoogleAuthUiClient
+import com.example.caloriecounter.app.data.user_calorie_db.UserCalorieData
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.flow.Flow

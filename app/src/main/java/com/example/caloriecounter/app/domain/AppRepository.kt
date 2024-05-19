@@ -1,6 +1,6 @@
 package com.example.caloriecounter.app.domain
 
-import com.example.caloriecounter.app.data.userCalorieDb.UserCalorieData
+import com.example.caloriecounter.app.data.user_calorie_db.UserCalorieData
 import kotlinx.coroutines.flow.Flow
 
 

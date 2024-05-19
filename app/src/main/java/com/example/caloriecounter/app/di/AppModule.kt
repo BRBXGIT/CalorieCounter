@@ -4,9 +4,8 @@ import android.content.Context
 import androidx.room.Room
 import com.example.caloriecounter.app.domain.AppRepository
 import com.example.caloriecounter.app.data.repository.AppRepositoryImpl
-import com.example.caloriecounter.app.data.userCalorieDb.UserCalorieDao
-import com.example.caloriecounter.app.data.userCalorieDb.UserCalorieData
-import com.example.caloriecounter.app.data.userCalorieDb.UserCalorieDb
+import com.example.caloriecounter.app.data.user_calorie_db.UserCalorieDao
+import com.example.caloriecounter.app.data.user_calorie_db.UserCalorieDb
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

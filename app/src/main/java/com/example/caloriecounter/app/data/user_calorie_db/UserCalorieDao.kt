@@ -1,11 +1,10 @@
-package com.example.caloriecounter.app.data.userCalorieDb
+package com.example.caloriecounter.app.data.user_calorie_db
 
 import androidx.room.Dao
 import androidx.room.Query
 import androidx.room.Update
 import androidx.room.Upsert
 import kotlinx.coroutines.flow.Flow
-import retrofit2.http.GET
 
 @Dao
 interface UserCalorieDao {
