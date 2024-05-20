@@ -85,6 +85,9 @@ dependencies {
     //Nav impl
     implementation(libs.navigation.compose)
     implementation(libs.kotlinx.serialization.json)
+    //Calendar impl
+    implementation(libs.com.maxkeppeler.sheets.compose.dialogs.core4)
+    implementation(libs.calendar)
 
     //Basic impl
     implementation(libs.androidx.core.ktx)
