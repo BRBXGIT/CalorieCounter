@@ -10,5 +10,5 @@ data class UserCalorieData(
     val requiredCalorieAmount: Int,
     val requiredWaterAmount: Int,
     val weight: Int,
-    val height: Int,
+    val height: Int
 )
