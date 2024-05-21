@@ -1,4 +1,4 @@
-package com.example.caloriecounter.home_screen.presentation
+package com.example.caloriecounter.home_screen.presentation.calorie_indicator_section
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -24,6 +24,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -84,7 +85,9 @@ fun CalorieIndicatorSection(
                             )) {
                                 append("$requiredAmount kcal")
                             }
-                        }
+                        },
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
                     )
                 }
 
@@ -110,7 +113,9 @@ fun CalorieIndicatorSection(
                             )) {
                                 append(" kcal")
                             }
-                        }
+                        },
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
                     )
                 }
             }
