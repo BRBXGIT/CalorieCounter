@@ -20,6 +20,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
@@ -125,9 +126,12 @@ fun CalorieIndicatorSection(
             CircleCalorieIndicator(
                 size = 120.dp,
                 backgroundColor = MaterialTheme.colorScheme.inverseOnSurface,
-                progressColor = MaterialTheme.colorScheme.primary,
                 targetProgress = progress,
-                totalAmount = totalAmount.toInt()
+                totalAmount = totalAmount.toInt(),
+                progressBrush = Brush.horizontalGradient(listOf(
+                    MaterialTheme.colorScheme.secondary,
+                    MaterialTheme.colorScheme.primary
+                ))
             )
         }
     }
