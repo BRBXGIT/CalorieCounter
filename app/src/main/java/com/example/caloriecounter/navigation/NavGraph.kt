@@ -11,6 +11,7 @@ import com.example.caloriecounter.auth.google_auth.GoogleAuthUiClient
 import com.example.caloriecounter.auth.presentation.AuthScreen
 import com.example.caloriecounter.auth.presentation.AuthScreenVM
 import com.example.caloriecounter.home_screen.presentation.HomeScreen
+import com.example.caloriecounter.home_screen.presentation.HomeScreenVM
 import com.example.caloriecounter.start_screen.StartScreen
 import com.example.caloriecounter.start_screen.StartScreenVM
 import com.google.firebase.auth.FirebaseAuth
@@ -25,6 +26,7 @@ fun NavGraph(
 
     val authScreenVM = hiltViewModel<AuthScreenVM>()
     val startScreenVM = hiltViewModel<StartScreenVM>()
+    val homeScreenVM = hiltViewModel<HomeScreenVM>()
 
     val userSignIn = firebaseAuth.currentUser != null
     val calorieData = sharedPreferences.getBoolean("calorieDataReceived", false)
@@ -55,7 +57,9 @@ fun NavGraph(
         }
 
         composable<HomeScreen> {
-            HomeScreen()
+            HomeScreen(
+                homeScreenVM = homeScreenVM
+            )
         }
     }
 }

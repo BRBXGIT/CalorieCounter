@@ -20,13 +20,14 @@ import com.example.caloriecounter.MainActivity
 
 private val DarkColorScheme = darkColorScheme(
     background = Color(0xff1a1920),
-    surface = Color(0xff232431),
+    surface = Color(0xff22222d),
+    surfaceVariant = Color(0xff272634),
     primary = Color(0xff4ddc9b),
     onPrimary = Color(0xfff7f7fb),
     secondary = Color(0xff6bd7e5),
     onBackground = Color(0xffa2a2ac),
     onSurface = Color(0xffd8d8da),
-    inverseOnSurface = Color(0xff46454f),
+    inverseOnSurface = Color(0xff77777c),
     error = Color(0xfffb8989)
 )
 
