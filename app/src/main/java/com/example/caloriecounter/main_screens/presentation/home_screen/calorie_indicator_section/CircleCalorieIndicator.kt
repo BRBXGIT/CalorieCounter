@@ -1,4 +1,4 @@
-package com.example.caloriecounter.home_screen.presentation.calorie_indicator_section
+package com.example.caloriecounter.main_screens.presentation.home_screen.calorie_indicator_section
 
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.animateFloatAsState

@@ -1,4 +1,4 @@
-package com.example.caloriecounter.home_screen.presentation
+package com.example.caloriecounter.main_screens.presentation.home_screen
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -24,8 +24,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.caloriecounter.R
 import com.example.caloriecounter.app.data.user_calorie_db.UserCalorieData
-import com.example.caloriecounter.home_screen.presentation.calendar_section.CalendarSection
-import com.example.caloriecounter.home_screen.presentation.calorie_indicator_section.CalorieIndicatorSection
+import com.example.caloriecounter.main_screens.presentation.home_screen.calendar_section.CalendarSection
+import com.example.caloriecounter.main_screens.presentation.home_screen.calorie_indicator_section.CalorieIndicatorSection
 import com.maxkeppeker.sheets.core.models.base.rememberUseCaseState
 import com.maxkeppeler.sheets.calendar.CalendarDialog
 import com.maxkeppeler.sheets.calendar.models.CalendarSelection

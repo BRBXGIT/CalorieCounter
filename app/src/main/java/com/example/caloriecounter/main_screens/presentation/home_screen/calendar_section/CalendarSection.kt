@@ -1,4 +1,4 @@
-package com.example.caloriecounter.home_screen.presentation.calendar_section
+package com.example.caloriecounter.main_screens.presentation.home_screen.calendar_section
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable

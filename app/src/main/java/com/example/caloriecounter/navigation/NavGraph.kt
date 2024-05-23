@@ -2,7 +2,6 @@ package com.example.caloriecounter.navigation
 
 import android.content.SharedPreferences
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -10,8 +9,8 @@ import androidx.navigation.compose.rememberNavController
 import com.example.caloriecounter.auth.google_auth.GoogleAuthUiClient
 import com.example.caloriecounter.auth.presentation.AuthScreen
 import com.example.caloriecounter.auth.presentation.AuthScreenVM
-import com.example.caloriecounter.home_screen.presentation.HomeScreen
-import com.example.caloriecounter.home_screen.presentation.HomeScreenVM
+import com.example.caloriecounter.main_screens.presentation.home_screen.HomeScreen
+import com.example.caloriecounter.main_screens.presentation.home_screen.HomeScreenVM
 import com.example.caloriecounter.start_screen.StartScreen
 import com.example.caloriecounter.start_screen.StartScreenVM
 import com.google.firebase.auth.FirebaseAuth

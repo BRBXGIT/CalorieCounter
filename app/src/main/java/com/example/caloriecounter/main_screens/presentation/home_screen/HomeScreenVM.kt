@@ -1,4 +1,4 @@
-package com.example.caloriecounter.home_screen.presentation
+package com.example.caloriecounter.main_screens.presentation.home_screen
 
 import androidx.lifecycle.ViewModel
 import com.example.caloriecounter.app.data.repository.AppRepositoryImpl

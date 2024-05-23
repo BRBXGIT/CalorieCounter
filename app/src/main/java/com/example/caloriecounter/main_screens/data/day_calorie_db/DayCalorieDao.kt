@@ -1,4 +1,4 @@
-package com.example.caloriecounter.home_screen.data.day_calorie_db
+package com.example.caloriecounter.main_screens.data.day_calorie_db
 
 import androidx.room.Dao
 import androidx.room.Query
