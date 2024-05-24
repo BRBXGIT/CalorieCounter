@@ -127,7 +127,7 @@ fun CalorieIndicatorSection(
             }
             CircleCalorieIndicator(
                 size = 120.dp,
-                backgroundColor = MaterialTheme.colorScheme.inverseOnSurface,
+                backgroundColor = MaterialTheme.colorScheme.onSurfaceVariant,
                 targetProgress = progress,
                 totalAmount = totalAmount.toInt(),
                 progressBrush = Brush.horizontalGradient(listOf(

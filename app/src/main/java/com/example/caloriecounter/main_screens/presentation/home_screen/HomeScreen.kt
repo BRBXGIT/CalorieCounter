@@ -124,18 +124,28 @@ fun HomeScreen(
                 )
             }
 
-            val nutrients = homeScreenVM.getNutrients().collectAsState(initial = emptyList()).value
-            LazyRow(
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(16.dp),
-                contentPadding = PaddingValues(
-                    start = 16.dp,
-                    end = 16.dp
-                ),
-                modifier = Modifier.fillMaxWidth()
+            Column(
+                verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
-                item {
-                    AddNutrient()
+                Text(
+                    text = "Trace element indicators",
+                    modifier = Modifier.padding(start = 14.dp),
+                    fontSize = 17.sp
+                )
+
+                val nutrients = homeScreenVM.getNutrients().collectAsState(initial = emptyList()).value
+                LazyRow(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(16.dp),
+                    contentPadding = PaddingValues(
+                        start = 16.dp,
+                        end = 16.dp
+                    ),
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    item {
+                        AddNutrient(homeScreenVM)
+                    }
                 }
             }
         }

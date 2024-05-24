@@ -70,7 +70,6 @@ fun CircleCalorieIndicator(
             Text(
                 text = "Total",
                 fontSize = 16.sp,
-                color = MaterialTheme.colorScheme.inverseOnSurface
             )
             Text(
                 text = "$totalAmount",
@@ -83,7 +82,6 @@ fun CircleCalorieIndicator(
             Text(
                 text = "kcal",
                 fontSize = 16.sp,
-                color = MaterialTheme.colorScheme.inverseOnSurface
             )
         }
     }

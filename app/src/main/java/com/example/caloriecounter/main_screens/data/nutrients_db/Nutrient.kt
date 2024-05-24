@@ -8,9 +8,9 @@ data class Nutrient(
     @PrimaryKey(autoGenerate = true)
     val id: Int,
     val name: String,
-    val color: Float,
+    val color: Long,
     val requiredAmount: Int,
 
     val date: String,
-    val receivedAmount: Int
+    val receivedAmount: Int = 0
 )
