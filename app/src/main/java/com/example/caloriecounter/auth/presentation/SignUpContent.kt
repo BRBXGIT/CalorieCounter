@@ -85,7 +85,11 @@ fun SignUpContent(
                 unfocusedContainerColor = Color.Transparent,
                 focusedLeadingIconColor = MaterialTheme.colorScheme.primary,
                 errorContainerColor = Color.Transparent,
-                errorLeadingIconColor = MaterialTheme.colorScheme.error
+                errorLeadingIconColor = MaterialTheme.colorScheme.error,
+                focusedTrailingIconColor = MaterialTheme.colorScheme.primary,
+                unfocusedIndicatorColor = MaterialTheme.colorScheme.onBackground,
+                unfocusedLabelColor = MaterialTheme.colorScheme.onBackground,
+                unfocusedLeadingIconColor = MaterialTheme.colorScheme.onBackground
             ),
             isError = emailError,
             leadingIcon = {
@@ -108,9 +112,13 @@ fun SignUpContent(
                 focusedContainerColor = Color.Transparent,
                 unfocusedContainerColor = Color.Transparent,
                 focusedLeadingIconColor = MaterialTheme.colorScheme.primary,
-                focusedTrailingIconColor = MaterialTheme.colorScheme.primary,
+                unfocusedLeadingIconColor = MaterialTheme.colorScheme.onBackground,
                 errorContainerColor = Color.Transparent,
-                errorLeadingIconColor = MaterialTheme.colorScheme.error
+                unfocusedLabelColor = MaterialTheme.colorScheme.onBackground,
+                errorLeadingIconColor = MaterialTheme.colorScheme.error,
+                focusedTrailingIconColor = MaterialTheme.colorScheme.primary,
+                unfocusedTrailingIconColor = MaterialTheme.colorScheme.onBackground,
+                unfocusedIndicatorColor = MaterialTheme.colorScheme.onBackground
             ),
             isError = passwordError,
             leadingIcon = {
@@ -150,10 +158,14 @@ fun SignUpContent(
             colors = TextFieldDefaults.colors(
                 focusedContainerColor = Color.Transparent,
                 unfocusedContainerColor = Color.Transparent,
-                errorContainerColor = Color.Transparent,
                 focusedLeadingIconColor = MaterialTheme.colorScheme.primary,
+                unfocusedLeadingIconColor = MaterialTheme.colorScheme.onBackground,
+                errorContainerColor = Color.Transparent,
+                unfocusedLabelColor = MaterialTheme.colorScheme.onBackground,
+                errorLeadingIconColor = MaterialTheme.colorScheme.error,
                 focusedTrailingIconColor = MaterialTheme.colorScheme.primary,
-                errorLeadingIconColor = MaterialTheme.colorScheme.error
+                unfocusedTrailingIconColor = MaterialTheme.colorScheme.onBackground,
+                unfocusedIndicatorColor = MaterialTheme.colorScheme.onBackground
             ),
             isError = confirmPasswordError,
             leadingIcon = {

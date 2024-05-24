@@ -60,27 +60,25 @@ fun CalorieIndicatorSection(
                     verticalArrangement = Arrangement.spacedBy(4.dp)
                 ) {
                     Text(
-                        text = "Received",
-                        color = MaterialTheme.colorScheme.inverseOnSurface
+                        text = "Received"
                     )
 
                     Text(
                         buildAnnotatedString {
                             withStyle(SpanStyle(
                                 fontSize = 19.sp,
-                                fontWeight = FontWeight.Bold
+                                fontWeight = FontWeight.Bold,
+                                color = MaterialTheme.colorScheme.onPrimary
                             )) {
                                 append(receivedAmount)
                             }
                             withStyle(SpanStyle(
                                 fontSize = 19.sp,
                                 fontWeight = FontWeight.Bold,
-                                color = MaterialTheme.colorScheme.inverseOnSurface
                             )) {
                                 append(" / ")
                             }
                             withStyle(SpanStyle(
-                                color = MaterialTheme.colorScheme.inverseOnSurface,
                                 fontSize = 16.sp
                             )) {
                                 append("$requiredAmount kcal")
@@ -96,19 +94,18 @@ fun CalorieIndicatorSection(
                 ) {
                     Text(
                         text = "Spent",
-                        color = MaterialTheme.colorScheme.inverseOnSurface
                     )
 
                     Text(
                         buildAnnotatedString {
                             withStyle(SpanStyle(
                                 fontSize = 19.sp,
+                                color = MaterialTheme.colorScheme.onPrimary,
                                 fontWeight = FontWeight.Bold
                             )) {
                                 append(spentAmount)
                             }
                             withStyle(SpanStyle(
-                                color = MaterialTheme.colorScheme.inverseOnSurface,
                                 fontSize = 16.sp
                             )) {
                                 append(" kcal")

@@ -77,7 +77,8 @@ fun CircleCalorieIndicator(
                 fontSize = 19.sp,
                 fontWeight = FontWeight.Bold,
                 maxLines = 1,
-                overflow = TextOverflow.Ellipsis
+                overflow = TextOverflow.Ellipsis,
+                color = MaterialTheme.colorScheme.onPrimary
             )
             Text(
                 text = "kcal",

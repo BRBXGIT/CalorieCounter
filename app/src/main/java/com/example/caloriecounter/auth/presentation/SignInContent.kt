@@ -67,7 +67,6 @@ fun SignInContent(
     googleSignInVM: GoogleSignInVM = viewModel<GoogleSignInVM>(),
     scope: CoroutineScope = rememberCoroutineScope(),
 ) {
-
     val userCalorieData = authScreenVM.getUserCalorieData().collectAsState(initial = null).value
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -99,7 +98,11 @@ fun SignInContent(
                 unfocusedContainerColor = Color.Transparent,
                 focusedLeadingIconColor = MaterialTheme.colorScheme.primary,
                 errorContainerColor = Color.Transparent,
-                errorLeadingIconColor = MaterialTheme.colorScheme.error
+                errorLeadingIconColor = MaterialTheme.colorScheme.error,
+                focusedTrailingIconColor = MaterialTheme.colorScheme.primary,
+                unfocusedIndicatorColor = MaterialTheme.colorScheme.onBackground,
+                unfocusedLabelColor = MaterialTheme.colorScheme.onBackground,
+                unfocusedLeadingIconColor = MaterialTheme.colorScheme.onBackground
             ),
             leadingIcon = {
                 Icon(
@@ -122,9 +125,13 @@ fun SignInContent(
                 focusedContainerColor = Color.Transparent,
                 unfocusedContainerColor = Color.Transparent,
                 focusedLeadingIconColor = MaterialTheme.colorScheme.primary,
+                unfocusedLeadingIconColor = MaterialTheme.colorScheme.onBackground,
                 errorContainerColor = Color.Transparent,
+                unfocusedLabelColor = MaterialTheme.colorScheme.onBackground,
                 errorLeadingIconColor = MaterialTheme.colorScheme.error,
-                focusedTrailingIconColor = MaterialTheme.colorScheme.primary
+                focusedTrailingIconColor = MaterialTheme.colorScheme.primary,
+                unfocusedTrailingIconColor = MaterialTheme.colorScheme.onBackground,
+                unfocusedIndicatorColor = MaterialTheme.colorScheme.onBackground
             ),
             leadingIcon = {
                 Icon(

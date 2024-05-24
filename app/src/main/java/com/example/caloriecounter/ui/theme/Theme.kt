@@ -27,6 +27,7 @@ private val DarkColorScheme = darkColorScheme(
     secondary = Color(0xff6bd7e5),
     onBackground = Color(0xffa2a2ac),
     onSurface = Color(0xffd8d8da),
+    onSurfaceVariant = Color(0xff77777c),
     inverseOnSurface = Color(0xff77777c),
     error = Color(0xfffb8989)
 )
