@@ -1,4 +1,4 @@
-package com.example.caloriecounter.main_screens.data.day_calorie_db
+package com.example.caloriecounter.main_screens.data.day_calorie_data
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

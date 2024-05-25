@@ -2,10 +2,8 @@ package com.example.caloriecounter.main_screens.di
 
 import android.content.Context
 import androidx.room.Room
-import com.example.caloriecounter.main_screens.data.day_calorie_db.DayCalorieDao
-import com.example.caloriecounter.main_screens.data.day_calorie_db.DayCalorieDb
-import com.example.caloriecounter.main_screens.data.nutrients_db.NutrientDao
-import com.example.caloriecounter.main_screens.data.nutrients_db.NutrientDb
+import com.example.caloriecounter.main_screens.data.day_calorie_data.DayCalorieDao
+import com.example.caloriecounter.main_screens.data.day_calorie_data.DayCalorieDb
 import com.example.caloriecounter.main_screens.data.repository.MainScreensRepositoryImpl
 import com.example.caloriecounter.main_screens.domain.MainScreensRepository
 import dagger.Module
@@ -17,7 +15,7 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object MainScreensModule {
+object MainScreenModule {
 
     @Provides
     @Singleton
@@ -25,23 +23,13 @@ object MainScreensModule {
         return Room.databaseBuilder(
             context,
             DayCalorieDb::class.java,
-            "Day calorie db"
+            "day calorie db"
         ).build().dayCalorieDao()
     }
 
     @Provides
     @Singleton
-    fun provideNutrientDao(@ApplicationContext context: Context): NutrientDao {
-        return Room.databaseBuilder(
-            context,
-            NutrientDb::class.java,
-            "nutrient db"
-        ).build().nutrientDao()
-    }
-
-    @Provides
-    @Singleton
-    fun provideMainScreensRepository(dayCalorieDao: DayCalorieDao, nutrientDao: NutrientDao): MainScreensRepository {
-        return MainScreensRepositoryImpl(dayCalorieDao, nutrientDao)
+    fun provideMainScreensRepository(dayCalorieDao: DayCalorieDao): MainScreensRepository {
+        return MainScreensRepositoryImpl(dayCalorieDao)
     }
 }

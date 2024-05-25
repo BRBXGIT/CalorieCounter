@@ -1,5 +1,6 @@
 package com.example.caloriecounter.main_screens.presentation.home_screen
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -19,6 +20,7 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
@@ -29,6 +31,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.caloriecounter.R
 import com.example.caloriecounter.app.data.user_calorie_db.UserCalorieData
+import com.example.caloriecounter.main_screens.data.day_calorie_data.DayCalorieData
 import com.example.caloriecounter.main_screens.presentation.home_screen.calendar_section.CalendarSection
 import com.example.caloriecounter.main_screens.presentation.home_screen.calorie_indicator_section.CalorieIndicatorSection
 import com.example.caloriecounter.main_screens.presentation.home_screen.nutrients_indicators_section.AddNutrient
@@ -112,10 +115,23 @@ fun HomeScreen(
                         height = 0
                     ))
                     .value
+                val todayCalorieData = homeScreenVM
+                    .getDayCalorieData(selectedDate)
+                    .collectAsState(initial = null)
+                    .value
+                if(todayCalorieData == null) {
+                    homeScreenVM.upsertNewDayCalorieData(selectedDate)
+                }
+
                 val requiredAmount = userRequirementCalorie.requiredCalorieAmount
-                val receivedAmount = 1648
-                val spentAmount = 34
-                val totalAmount = (receivedAmount - spentAmount)
+                var receivedAmount by rememberSaveable { mutableIntStateOf(0) }
+                var spentAmount by rememberSaveable { mutableIntStateOf(0) }
+                var totalAmount by rememberSaveable { mutableIntStateOf(0) }
+                if(todayCalorieData != null) {
+                    receivedAmount = todayCalorieData.receivedCaloriesAmount
+                    spentAmount = todayCalorieData.spentCaloriesAmount
+                    totalAmount = (receivedAmount - spentAmount)
+                }
                 CalorieIndicatorSection(
                     receivedAmount = receivedAmount.toString(),
                     requiredAmount = requiredAmount.toString(),
@@ -133,7 +149,6 @@ fun HomeScreen(
                     fontSize = 17.sp
                 )
 
-                val nutrients = homeScreenVM.getNutrients().collectAsState(initial = emptyList()).value
                 LazyRow(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.spacedBy(16.dp),

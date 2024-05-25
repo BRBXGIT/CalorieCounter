@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.caloriecounter.app.data.repository.AppRepositoryImpl
 import com.example.caloriecounter.app.data.user_calorie_db.UserCalorieData
-import com.example.caloriecounter.main_screens.data.nutrients_db.Nutrient
+import com.example.caloriecounter.main_screens.data.day_calorie_data.DayCalorieData
 import com.example.caloriecounter.main_screens.data.repository.MainScreensRepositoryImpl
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -22,13 +22,15 @@ class HomeScreenVM @Inject constructor(
         return appRepositoryImpl.getUserCalorieData()
     }
 
-    fun getNutrients(): Flow<List<Nutrient>> {
-        return mainScreensRepositoryImpl.getNutrients()
+    fun upsertNewDayCalorieData(date: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            mainScreensRepositoryImpl.upsertNewDay(DayCalorieData(
+                date = date
+            ))
+        }
     }
 
-    fun upsertNewNutrient(nutrient: Nutrient) {
-        viewModelScope.launch(Dispatchers.IO) {
-            mainScreensRepositoryImpl.upsertNutrient(nutrient)
-        }
+    fun getDayCalorieData(date: String): Flow<DayCalorieData> {
+        return mainScreensRepositoryImpl.getCaloriesByDate(date)
     }
 }

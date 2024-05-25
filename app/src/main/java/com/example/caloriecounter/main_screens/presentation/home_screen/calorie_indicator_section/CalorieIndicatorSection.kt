@@ -118,7 +118,7 @@ fun CalorieIndicatorSection(
             }
 
             var progress by rememberSaveable { mutableFloatStateOf(0f) }
-            LaunchedEffect(key1 = requiredAmount) {
+            LaunchedEffect(key1 = requiredAmount, key2 = totalAmount) {
                 progress = if(requiredAmount.toInt() != 0) {
                     totalAmount.toFloat() / requiredAmount.toFloat()
                 } else {

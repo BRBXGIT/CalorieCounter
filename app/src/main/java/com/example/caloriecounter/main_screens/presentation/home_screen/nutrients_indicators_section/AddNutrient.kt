@@ -1,13 +1,11 @@
 package com.example.caloriecounter.main_screens.presentation.home_screen.nutrients_indicators_section
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -46,7 +44,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.caloriecounter.R
-import com.example.caloriecounter.main_screens.data.nutrients_db.Nutrient
 import com.example.caloriecounter.main_screens.presentation.home_screen.HomeScreenVM
 import kotlinx.coroutines.delay
 
