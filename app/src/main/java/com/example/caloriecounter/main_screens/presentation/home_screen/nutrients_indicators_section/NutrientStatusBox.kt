@@ -11,9 +11,21 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableFloatStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 
 @Composable
 fun NutrientStatusBox(
@@ -39,6 +51,52 @@ fun NutrientStatusBox(
         ) {
             Text(
                 text = name
+            )
+
+            Text(
+                buildAnnotatedString {
+                    withStyle(
+                        SpanStyle(
+                        fontSize = 18.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = MaterialTheme.colorScheme.onPrimary
+                    )
+                    ) {
+                        append(receivedAmount.toString())
+                    }
+                    withStyle(
+                        SpanStyle(
+                        fontSize = 18.sp,
+                        fontWeight = FontWeight.Bold,
+                    )
+                    ) {
+                        append(" / ")
+                    }
+                    withStyle(
+                        SpanStyle(
+                        fontSize = 15.sp
+                    )
+                    ) {
+                        append("$requiredAmount g")
+                    }
+                },
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis
+            )
+
+            var progress by rememberSaveable { mutableFloatStateOf(0f) }
+            LaunchedEffect(key1 = requiredAmount, key2 = receivedAmount) {
+                progress = if(requiredAmount != 0) {
+                    receivedAmount.toFloat() / requiredAmount.toFloat()
+                } else {
+                    0f
+                }
+            }
+            CircleNutrientIndicator(
+                color = Color(color),
+                backgroundColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                progress = progress,
+                size = 76.dp
             )
         }
     }

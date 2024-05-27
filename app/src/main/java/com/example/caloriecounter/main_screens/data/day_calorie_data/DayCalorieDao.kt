@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface DayCalorieDao {
 
-    @Insert(onConflict = OnConflictStrategy.ABORT)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun upsertDayCalories(dayCalorieData: DayCalorieData)
 
     @Query("UPDATE daycaloriedata SET receivedCaloriesAmount = :amount WHERE date = :date")

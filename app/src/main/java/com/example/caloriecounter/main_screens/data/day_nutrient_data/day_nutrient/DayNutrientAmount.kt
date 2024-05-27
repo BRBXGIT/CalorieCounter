@@ -8,6 +8,7 @@ import com.example.caloriecounter.main_screens.data.day_nutrient_data.nutrient.N
 
 @Entity(
     tableName = "dayNutrientAmount",
+    indices = [Index(value = ["date", "nutrientId"], unique = true)]
 )
 data class DayNutrientAmount(
     val date: String,
