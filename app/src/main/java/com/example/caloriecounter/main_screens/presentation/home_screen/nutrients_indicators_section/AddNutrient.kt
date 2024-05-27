@@ -64,6 +64,7 @@ fun AddNutrient(
     Surface(
         onClick = { openAddNutrientSheet = true },
         shape = RoundedCornerShape(10.dp),
+        tonalElevation = 20.dp,
         color = MaterialTheme.colorScheme.surfaceVariant,
         modifier = Modifier
             .height(190.dp)
@@ -84,18 +85,11 @@ fun AddNutrient(
                     textAlign = TextAlign.Center
                 )
 
-                Box(
-                    modifier = Modifier
-                        .size(36.dp)
-                        .clip(CircleShape)
-                        .background(MaterialTheme.colorScheme.onSurface),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Icon(
-                        painter = painterResource(id = R.drawable.ic_plus),
-                        contentDescription = null
-                    )
-                }
+                Icon(
+                    painter = painterResource(id = R.drawable.ic_plus),
+                    contentDescription = null,
+                    tint = MaterialTheme.colorScheme.onPrimary
+                )
             }
         }
     }

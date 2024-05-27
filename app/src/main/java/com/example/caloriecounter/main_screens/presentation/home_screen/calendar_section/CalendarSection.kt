@@ -1,6 +1,5 @@
 package com.example.caloriecounter.main_screens.presentation.home_screen.calendar_section
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
@@ -11,7 +10,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -19,6 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.example.caloriecounter.R
 
 @Composable
@@ -26,18 +25,16 @@ fun CalendarSection(
     date: String,
     onPreviousDayClick: () -> Unit,
     onNextDayClick: () -> Unit,
-    onCalendarClick: () -> Unit
+    onCalendarClick: () -> Unit,
 ) {
     Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(56.dp)
-            .background(MaterialTheme.colorScheme.surface),
+        modifier = Modifier.fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
         IconButton(
-            onClick = { onPreviousDayClick() }
+            onClick = { onPreviousDayClick() },
+            modifier = Modifier.size(28.dp)
         ) {
             Icon(
                 painter = painterResource(id = R.drawable.ic_arrow_left),
@@ -50,7 +47,7 @@ fun CalendarSection(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(16.dp),
             modifier = Modifier
-                .height(42.dp)
+                .height(38.dp)
                 .clip(RoundedCornerShape(20.dp))
                 .clickable { onCalendarClick() }
         ) {
@@ -62,12 +59,16 @@ fun CalendarSection(
             
             Text(
                 text = date,
-                modifier = Modifier.padding(end = 8.dp)
+                modifier = Modifier.padding(end = 8.dp),
+                fontSize = 16.sp
             )
         }
 
         IconButton(
-            onClick = { onNextDayClick() }
+            onClick = { onNextDayClick() },
+            modifier = Modifier
+                .padding(16.dp)
+                .size(28.dp)
         ) {
             Icon(
                 painter = painterResource(id = R.drawable.ic_arrow_right),

@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -64,6 +65,7 @@ fun CircleNutrientIndicator(
             text = "${(progress * 100).toInt()}%",
             fontSize = 16.sp,
             maxLines = 1,
+            color = MaterialTheme.colorScheme.onPrimary,
             overflow = TextOverflow.Ellipsis,
             modifier = Modifier.padding(start = 8.dp, end = 8.dp)
         )

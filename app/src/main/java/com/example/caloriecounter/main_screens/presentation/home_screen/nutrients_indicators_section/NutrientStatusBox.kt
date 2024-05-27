@@ -37,6 +37,7 @@ fun NutrientStatusBox(
     Surface(
         onClick = { /*TODO*/ },
         shape = RoundedCornerShape(10.dp),
+        tonalElevation = 20.dp,
         color = MaterialTheme.colorScheme.surfaceVariant,
         modifier = Modifier
             .height(190.dp)
