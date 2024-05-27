@@ -13,6 +13,7 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -58,13 +59,10 @@ fun HomeScreen(
 
     val selectedDate = date.format(formatter)
 
-    val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior(rememberTopAppBarState())
     Scaffold(
-        modifier = Modifier
-            .nestedScroll(scrollBehavior.nestedScrollConnection)
-            .fillMaxSize(),
+        modifier = Modifier.fillMaxSize(),
         topBar = {
-            MediumTopAppBar(
+            CenterAlignedTopAppBar(
                 title = {
                     val dateDialogState = rememberUseCaseState()
                     CalendarDialog(
@@ -91,7 +89,6 @@ fun HomeScreen(
                         )
                     }
                 },
-                scrollBehavior = scrollBehavior,
                 colors = TopAppBarDefaults.mediumTopAppBarColors(
                     scrolledContainerColor = MaterialTheme.colorScheme.surface
                 ),
@@ -114,8 +111,8 @@ fun HomeScreen(
             Column(
                 verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
-                Spacer(modifier = Modifier.height(32.dp))
-                
+                Spacer(modifier = Modifier.height(24.dp))
+
                 Text(
                     text = "Indicators calories",
                     modifier = Modifier.padding(start = 14.dp),
