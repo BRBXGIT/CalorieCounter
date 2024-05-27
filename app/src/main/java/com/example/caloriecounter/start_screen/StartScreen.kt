@@ -132,6 +132,8 @@ fun StartScreen(
                             focusedContainerColor = Color.Transparent,
                             unfocusedContainerColor = Color.Transparent,
                             errorContainerColor = Color.Transparent,
+                            unfocusedIndicatorColor = MaterialTheme.colorScheme.onBackground,
+                            unfocusedLabelColor = MaterialTheme.colorScheme.onBackground
                         ),
                         isError = weightError,
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
@@ -148,6 +150,8 @@ fun StartScreen(
                             focusedContainerColor = Color.Transparent,
                             unfocusedContainerColor = Color.Transparent,
                             errorContainerColor = Color.Transparent,
+                            unfocusedIndicatorColor = MaterialTheme.colorScheme.onBackground,
+                            unfocusedLabelColor = MaterialTheme.colorScheme.onBackground
                         ),
                         isError = heightError,
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
@@ -163,6 +167,8 @@ fun StartScreen(
                         focusedContainerColor = Color.Transparent,
                         unfocusedContainerColor = Color.Transparent,
                         errorContainerColor = Color.Transparent,
+                        unfocusedIndicatorColor = MaterialTheme.colorScheme.onBackground,
+                        unfocusedLabelColor = MaterialTheme.colorScheme.onBackground
                     ),
                     isError = ageError,
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
@@ -184,6 +190,8 @@ fun StartScreen(
                             focusedContainerColor = Color.Transparent,
                             unfocusedContainerColor = Color.Transparent,
                             errorContainerColor = Color.Transparent,
+                            unfocusedIndicatorColor = MaterialTheme.colorScheme.onBackground,
+                            unfocusedLabelColor = MaterialTheme.colorScheme.onBackground
                         ),
                         readOnly = true,
                         maxLines = 1,
@@ -275,6 +283,8 @@ fun StartScreen(
                             focusedContainerColor = Color.Transparent,
                             unfocusedContainerColor = Color.Transparent,
                             errorContainerColor = Color.Transparent,
+                            unfocusedIndicatorColor = MaterialTheme.colorScheme.onBackground,
+                            unfocusedLabelColor = MaterialTheme.colorScheme.onBackground
                         ),
                         readOnly = true,
                         trailingIcon = {

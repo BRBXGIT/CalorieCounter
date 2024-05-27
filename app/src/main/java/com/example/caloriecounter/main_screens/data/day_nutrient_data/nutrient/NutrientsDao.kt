@@ -1,4 +1,4 @@
-package com.example.caloriecounter.main_screens.data.day_nutrient_data
+package com.example.caloriecounter.main_screens.data.day_nutrient_data.nutrient
 
 import androidx.room.Dao
 import androidx.room.Query

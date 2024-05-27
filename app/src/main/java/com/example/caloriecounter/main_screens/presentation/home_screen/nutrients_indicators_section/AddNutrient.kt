@@ -26,6 +26,8 @@ import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.rememberModalBottomSheetState
+import androidx.compose.material3.rememberStandardBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -44,6 +46,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.caloriecounter.R
+import com.example.caloriecounter.main_screens.data.day_nutrient_data.nutrient.Nutrient
 import com.example.caloriecounter.main_screens.presentation.home_screen.HomeScreenVM
 import kotlinx.coroutines.delay
 
@@ -104,8 +107,10 @@ fun AddNutrientBottomSheet(
     onDismissRequest: () -> Unit,
     homeScreenVM: HomeScreenVM
 ) {
+    val state = rememberModalBottomSheetState(skipPartiallyExpanded = true)
     ModalBottomSheet(
         onDismissRequest = { onDismissRequest() },
+        sheetState = state
     ) {
         Column(
             modifier = Modifier
@@ -182,7 +187,12 @@ fun AddNutrientBottomSheet(
                         nameError = true
                     }
                     if((!nameError) && (!requiredAmountError)) {
-                        TODO()
+                        homeScreenVM.upsertNutrient(Nutrient(
+                            name = name,
+                            requiredAmount = requiredAmount.toInt(),
+                            color = chosenColor
+                        ))
+                        onDismissRequest()
                     }
                 },
                 modifier = Modifier

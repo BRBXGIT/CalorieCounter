@@ -18,6 +18,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
@@ -31,10 +32,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.caloriecounter.R
 import com.example.caloriecounter.app.data.user_calorie_db.UserCalorieData
-import com.example.caloriecounter.main_screens.data.day_calorie_data.DayCalorieData
+import com.example.caloriecounter.main_screens.data.day_nutrient_data.nutrient.Nutrient
 import com.example.caloriecounter.main_screens.presentation.home_screen.calendar_section.CalendarSection
 import com.example.caloriecounter.main_screens.presentation.home_screen.calorie_indicator_section.CalorieIndicatorSection
 import com.example.caloriecounter.main_screens.presentation.home_screen.nutrients_indicators_section.AddNutrient
+import com.example.caloriecounter.main_screens.presentation.home_screen.nutrients_indicators_section.NutrientStatusBox
 import com.maxkeppeker.sheets.core.models.base.rememberUseCaseState
 import com.maxkeppeler.sheets.calendar.CalendarDialog
 import com.maxkeppeler.sheets.calendar.models.CalendarSelection
@@ -149,6 +151,15 @@ fun HomeScreen(
                     fontSize = 17.sp
                 )
 
+                val nutrients = homeScreenVM
+                    .getAllNutrients()
+                    .collectAsState(initial = emptyList())
+                    .value
+                LaunchedEffect(key1 = nutrients, key2 = selectedDate) {
+                    nutrients.forEach { nutrient ->
+                        homeScreenVM.insertNewDayNutrientAmount(nutrient.nutrientId, selectedDate)
+                    }
+                }
                 LazyRow(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.spacedBy(16.dp),
@@ -160,6 +171,19 @@ fun HomeScreen(
                 ) {
                     item {
                         AddNutrient(homeScreenVM)
+                    }
+
+                    items(nutrients) { nutrient ->
+                        val receivedNutrientAmount = homeScreenVM
+                            .getNutrientAmountByDate(nutrient.nutrientId, selectedDate)
+                            .collectAsState(initial = null)
+                            .value
+                        NutrientStatusBox(
+                            name = nutrient.name,
+                            color = nutrient.color,
+                            requiredAmount = nutrient.requiredAmount,
+                            receivedAmount = receivedNutrientAmount ?: 0
+                        )
                     }
                 }
             }
