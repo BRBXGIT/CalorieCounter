@@ -60,7 +60,7 @@ fun WaterBarIndicator(
             }
 
             IconButton(
-                onClick = { /*TODO*/ },
+                onClick = { onReduceButtonClick() },
                 colors = IconButtonDefaults.iconButtonColors(
                     containerColor = MaterialTheme.colorScheme.surfaceDim
                 )

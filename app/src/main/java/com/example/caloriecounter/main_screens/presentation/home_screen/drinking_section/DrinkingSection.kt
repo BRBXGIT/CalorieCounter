@@ -129,6 +129,7 @@ fun DrinkingSection(
                 }
             }
             var addWaterDialogOpen by rememberSaveable { mutableStateOf(false) }
+            var reduceWaterAmountDialogOpen by rememberSaveable { mutableStateOf(false) }
             if(addWaterDialogOpen) {
                 AddWaterAmountDialog(
                     homeScreenVM = homeScreenVM,
@@ -137,10 +138,18 @@ fun DrinkingSection(
                     selectedDate = selectedDate
                 )
             }
+            if(reduceWaterAmountDialogOpen) {
+                ReduceWaterAmountDialog(
+                    homeScreenVM = homeScreenVM,
+                    currentWaterAmount = receivedWaterAmount,
+                    selectedDate = selectedDate,
+                    onDismissRequest = { reduceWaterAmountDialogOpen = false }
+                )
+            }
             WaterBarIndicator(
                 progress = progress,
                 onAddButtonClick = { addWaterDialogOpen = true },
-                onReduceButtonClick = { TODO() }
+                onReduceButtonClick = { reduceWaterAmountDialogOpen = true }
             )
         }
     }
@@ -206,6 +215,79 @@ fun AddWaterAmountDialog(
                             } else {
                                 homeScreenVM.updateDayReceivedWaterAmount(
                                     selectedDate, currentWaterAmount + waterAmount.toInt()
+                                )
+                                onDismissRequest()
+                            }
+                        }
+                    ) {
+                        Text(text = "Confirm")
+                    }
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun ReduceWaterAmountDialog(
+    homeScreenVM: HomeScreenVM,
+    currentWaterAmount: Int,
+    selectedDate: String,
+    onDismissRequest: () -> Unit
+) {
+    var waterAmount by rememberSaveable { mutableStateOf("") }
+    waterAmount = waterAmount.filter { it.isDigit() }
+    Dialog(
+        onDismissRequest = { onDismissRequest() }
+    ) {
+        Card(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 32.dp),
+        ) {
+            Column(
+                verticalArrangement = Arrangement.spacedBy(16.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = Modifier
+                    .padding(16.dp)
+            ) {
+                Text(
+                    text = "Input water amount",
+                    color = MaterialTheme.colorScheme.onPrimary
+                )
+
+                var amountError by rememberSaveable { mutableStateOf(false) }
+                LaunchedEffect(key1 = amountError) {
+                    delay(3000)
+                    amountError = false
+                }
+                TextField(
+                    value = waterAmount,
+                    onValueChange = { waterAmount = it },
+                    label = { Text(text = "Amount") },
+                    isError = amountError,
+                    keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number)
+                )
+
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceAround
+                ) {
+                    TextButton(
+                        onClick = { onDismissRequest() }
+                    ) {
+                        Text(text = "Dismiss")
+                    }
+
+                    TextButton(
+                        onClick = {
+                            if(waterAmount.isBlank()) {
+                                amountError = true
+                            } else {
+                                homeScreenVM.updateDayReceivedWaterAmount(
+                                    selectedDate, currentWaterAmount - waterAmount.toInt()
                                 )
                                 onDismissRequest()
                             }
