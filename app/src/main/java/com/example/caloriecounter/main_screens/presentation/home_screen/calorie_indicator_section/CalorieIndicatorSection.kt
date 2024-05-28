@@ -79,7 +79,7 @@ fun CalorieIndicatorSection(
                                 append(" / ")
                             }
                             withStyle(SpanStyle(
-                                fontSize = 16.sp
+                                fontSize = 16.sp,
                             )) {
                                 append("$requiredAmount kcal")
                             }

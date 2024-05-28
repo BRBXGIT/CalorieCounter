@@ -33,6 +33,12 @@ class HomeScreenVM @Inject constructor(
         }
     }
 
+    fun updateDayReceivedWaterAmount(date: String, amount: Int) {
+        viewModelScope.launch(Dispatchers.IO) {
+            mainScreensRepositoryImpl.updateDayWaterAmountByDate(date, amount)
+        }
+    }
+
     fun getDayCalorieData(date: String): Flow<DayCalorieData> {
         return mainScreensRepositoryImpl.getCaloriesByDate(date)
     }

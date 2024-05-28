@@ -22,6 +22,10 @@ class MainScreensRepositoryImpl @Inject constructor(
         dayCalorieDao.updateDayCalorieAmountByDate(date, amount)
     }
 
+    override suspend fun updateDayWaterAmountByDate(date: String, amount: Int) {
+        dayCalorieDao.updateDayWaterAmountByDate(date, amount)
+    }
+
     override fun getCaloriesByDate(date: String): Flow<DayCalorieData> {
         return dayCalorieDao.getCaloriesByDate(date)
     }

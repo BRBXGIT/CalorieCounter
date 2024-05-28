@@ -41,6 +41,7 @@ import com.example.caloriecounter.R
 import com.example.caloriecounter.app.data.user_calorie_db.UserCalorieData
 import com.example.caloriecounter.main_screens.presentation.home_screen.calendar_section.CalendarSection
 import com.example.caloriecounter.main_screens.presentation.home_screen.calorie_indicator_section.CalorieIndicatorSection
+import com.example.caloriecounter.main_screens.presentation.home_screen.drinking_section.DrinkingSection
 import com.example.caloriecounter.main_screens.presentation.home_screen.nutrients_indicators_section.AddNutrient
 import com.example.caloriecounter.main_screens.presentation.home_screen.nutrients_indicators_section.NutrientStatusBox
 import com.maxkeppeker.sheets.core.models.base.rememberUseCaseState
@@ -96,6 +97,25 @@ fun HomeScreen(
             )
         }
     ) { innerPadding ->
+
+        val userRequirementCalorie = homeScreenVM
+            .getUserRequirementCalorieData()
+            .collectAsState(initial = UserCalorieData(
+                id = 0,
+                requiredCalorieAmount = 0,
+                requiredWaterAmount = 0,
+                weight = 0,
+                height = 0
+            ))
+            .value
+        val todayCalorieData = homeScreenVM
+            .getDayCalorieData(selectedDate)
+            .collectAsState(initial = null)
+            .value
+        if(todayCalorieData == null) {
+            homeScreenVM.upsertNewDayCalorieData(selectedDate)
+        }
+
         val mainColumnScrollState = rememberScrollState()
         Column(
             modifier = Modifier
@@ -118,24 +138,6 @@ fun HomeScreen(
                     modifier = Modifier.padding(start = 14.dp),
                     fontSize = 17.sp
                 )
-
-                val userRequirementCalorie = homeScreenVM
-                    .getUserRequirementCalorieData()
-                    .collectAsState(initial = UserCalorieData(
-                        id = 0,
-                        requiredCalorieAmount = 0,
-                        requiredWaterAmount = 0,
-                        weight = 0,
-                        height = 0
-                    ))
-                    .value
-                val todayCalorieData = homeScreenVM
-                    .getDayCalorieData(selectedDate)
-                    .collectAsState(initial = null)
-                    .value
-                if(todayCalorieData == null) {
-                    homeScreenVM.upsertNewDayCalorieData(selectedDate)
-                }
 
                 val requiredAmount = userRequirementCalorie.requiredCalorieAmount
                 var receivedAmount by rememberSaveable { mutableIntStateOf(0) }
@@ -199,6 +201,33 @@ fun HomeScreen(
                     }
                 }
             }
+
+            Column(
+                verticalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                Text(
+                    text = "Drinking mode",
+                    modifier = Modifier.padding(start = 14.dp),
+                    fontSize = 17.sp
+                )
+
+                val requiredWaterAmount = userRequirementCalorie.requiredWaterAmount
+                var receivedWaterAmount by rememberSaveable { mutableIntStateOf(0) }
+                var lastDrinkAt by rememberSaveable { mutableStateOf("") }
+                if(todayCalorieData != null) {
+                    receivedWaterAmount = todayCalorieData.receivedWaterAmount
+                    lastDrinkAt = todayCalorieData.lastDrinkAt
+                }
+                DrinkingSection(
+                    requiredWaterAmount = requiredWaterAmount,
+                    receivedWaterAmount = receivedWaterAmount,
+                    lastDrinkAt = lastDrinkAt,
+                    homeScreenVM = homeScreenVM,
+                    selectedDate = selectedDate
+                )
+            }
+            
+            Spacer(modifier = Modifier.height(0.dp))
         }
     }
 }

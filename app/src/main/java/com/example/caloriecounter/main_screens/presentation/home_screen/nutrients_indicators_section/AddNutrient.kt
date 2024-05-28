@@ -139,7 +139,8 @@ fun AddNutrientBottomSheet(
 
             val nutrientColor = listOf(
                 0xfffc87bf, 0xfff8e38a,
-                0xff6fe5e9, 0xff5be4b2
+                0xff6fe5e9, 0xff5be4b2,
+                0xffb95cf4
             )
             var chosenColor by rememberSaveable { mutableLongStateOf(nutrientColor[0]) }
 

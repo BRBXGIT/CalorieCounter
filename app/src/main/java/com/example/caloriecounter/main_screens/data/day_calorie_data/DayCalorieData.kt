@@ -10,4 +10,5 @@ data class DayCalorieData(
     val receivedCaloriesAmount: Int = 0,
     val spentCaloriesAmount: Int = 0,
     val receivedWaterAmount: Int = 0,
+    val lastDrinkAt: String = "00:00"
 )
