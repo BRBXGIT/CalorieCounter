@@ -39,6 +39,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.caloriecounter.R
 import com.example.caloriecounter.app.data.user_calorie_db.UserCalorieData
+import com.example.caloriecounter.main_screens.presentation.MainScreensSharedVM
 import com.example.caloriecounter.main_screens.presentation.home_screen.calendar_section.CalendarSection
 import com.example.caloriecounter.main_screens.presentation.home_screen.calorie_indicator_section.CalorieIndicatorSection
 import com.example.caloriecounter.main_screens.presentation.home_screen.drinking_section.DrinkingSection
@@ -53,12 +54,10 @@ import java.time.format.DateTimeFormatter
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(
-    homeScreenVM: HomeScreenVM
+    homeScreenVM: HomeScreenVM,
+    mainScreensSharedVM: MainScreensSharedVM
 ) {
-    var date by rememberSaveable { mutableStateOf(LocalDateTime.now()) }
-    val formatter = DateTimeFormatter.ofPattern("MMMM d, yyyy")
-
-    val selectedDate = date.format(formatter)
+    val selectedDate by rememberSaveable { mainScreensSharedVM.selectedDate }
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
@@ -69,14 +68,14 @@ fun HomeScreen(
                     CalendarDialog(
                         state = dateDialogState,
                         selection = CalendarSelection.Date { calendarDate ->
-                            date = calendarDate.atStartOfDay()
+                            mainScreensSharedVM.setDate(calendarDate.atStartOfDay())
                         }
                     )
 
                     CalendarSection(
                         date = selectedDate,
-                        onPreviousDayClick = { date = date.minusDays(1) },
-                        onNextDayClick = { date = date.plusDays(1) },
+                        onPreviousDayClick = { mainScreensSharedVM.dateMinusDay() },
+                        onNextDayClick = { mainScreensSharedVM.datePlusDay() },
                         onCalendarClick = { dateDialogState.show() },
                     )
                 },
