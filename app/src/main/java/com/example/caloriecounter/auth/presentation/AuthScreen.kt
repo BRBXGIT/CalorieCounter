@@ -91,6 +91,7 @@ fun AuthScreen(
     }
 }
 
+//Enum class with tabRows
 enum class SignTabs(
     val text: String,
     val content: @Composable (

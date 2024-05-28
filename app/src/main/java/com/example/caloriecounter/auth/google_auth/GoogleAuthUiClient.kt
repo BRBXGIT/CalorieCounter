@@ -21,6 +21,7 @@ class GoogleAuthUiClient(
     private val oneTapClient: SignInClient,
     private val firebaseAuth: FirebaseAuth
 ) {
+    //Sign in with google function
     suspend fun signInWithGoogle(): IntentSender? {
         val result = try {
             oneTapClient.beginSignIn(
@@ -34,6 +35,8 @@ class GoogleAuthUiClient(
         return result?.pendingIntent?.intentSender
     }
 
+    //Sign in with intent and credentials, return a signInState DataClass
+    //Which contains user and error's if they were
     suspend fun signInWithIntent(intent: Intent): SignInState {
         val credential = oneTapClient.getSignInCredentialFromIntent(intent)
         val googleIdToken = credential.googleIdToken
@@ -57,6 +60,7 @@ class GoogleAuthUiClient(
         }
     }
 
+    //Building sign in request, easy to understand
     private fun buildSignInRequest(): BeginSignInRequest {
         return BeginSignInRequest.Builder()
             .setGoogleIdTokenRequestOptions(

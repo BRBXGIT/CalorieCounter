@@ -235,6 +235,7 @@ fun SignInContent(
             )
         }
 
+        //State and launcher for google sign in
         val state by googleSignInVM.state.collectAsStateWithLifecycle()
 
         val launcher = rememberLauncherForActivityResult(
@@ -251,6 +252,7 @@ fun SignInContent(
             }
         )
 
+        //Check succesfull of signing in with google
         LaunchedEffect(key1 = state.isSignInSuccessful, key2 = state.signInErrorMessage != null) {
             if(state.isSignInSuccessful) {
                 googleSignInVM.resetState()

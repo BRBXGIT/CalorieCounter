@@ -17,6 +17,7 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object AppModule {
 
+    //Providing user's dao
     @Provides
     @Singleton
     fun provideUserCalorieDao(@ApplicationContext context: Context): UserCalorieDao {
@@ -27,6 +28,7 @@ object AppModule {
         ).build().userCalorieDao()
     }
 
+    //Providing app repository
     @Provides
     @Singleton
     fun provideAppRepositoryImpl(userCalorieDao: UserCalorieDao): AppRepository {

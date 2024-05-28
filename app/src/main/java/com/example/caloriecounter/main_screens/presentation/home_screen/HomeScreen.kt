@@ -169,6 +169,8 @@ fun HomeScreen(
                     .getAllNutrients()
                     .collectAsState(initial = emptyList())
                     .value
+                //Checking if date was changed or user insert new nutrient
+                //and after this create row in db with new date and nutrient
                 LaunchedEffect(key1 = nutrients, key2 = selectedDate) {
                     nutrients.forEach { nutrient ->
                         homeScreenVM.insertNewDayNutrientAmount(nutrient.nutrientId, selectedDate)

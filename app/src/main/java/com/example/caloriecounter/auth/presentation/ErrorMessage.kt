@@ -23,6 +23,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
+//Custom error message toast
 @Composable
 fun ErrorMessage(
     onTimeEnds: () -> Unit

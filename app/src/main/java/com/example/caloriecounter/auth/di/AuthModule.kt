@@ -15,12 +15,14 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object AuthModule {
 
+    //Provides firebase auth, how unexpected)
     @Provides
     @Singleton
     fun provideFirebaseAuth(): FirebaseAuth {
         return FirebaseAuth.getInstance()
     }
 
+    //Provides googleAuthUiClient
     @Provides
     @Singleton
     fun provideGoogleAuthUiClient(@ApplicationContext context: Context, firebaseAuth: FirebaseAuth): GoogleAuthUiClient {

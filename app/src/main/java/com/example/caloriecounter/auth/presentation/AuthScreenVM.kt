@@ -15,6 +15,7 @@ class AuthScreenVM @Inject constructor(
     private val appRepositoryImpl: AppRepositoryImpl
 ): ViewModel() {
 
+    //Function creating user with email
     suspend fun createUser(email: String, password: String): Boolean {
         val result = CompletableDeferred<Boolean>()
         firebaseAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener {
@@ -23,6 +24,7 @@ class AuthScreenVM @Inject constructor(
         return result.await()
     }
 
+    //Function for sign in with email(not google)
     suspend fun signIn(email: String, password: String): Boolean {
         val result = CompletableDeferred<Boolean>()
         firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener {
@@ -31,6 +33,7 @@ class AuthScreenVM @Inject constructor(
         return result.await()
     }
 
+    //Check have been user used this app before
     fun getUserCalorieData(): Flow<UserCalorieData?> {
         return appRepositoryImpl.getUserCalorieData()
     }

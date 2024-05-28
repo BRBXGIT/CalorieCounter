@@ -45,6 +45,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
+//Simple sign up screen, nothing to comment)
 @Composable
 fun SignUpContent(
     authScreenVM: AuthScreenVM,
