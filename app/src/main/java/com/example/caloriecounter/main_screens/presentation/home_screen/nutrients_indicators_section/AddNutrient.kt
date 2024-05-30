@@ -104,7 +104,8 @@ fun AddNutrientBottomSheet(
     val state = rememberModalBottomSheetState(skipPartiallyExpanded = true)
     ModalBottomSheet(
         onDismissRequest = { onDismissRequest() },
-        sheetState = state
+        sheetState = state,
+        containerColor = MaterialTheme.colorScheme.surfaceVariant
     ) {
         Column(
             modifier = Modifier

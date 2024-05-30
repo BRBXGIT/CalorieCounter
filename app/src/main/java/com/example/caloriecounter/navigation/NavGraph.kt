@@ -1,6 +1,7 @@
 package com.example.caloriecounter.navigation
 
 import android.content.SharedPreferences
+import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -11,6 +12,8 @@ import com.example.caloriecounter.auth.google_auth.GoogleAuthUiClient
 import com.example.caloriecounter.auth.presentation.AuthScreen
 import com.example.caloriecounter.auth.presentation.AuthScreenVM
 import com.example.caloriecounter.main_screens.presentation.MainScreensSharedVM
+import com.example.caloriecounter.main_screens.presentation.activity_screen.presentation.ActivityScreen
+import com.example.caloriecounter.main_screens.presentation.eating_screen.presentation.EatingScreen
 import com.example.caloriecounter.main_screens.presentation.home_screen.HomeScreen
 import com.example.caloriecounter.main_screens.presentation.home_screen.HomeScreenVM
 import com.example.caloriecounter.start_screen.StartScreen
@@ -61,7 +64,22 @@ fun NavGraph(
         composable<HomeScreen> {
             HomeScreen(
                 homeScreenVM = homeScreenVM,
-                mainScreensSharedVM = mainScreensSharedVM
+                mainScreensSharedVM = mainScreensSharedVM,
+                navController = navController
+            )
+        }
+
+        composable<EatingScreen> {
+            EatingScreen(
+                navController = navController,
+                mainScreensSharedVM = mainScreensSharedVM,
+            )
+        }
+
+        composable<ActivityScreen> {
+            ActivityScreen(
+                navController = navController,
+                mainScreensSharedVM = mainScreensSharedVM,
             )
         }
     }

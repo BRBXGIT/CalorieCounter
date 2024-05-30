@@ -13,7 +13,7 @@ interface MainScreensRepository {
 
     fun getCaloriesByDate(date: String): Flow<DayCalorieData>
 
-    suspend fun updateDayWaterAmountByDate(date: String, amount: Int)
+    suspend fun updateDayWaterAmountByDate(date: String, amount: Int, timeOfDrink: String)
 
     suspend fun upsertNutrient(nutrient: Nutrient)
 

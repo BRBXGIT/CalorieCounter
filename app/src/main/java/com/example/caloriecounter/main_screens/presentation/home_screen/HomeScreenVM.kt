@@ -33,9 +33,9 @@ class HomeScreenVM @Inject constructor(
         }
     }
 
-    fun updateDayReceivedWaterAmount(date: String, amount: Int) {
+    fun updateDayReceivedWaterAmount(date: String, amount: Int, timeOfDrink: String) {
         viewModelScope.launch(Dispatchers.IO) {
-            mainScreensRepositoryImpl.updateDayWaterAmountByDate(date, amount)
+            mainScreensRepositoryImpl.updateDayWaterAmountByDate(date, amount, timeOfDrink)
         }
     }
 

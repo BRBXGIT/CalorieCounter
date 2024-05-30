@@ -1,4 +1,4 @@
-package com.example.caloriecounter.main_screens.main_screens_bars
+package com.example.caloriecounter.main_screens.presentation.main_screens_bars.bottom_bar
 
 import android.util.Log
 import androidx.compose.foundation.layout.height
@@ -7,7 +7,6 @@ import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBarItem
-import androidx.compose.material3.NavigationBarItemColors
 import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable

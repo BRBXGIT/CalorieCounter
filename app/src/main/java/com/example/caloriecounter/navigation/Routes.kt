@@ -10,3 +10,12 @@ object StartScreen
 
 @Serializable
 object HomeScreen
+
+@Serializable
+object EatingScreen
+
+@Serializable
+object ActivityScreen
+
+@Serializable
+object WaterScreen

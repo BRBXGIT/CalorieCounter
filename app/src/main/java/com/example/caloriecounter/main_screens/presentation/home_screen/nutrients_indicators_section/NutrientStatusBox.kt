@@ -35,7 +35,6 @@ fun NutrientStatusBox(
     receivedAmount: Int
 ) {
     Surface(
-        onClick = { /*TODO*/ },
         shape = RoundedCornerShape(10.dp),
         tonalElevation = 20.dp,
         color = MaterialTheme.colorScheme.surfaceVariant,
@@ -51,7 +50,9 @@ fun NutrientStatusBox(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
-                text = name
+                text = name,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis
             )
 
             Text(

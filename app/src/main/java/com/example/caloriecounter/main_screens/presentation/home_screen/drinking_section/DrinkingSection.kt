@@ -45,6 +45,8 @@ import androidx.compose.ui.window.Dialog
 import com.example.caloriecounter.R
 import com.example.caloriecounter.main_screens.presentation.home_screen.HomeScreenVM
 import kotlinx.coroutines.delay
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 @Composable
 fun DrinkingSection(
@@ -208,13 +210,16 @@ fun AddWaterAmountDialog(
                         Text(text = "Dismiss")
                     }
 
+                    val timeOfDrink = LocalDateTime.now()
+                    val formatter = DateTimeFormatter.ofPattern("HH:mm")
+                    val currentTime = timeOfDrink.format(formatter)
                     TextButton(
                         onClick = {
                             if(waterAmount.isBlank()) {
                                 amountError = true
                             } else {
                                 homeScreenVM.updateDayReceivedWaterAmount(
-                                    selectedDate, currentWaterAmount + waterAmount.toInt()
+                                    selectedDate, currentWaterAmount + waterAmount.toInt(), currentTime
                                 )
                                 onDismissRequest()
                             }
@@ -281,13 +286,16 @@ fun ReduceWaterAmountDialog(
                         Text(text = "Dismiss")
                     }
 
+                    val timeOfDrink = LocalDateTime.now()
+                    val formatter = DateTimeFormatter.ofPattern("HH:mm")
+                    val currentTime = timeOfDrink.format(formatter)
                     TextButton(
                         onClick = {
                             if(waterAmount.isBlank()) {
                                 amountError = true
                             } else {
                                 homeScreenVM.updateDayReceivedWaterAmount(
-                                    selectedDate, currentWaterAmount - waterAmount.toInt()
+                                    selectedDate, currentWaterAmount - waterAmount.toInt(), currentTime
                                 )
                                 onDismissRequest()
                             }
