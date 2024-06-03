@@ -14,4 +14,7 @@ interface DayNutrientsDao {
 
     @Query("SELECT receivedAmount FROM dayNutrientAmount WHERE nutrientId = :nutrientId AND date = :date")
     fun getNutrientAmountByDate(nutrientId: Int, date: String): Flow<Int>
+
+    @Query("UPDATE dayNutrientAmount SET receivedAmount = :amount WHERE date = :date AND nutrientId = :nutrientId")
+    suspend fun updateNutrientAmountByDate(nutrientId: Int, date: String, amount: Int)
 }

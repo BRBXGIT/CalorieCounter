@@ -22,4 +22,6 @@ interface MainScreensRepository {
     suspend fun insertDayNutrientAmount(dayNutrientAmount: DayNutrientAmount)
 
     fun getNutrientAmountByDate(nutrientId: Int, date: String): Flow<Int>
+
+    suspend fun updateNutrientAmountByDate(nutrientId: Int, date: String, amount: Int)
 }

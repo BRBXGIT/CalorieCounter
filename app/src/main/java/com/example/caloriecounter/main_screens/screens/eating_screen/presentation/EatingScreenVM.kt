@@ -2,6 +2,7 @@ package com.example.caloriecounter.main_screens.screens.eating_screen.presentati
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.caloriecounter.main_screens.data.day_calorie_data.DayCalorieData
 import com.example.caloriecounter.main_screens.data.day_nutrient_data.nutrient.Nutrient
 import com.example.caloriecounter.main_screens.data.repository.MainScreensRepositoryImpl
 import com.example.caloriecounter.main_screens.screens.eating_screen.data.meal_db.Meal
@@ -25,6 +26,36 @@ class EatingScreenVM @Inject constructor(
     fun addDish(meal: Meal) {
         viewModelScope.launch(Dispatchers.IO) {
             eatingScreenRepositoryImpl.upsertMeal(meal)
+        }
+    }
+
+    fun getAllDishes(): Flow<List<Meal>> {
+        return eatingScreenRepositoryImpl.getAllMeals()
+    }
+
+    fun deleteDishById(id: Int) {
+        viewModelScope.launch(Dispatchers.IO) {
+            eatingScreenRepositoryImpl.deleteMealById(id)
+        }
+    }
+
+    fun getTodayCalorieData(date: String): Flow<DayCalorieData> {
+        return mainScreensRepositoryImpl.getCaloriesByDate(date)
+    }
+
+    fun updateTodayCalorieData(date: String, calorieAmount: Int) {
+        viewModelScope.launch(Dispatchers.IO) {
+            mainScreensRepositoryImpl.updateDayCalorieAmountByDate(date, calorieAmount)
+        }
+    }
+
+    fun getTodayNutrientsData(nutrientId: Int, date: String): Flow<Int> {
+        return mainScreensRepositoryImpl.getNutrientAmountByDate(nutrientId, date)
+    }
+
+    fun updateTodayNutrientData(nutrientId: Int, amount: Int, date: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            mainScreensRepositoryImpl.updateNutrientAmountByDate(nutrientId, date, amount)
         }
     }
 }

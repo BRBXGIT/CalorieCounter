@@ -22,3 +22,8 @@ data class AddDishScreen(
     val dishType: String
 )
 
+@Serializable
+data class DishesScreen(
+    val dishType: String
+)
+

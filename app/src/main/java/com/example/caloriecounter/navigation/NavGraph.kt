@@ -14,6 +14,7 @@ import com.example.caloriecounter.auth.presentation.AuthScreenVM
 import com.example.caloriecounter.main_screens.screens.MainScreensSharedVM
 import com.example.caloriecounter.main_screens.screens.activity_screen.presentation.ActivityScreen
 import com.example.caloriecounter.main_screens.screens.eating_screen.presentation.AddDishScreen
+import com.example.caloriecounter.main_screens.screens.eating_screen.presentation.DishesScreen
 import com.example.caloriecounter.main_screens.screens.eating_screen.presentation.EatingScreen
 import com.example.caloriecounter.main_screens.screens.eating_screen.presentation.EatingScreenVM
 import com.example.caloriecounter.main_screens.screens.home_screen.HomeScreen
@@ -76,7 +77,6 @@ fun NavGraph(
             EatingScreen(
                 navController = navController,
                 mainScreensSharedVM = mainScreensSharedVM,
-                eatingScreenVM = eatingScreenVM
             )
         }
 
@@ -93,6 +93,16 @@ fun NavGraph(
                 eatingScreenVM = eatingScreenVM,
                 navController = navController,
                 typeOfDish = args.dishType
+            )
+        }
+
+        composable<DishesScreen> {
+            val args = it.toRoute<DishesScreen>()
+            DishesScreen(
+                typeOfDish = args.dishType,
+                eatingScreenVM = eatingScreenVM,
+                navController = navController,
+                mainScreensSharedVM = mainScreensSharedVM
             )
         }
     }

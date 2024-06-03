@@ -47,4 +47,8 @@ class MainScreensRepositoryImpl @Inject constructor(
     override fun getNutrientAmountByDate(nutrientId: Int, date: String): Flow<Int> {
         return dayNutrientDao.getNutrientAmountByDate(nutrientId, date)
     }
+
+    override suspend fun updateNutrientAmountByDate(nutrientId: Int, date: String, amount: Int) {
+        dayNutrientDao.updateNutrientAmountByDate(nutrientId, date, amount)
+    }
 }
