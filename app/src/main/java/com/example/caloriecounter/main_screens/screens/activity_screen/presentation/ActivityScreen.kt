@@ -1,4 +1,4 @@
-package com.example.caloriecounter.main_screens.presentation.activity_screen.presentation
+package com.example.caloriecounter.main_screens.screens.activity_screen.presentation
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -9,9 +9,9 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
-import com.example.caloriecounter.main_screens.presentation.main_screens_bars.bottom_bar.MainScreensBottomBar
-import com.example.caloriecounter.main_screens.presentation.MainScreensSharedVM
-import com.example.caloriecounter.main_screens.presentation.main_screens_bars.top_bar.MainScreensTopBar
+import com.example.caloriecounter.main_screens.screens.main_screens_bars.bottom_bar.MainScreensBottomBar
+import com.example.caloriecounter.main_screens.screens.MainScreensSharedVM
+import com.example.caloriecounter.main_screens.screens.main_screens_bars.top_bar.MainScreensTopBar
 
 @Composable
 fun ActivityScreen(

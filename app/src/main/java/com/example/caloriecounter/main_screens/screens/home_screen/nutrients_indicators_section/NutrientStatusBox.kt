@@ -1,4 +1,4 @@
-package com.example.caloriecounter.main_screens.presentation.home_screen.nutrients_indicators_section
+package com.example.caloriecounter.main_screens.screens.home_screen.nutrients_indicators_section
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column

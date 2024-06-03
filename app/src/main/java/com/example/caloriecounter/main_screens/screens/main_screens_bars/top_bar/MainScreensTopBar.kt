@@ -1,4 +1,4 @@
-package com.example.caloriecounter.main_screens.presentation.main_screens_bars.top_bar
+package com.example.caloriecounter.main_screens.screens.main_screens_bars.top_bar
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.CenterAlignedTopAppBar
@@ -11,7 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import com.example.caloriecounter.R
-import com.example.caloriecounter.main_screens.presentation.MainScreensSharedVM
+import com.example.caloriecounter.main_screens.screens.MainScreensSharedVM
 import com.maxkeppeker.sheets.core.models.base.rememberUseCaseState
 import com.maxkeppeler.sheets.calendar.CalendarDialog
 import com.maxkeppeler.sheets.calendar.models.CalendarSelection

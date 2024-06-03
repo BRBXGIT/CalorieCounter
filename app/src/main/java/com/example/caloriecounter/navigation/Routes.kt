@@ -18,4 +18,7 @@ object EatingScreen
 object ActivityScreen
 
 @Serializable
-object WaterScreen
+data class AddDishScreen(
+    val dishType: String
+)
+

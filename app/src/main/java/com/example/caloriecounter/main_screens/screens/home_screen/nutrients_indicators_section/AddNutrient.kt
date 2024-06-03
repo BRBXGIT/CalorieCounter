@@ -1,4 +1,4 @@
-package com.example.caloriecounter.main_screens.presentation.home_screen.nutrients_indicators_section
+package com.example.caloriecounter.main_screens.screens.home_screen.nutrients_indicators_section
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -27,7 +27,6 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
-import androidx.compose.material3.rememberStandardBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -47,7 +46,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.caloriecounter.R
 import com.example.caloriecounter.main_screens.data.day_nutrient_data.nutrient.Nutrient
-import com.example.caloriecounter.main_screens.presentation.home_screen.HomeScreenVM
+import com.example.caloriecounter.main_screens.screens.home_screen.HomeScreenVM
 import kotlinx.coroutines.delay
 
 @Composable
@@ -105,7 +104,7 @@ fun AddNutrientBottomSheet(
     ModalBottomSheet(
         onDismissRequest = { onDismissRequest() },
         sheetState = state,
-        containerColor = MaterialTheme.colorScheme.surfaceVariant
+        tonalElevation = 0.dp
     ) {
         Column(
             modifier = Modifier

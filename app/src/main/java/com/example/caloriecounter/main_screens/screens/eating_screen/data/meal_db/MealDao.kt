@@ -1,6 +1,5 @@
-package com.example.caloriecounter.main_screens.screens.eating_screen.data
+package com.example.caloriecounter.main_screens.screens.eating_screen.data.meal_db
 
-import androidx.compose.foundation.lazy.staggeredgrid.LazyStaggeredGridItemScope
 import androidx.room.Dao
 import androidx.room.Query
 import androidx.room.Upsert

@@ -1,4 +1,4 @@
-package com.example.caloriecounter.main_screens.presentation
+package com.example.caloriecounter.main_screens.screens
 
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel

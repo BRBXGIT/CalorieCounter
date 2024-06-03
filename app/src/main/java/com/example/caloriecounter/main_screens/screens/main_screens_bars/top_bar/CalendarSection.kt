@@ -1,4 +1,4 @@
-package com.example.caloriecounter.main_screens.presentation.main_screens_bars.top_bar
+package com.example.caloriecounter.main_screens.screens.main_screens_bars.top_bar
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement

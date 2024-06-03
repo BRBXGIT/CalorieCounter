@@ -11,5 +11,6 @@ data class Nutrient(
     val nutrientId: Int = 0,
     val name: String,
     val requiredAmount: Int,
+    val willReceiveAmount: Int = 0,
     val color: Long
 )

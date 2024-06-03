@@ -1,4 +1,4 @@
-package com.example.caloriecounter.main_screens.presentation.home_screen
+package com.example.caloriecounter.main_screens.screens.home_screen
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -10,7 +10,6 @@ import com.example.caloriecounter.main_screens.data.day_nutrient_data.nutrient.N
 import com.example.caloriecounter.main_screens.data.repository.MainScreensRepositoryImpl
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import javax.inject.Inject

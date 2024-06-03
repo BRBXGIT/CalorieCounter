@@ -1,4 +1,4 @@
-package com.example.caloriecounter.main_screens.presentation.main_screens_bars.bottom_bar
+package com.example.caloriecounter.main_screens.screens.main_screens_bars.bottom_bar
 
 import android.util.Log
 import androidx.compose.foundation.layout.height
