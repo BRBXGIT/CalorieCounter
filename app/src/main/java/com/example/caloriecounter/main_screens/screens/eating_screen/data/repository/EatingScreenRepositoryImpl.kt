@@ -22,7 +22,7 @@ class EatingScreenRepositoryImpl @Inject constructor(
         mealDao.deleteMealById(id)
     }
 
-    override fun getDishByName(name: String): Flow<List<Meal>> {
-        return mealDao.getMealsByName(name)
+    override fun getDishByName(name: String, type: String): Flow<List<Meal>> {
+        return mealDao.getMealsByName(name, type)
     }
 }

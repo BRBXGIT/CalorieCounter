@@ -17,6 +17,6 @@ interface MealDao {
     @Query("DELETE FROM meal WHERE id = :id")
     suspend fun deleteMealById(id: Int)
 
-    @Query("SELECT * FROM meal WHERE name LIKE '%' || :name || '%'")
-    fun getMealsByName(name: String): Flow<List<Meal>>
+    @Query("SELECT * FROM meal WHERE name LIKE '%' || :name || '%' AND type = :type")
+    fun getMealsByName(name: String, type: String): Flow<List<Meal>>
 }

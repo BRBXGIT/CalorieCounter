@@ -11,5 +11,5 @@ interface EatingScreenRepository {
 
     suspend fun deleteMealById(id: Int)
 
-    fun getDishByName(name: String): Flow<List<Meal>>
+    fun getDishByName(name: String, type: String): Flow<List<Meal>>
 }

@@ -59,7 +59,7 @@ class EatingScreenVM @Inject constructor(
         }
     }
 
-    fun getDishByName(name: String): Flow<List<Meal>> {
-        return eatingScreenRepositoryImpl.getDishByName(name)
+    fun getDishByName(name: String, type: String): Flow<List<Meal>> {
+        return eatingScreenRepositoryImpl.getDishByName(name, type)
     }
 }

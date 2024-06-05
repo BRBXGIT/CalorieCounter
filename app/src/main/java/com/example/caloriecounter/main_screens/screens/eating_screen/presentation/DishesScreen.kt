@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -62,7 +63,7 @@ fun DishesScreen(
         topBar = {
             CenterAlignedTopAppBar(
                 title = { Text(
-                    text = "Add food"
+                    text = typeOfDish
                 ) },
                 navigationIcon = {
                     IconButton(
@@ -126,7 +127,7 @@ fun DishesScreen(
             var active by rememberSaveable { mutableStateOf(false) }
 
             val dishesBySearch = eatingScreenVM
-                .getDishByName(query)
+                .getDishByName(query, typeOfDish)
                 .collectAsState(initial = emptyList())
                 .value
             var searchedDishes by rememberSaveable { mutableStateOf(emptyList<Meal>()) }
@@ -163,7 +164,6 @@ fun DishesScreen(
                 modifier = Modifier
                     .background(MaterialTheme.colorScheme.surface)
                     .fillMaxWidth()
-                    .padding(bottom = 8.dp),
             ) {
                 AllDishesContent(
                     dishes = searchedDishes,

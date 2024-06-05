@@ -43,6 +43,22 @@ fun AllDishesContent(
     todayCalorieData: DayCalorieData?,
     todayNutrientsData: List<Int>
 ) {
+
+//    if (todayCalorieData != null) {
+//        eatingScreenVM.updateTodayCalorieData(
+//            date = selectedDate,
+//            calorieAmount = todayCalorieData.receivedCaloriesAmount + dish.calories
+//        )
+//    }
+//
+//    dish.nutrients.forEachIndexed { index, nutrient ->
+//        eatingScreenVM.updateTodayNutrientData(
+//            nutrientId = nutrient.nutrientId,
+//            amount = dish.nutrients[index].willReceiveAmount + todayNutrientsData[index],
+//            date = selectedDate
+//        )
+//    }
+
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
@@ -53,19 +69,7 @@ fun AllDishesContent(
                 modifier = Modifier
                     .fillMaxWidth()
                     .clickable {
-                        if (todayCalorieData != null) {
-                            eatingScreenVM.updateTodayCalorieData(
-                                date = selectedDate,
-                                calorieAmount = todayCalorieData.receivedCaloriesAmount + dish.calories
-                            )
-                        }
-                        dish.nutrients.forEachIndexed { index, nutrient ->
-                            eatingScreenVM.updateTodayNutrientData(
-                                nutrientId = nutrient.nutrientId,
-                                amount = dish.nutrients[index].willReceiveAmount + todayNutrientsData[index],
-                                date = selectedDate
-                            )
-                        }
+
                     }
                     .padding(16.dp)
                     .animateItem(),
