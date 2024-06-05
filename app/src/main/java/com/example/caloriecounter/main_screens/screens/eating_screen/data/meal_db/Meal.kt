@@ -4,6 +4,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.example.caloriecounter.main_screens.data.day_nutrient_data.nutrient.Nutrient
 
+//Named "meal" due to my error, further will be named "dish"
 @Entity(
     tableName = "Meal"
 )
