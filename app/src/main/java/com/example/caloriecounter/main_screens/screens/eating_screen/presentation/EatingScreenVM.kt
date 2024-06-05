@@ -58,4 +58,8 @@ class EatingScreenVM @Inject constructor(
             mainScreensRepositoryImpl.updateNutrientAmountByDate(nutrientId, date, amount)
         }
     }
+
+    fun getDishByName(name: String): Flow<List<Meal>> {
+        return eatingScreenRepositoryImpl.getDishByName(name)
+    }
 }

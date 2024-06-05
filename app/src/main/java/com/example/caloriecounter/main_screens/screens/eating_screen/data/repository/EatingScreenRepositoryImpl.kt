@@ -14,31 +14,15 @@ class EatingScreenRepositoryImpl @Inject constructor(
         return mealDao.getAllMeals()
     }
 
-    override fun getBreakfastMeal(): Flow<List<Meal>> {
-        return mealDao.getBreakfastMeal()
-    }
-
     override suspend fun upsertMeal(meal: Meal) {
         mealDao.upsertMeal(meal)
-    }
-
-    override fun getDinnerMeal(): Flow<List<Meal>> {
-        return mealDao.getDinnerMeal()
     }
 
     override suspend fun deleteMealById(id: Int) {
         mealDao.deleteMealById(id)
     }
 
-    override fun getFeaturedMeals(): Flow<List<Meal>> {
-        return mealDao.getFeaturedMeals()
-    }
-
-    override fun getLunchMeal(): Flow<List<Meal>> {
-        return mealDao.getLunchMeal()
-    }
-
-    override fun getSnackMeal(): Flow<List<Meal>> {
-        return mealDao.getSnackMeal()
+    override fun getDishByName(name: String): Flow<List<Meal>> {
+        return mealDao.getMealsByName(name)
     }
 }

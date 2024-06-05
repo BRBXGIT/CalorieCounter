@@ -9,15 +9,7 @@ interface EatingScreenRepository {
 
     fun getAllMeals(): Flow<List<Meal>>
 
-    fun getFeaturedMeals(): Flow<List<Meal>>
-
-    fun getBreakfastMeal(): Flow<List<Meal>>
-
-    fun getLunchMeal(): Flow<List<Meal>>
-
-    fun getDinnerMeal(): Flow<List<Meal>>
-
-    fun getSnackMeal(): Flow<List<Meal>>
-
     suspend fun deleteMealById(id: Int)
+
+    fun getDishByName(name: String): Flow<List<Meal>>
 }

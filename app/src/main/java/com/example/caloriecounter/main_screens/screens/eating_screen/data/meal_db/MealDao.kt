@@ -14,21 +14,9 @@ interface MealDao {
     @Query("SELECT * FROM meal")
     fun getAllMeals(): Flow<List<Meal>>
 
-    @Query("SELECT * FROM Meal WHERE featured = 1")
-    fun getFeaturedMeals(): Flow<List<Meal>>
-
-    @Query("SELECT * FROM meal WHERE type = 'Breakfast'")
-    fun getBreakfastMeal(): Flow<List<Meal>>
-
-    @Query("SELECT * FROM meal WHERE type = 'Lunch'")
-    fun getLunchMeal(): Flow<List<Meal>>
-
-    @Query("SELECT * FROM meal WHERE type = 'Dinner'")
-    fun getDinnerMeal(): Flow<List<Meal>>
-
-    @Query("SELECT * FROM meal WHERE type = 'Snack'")
-    fun getSnackMeal(): Flow<List<Meal>>
-
     @Query("DELETE FROM meal WHERE id = :id")
     suspend fun deleteMealById(id: Int)
+
+    @Query("SELECT * FROM meal WHERE name LIKE '%' || :name || '%'")
+    fun getMealsByName(name: String): Flow<List<Meal>>
 }
