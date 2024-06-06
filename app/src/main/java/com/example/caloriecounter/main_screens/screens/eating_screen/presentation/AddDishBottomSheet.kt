@@ -2,6 +2,7 @@ package com.example.caloriecounter.main_screens.screens.eating_screen.presentati
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -16,6 +17,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.OutlinedTextField
@@ -35,6 +37,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.caloriecounter.R
@@ -57,7 +61,7 @@ fun AddDishBottomSheet(
     ModalBottomSheet(
         onDismissRequest = { onDismissRequest() },
         sheetState = state,
-        tonalElevation = 0.dp
+        tonalElevation = 0.dp,
     ) {
         Column(
             modifier = Modifier
@@ -90,7 +94,9 @@ fun AddDishBottomSheet(
                         Text(
                             text = dish.name,
                             fontWeight = FontWeight.Bold,
-                            fontSize = 16.sp
+                            fontSize = 16.sp,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis
                         )
                     }
 
@@ -141,10 +147,19 @@ fun AddDishBottomSheet(
                     modifier = Modifier
                         .fillMaxWidth(0.3f)
                         .weight(0.5f),
-                    label = { Text(text = "Quantity") },
+                    label = { 
+                        Box(
+                            contentAlignment = Alignment.Center,
+                            modifier = Modifier.fillMaxWidth()
+                        ) {
+                            Text(text = "Quantity")
+                        }
+                    },
                     shape = RoundedCornerShape(topStart = 10.dp, topEnd = 10.dp),
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                    isError = quantityError
+                    isError = quantityError,
+                    maxLines = 1,
+                    textStyle = LocalTextStyle.current.copy(textAlign = TextAlign.Center)
                 )
 
                 Button(
