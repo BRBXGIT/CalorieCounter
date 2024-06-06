@@ -19,4 +19,7 @@ interface MealDao {
 
     @Query("SELECT * FROM meal WHERE name LIKE '%' || :name || '%' AND type = :type")
     fun getMealsByName(name: String, type: String): Flow<List<Meal>>
+
+    @Query("UPDATE meal SET featured = :isFeature WHERE id = :id")
+    suspend fun updateFeatureParameter(isFeature: Boolean, id: Int)
 }

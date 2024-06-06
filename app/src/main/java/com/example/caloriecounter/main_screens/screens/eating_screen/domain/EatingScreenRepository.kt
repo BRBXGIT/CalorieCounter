@@ -12,4 +12,6 @@ interface EatingScreenRepository {
     suspend fun deleteMealById(id: Int)
 
     fun getDishByName(name: String, type: String): Flow<List<Meal>>
+
+    suspend fun updateFeatureParameter(isFeature: Boolean, id: Int)
 }

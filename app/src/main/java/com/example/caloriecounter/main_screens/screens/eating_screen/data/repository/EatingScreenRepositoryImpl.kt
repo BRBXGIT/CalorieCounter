@@ -25,4 +25,8 @@ class EatingScreenRepositoryImpl @Inject constructor(
     override fun getDishByName(name: String, type: String): Flow<List<Meal>> {
         return mealDao.getMealsByName(name, type)
     }
+
+    override suspend fun updateFeatureParameter(isFeature: Boolean, id: Int) {
+        mealDao.updateFeatureParameter(isFeature, id)
+    }
 }

@@ -62,4 +62,10 @@ class EatingScreenVM @Inject constructor(
     fun getDishByName(name: String, type: String): Flow<List<Meal>> {
         return eatingScreenRepositoryImpl.getDishByName(name, type)
     }
+
+    fun updateFeatureParameter(isFeature: Boolean, id: Int) {
+        viewModelScope.launch {
+            eatingScreenRepositoryImpl.updateFeatureParameter(isFeature, id)
+        }
+    }
 }
