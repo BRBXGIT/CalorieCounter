@@ -1,11 +1,13 @@
 package com.example.caloriecounter.main_screens.screens.eating_screen.presentation
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -62,7 +64,6 @@ fun AddDishBottomSheet(
         onDismissRequest = { onDismissRequest() },
         sheetState = state,
         tonalElevation = 0.dp,
-        containerColor = MaterialTheme.colorScheme.surface
     ) {
         Column(
             modifier = Modifier

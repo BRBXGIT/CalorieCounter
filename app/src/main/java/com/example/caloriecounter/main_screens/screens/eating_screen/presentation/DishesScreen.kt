@@ -165,7 +165,8 @@ fun DishesScreen(
                 windowInsets = WindowInsets(0, 0, 0, 0),
                 modifier = Modifier
                     .background(MaterialTheme.colorScheme.surface)
-                    .fillMaxWidth()
+                    .fillMaxWidth(),
+                tonalElevation = 0.dp
             ) {
                 AllDishesContent(
                     dishes = dishesBySearch,
