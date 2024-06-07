@@ -4,11 +4,15 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.navigation.NavHostController
+import com.example.caloriecounter.R
 import com.example.caloriecounter.main_screens.screens.main_screens_bars.bottom_bar.MainScreensBottomBar
 import com.example.caloriecounter.main_screens.screens.MainScreensSharedVM
 import com.example.caloriecounter.main_screens.screens.main_screens_bars.top_bar.MainScreensTopBar
@@ -21,7 +25,17 @@ fun ActivityScreen(
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         bottomBar = { MainScreensBottomBar(navController = navController) },
-        topBar = { MainScreensTopBar(mainScreensSharedVM = mainScreensSharedVM) }
+        topBar = { MainScreensTopBar(mainScreensSharedVM = mainScreensSharedVM) },
+        floatingActionButton = {
+            FloatingActionButton(
+                onClick = { /*TODO*/ }
+            ) {
+                Icon(
+                    painter = painterResource(id = R.drawable.ic_plus),
+                    contentDescription = null
+                )
+            }
+        }
     ) { innerPadding ->
         Column(
             modifier = Modifier
