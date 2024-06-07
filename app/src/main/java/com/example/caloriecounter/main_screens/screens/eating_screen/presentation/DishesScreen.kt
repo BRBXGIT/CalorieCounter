@@ -38,6 +38,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -130,12 +131,13 @@ fun DishesScreen(
                 .getDishByName(query, typeOfDish)
                 .collectAsState(initial = emptyList())
                 .value
-            var searchedDishes by rememberSaveable { mutableStateOf(emptyList<Meal>()) }
+
+            val focusManager = LocalFocusManager.current
             SearchBar(
                 query = query,
                 onQueryChange = { query = it },
                 onSearch = {
-                    searchedDishes = dishesBySearch
+                    focusManager.clearFocus()
                 },
                 active = active,
                 onActiveChange = { active = it },
@@ -166,7 +168,7 @@ fun DishesScreen(
                     .fillMaxWidth()
             ) {
                 AllDishesContent(
-                    dishes = searchedDishes,
+                    dishes = dishesBySearch,
                     eatingScreenVM = eatingScreenVM,
                     selectedDate = selectedDate,
                     todayCalorieData = todayCalorieData,

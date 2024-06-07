@@ -62,6 +62,7 @@ fun AddDishBottomSheet(
         onDismissRequest = { onDismissRequest() },
         sheetState = state,
         tonalElevation = 0.dp,
+        containerColor = MaterialTheme.colorScheme.surface
     ) {
         Column(
             modifier = Modifier
