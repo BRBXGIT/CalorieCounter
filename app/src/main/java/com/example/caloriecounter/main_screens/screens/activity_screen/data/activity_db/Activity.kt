@@ -8,9 +8,9 @@ import androidx.room.PrimaryKey
 )
 data class Activity(
     @PrimaryKey(autoGenerate = true)
-    val id: Int,
+    val id: Int = 0,
     val name: String,
     val spentCalories: Int,
     val time: String,
-    val featured: Boolean
+    val featured: Boolean = false
 )

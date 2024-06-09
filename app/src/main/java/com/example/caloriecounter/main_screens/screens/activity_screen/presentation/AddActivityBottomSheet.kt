@@ -1,4 +1,4 @@
-package com.example.caloriecounter.main_screens.screens.eating_screen.presentation
+package com.example.caloriecounter.main_screens.screens.activity_screen.presentation
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -39,17 +39,17 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.caloriecounter.R
 import com.example.caloriecounter.main_screens.data.day_calorie_data.DayCalorieData
+import com.example.caloriecounter.main_screens.screens.activity_screen.data.activity_db.Activity
 import com.example.caloriecounter.main_screens.screens.eating_screen.data.meal_db.Meal
+import com.example.caloriecounter.main_screens.screens.eating_screen.presentation.EatingScreenVM
 import kotlinx.coroutines.delay
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AddDishBottomSheet(
+fun AddActivityBottomSheet(
     onDismissRequest: () -> Unit,
-    dish: Meal,
-    eatingScreenVM: EatingScreenVM,
-    todayCalorieData: DayCalorieData?,
-    todayNutrientsData: List<Int>,
+    activity: Activity,
+    activityScreenVM: ActivityScreenVM,
     selectedDate: String
 ) {
     val state = rememberModalBottomSheetState(skipPartiallyExpanded = true)
@@ -88,7 +88,7 @@ fun AddDishBottomSheet(
                         )
 
                         Text(
-                            text = dish.name,
+                            text = activity.name,
                             fontWeight = FontWeight.Bold,
                             fontSize = 16.sp,
                             maxLines = 1,
@@ -96,10 +96,10 @@ fun AddDishBottomSheet(
                         )
                     }
 
-                    if(dish.featured) {
+                    if(activity.featured) {
                         IconButton(
                             onClick = {
-                                eatingScreenVM.updateFeatureParameter(false, dish.id)
+                                activityScreenVM.updateActivityFeatureStatus(false, activity.id)
                             }
                         ) {
                             Icon(
@@ -111,7 +111,7 @@ fun AddDishBottomSheet(
                     } else {
                         IconButton(
                             onClick = {
-                                eatingScreenVM.updateFeatureParameter(true, dish.id)
+                                activityScreenVM.updateActivityFeatureStatus(true, activity.id)
                             }
                         ) {
                             Icon(
@@ -143,7 +143,7 @@ fun AddDishBottomSheet(
                     modifier = Modifier
                         .fillMaxWidth(0.3f)
                         .weight(0.5f),
-                    label = { 
+                    label = {
                         Box(
                             contentAlignment = Alignment.Center,
                             modifier = Modifier.fillMaxWidth()
@@ -161,24 +161,7 @@ fun AddDishBottomSheet(
                 Button(
                     onClick = {
                         if(quantity.isNotBlank()) {
-                            if (todayCalorieData != null) {
-                                eatingScreenVM.updateTodayCalorieData(
-                                    date = selectedDate,
-                                    calorieAmount = todayCalorieData.receivedCaloriesAmount + (dish.calories * quantity.toInt())
-                                )
-                            }
-
-                            dish.nutrients.forEachIndexed { index, nutrient ->
-                                eatingScreenVM.updateTodayNutrientData(
-                                    nutrientId = nutrient.nutrientId,
-                                    amount = (dish.nutrients[index].willReceiveAmount * quantity.toInt()) + todayNutrientsData[index],
-                                    date = selectedDate
-                                )
-                            }
-
-                            onDismissRequest()
-                        } else {
-                            quantityError = true
+                            activityScreenVM
                         }
                     },
                     modifier = Modifier
@@ -186,11 +169,11 @@ fun AddDishBottomSheet(
                         .height(48.dp)
                 ) {
                     Text(
-                        text = "Add dish"
+                        text = "Add activity"
                     )
                 }
             }
-            
+
             Spacer(modifier = Modifier.height(0.dp))
         }
     }

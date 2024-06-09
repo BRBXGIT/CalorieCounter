@@ -3,6 +3,7 @@ package com.example.caloriecounter.main_screens.screens.activity_screen.data.act
 import androidx.room.Dao
 import androidx.room.Query
 import androidx.room.Upsert
+import com.example.caloriecounter.main_screens.screens.eating_screen.data.meal_db.Meal
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -19,4 +20,7 @@ interface ActivityDao {
 
     @Query("UPDATE activity SET featured = :isFeature WHERE id = :id")
     fun updateFeaturedStatusById(isFeature: Boolean, id: Int)
+
+    @Query("SELECT * FROM activity WHERE name LIKE '%' || :name || '%'")
+    fun getActivitiesByName(name: String): Flow<List<Activity>>
 }

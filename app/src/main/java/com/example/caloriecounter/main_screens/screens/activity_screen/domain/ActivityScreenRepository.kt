@@ -12,4 +12,6 @@ interface ActivityScreenRepository {
     fun getAllActivities(): Flow<List<Activity>>
 
     fun updateFeaturedStatusById(isFeature: Boolean, id: Int)
+
+    fun findActivitiesByName(name: String): Flow<List<Activity>>
 }

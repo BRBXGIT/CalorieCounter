@@ -25,4 +25,8 @@ class ActivityScreenRepositoryImpl @Inject constructor(
     override fun updateFeaturedStatusById(isFeature: Boolean, id: Int) {
         activityDao.updateFeaturedStatusById(isFeature, id)
     }
+
+    override fun findActivitiesByName(name: String): Flow<List<Activity>> {
+        return activityDao.getActivitiesByName(name)
+    }
 }
