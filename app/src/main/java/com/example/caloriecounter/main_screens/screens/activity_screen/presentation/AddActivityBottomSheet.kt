@@ -81,7 +81,7 @@ fun AddActivityBottomSheet(
                         horizontalAlignment = Alignment.Start
                     ) {
                         Text(
-                            text = "Dishes",
+                            text = "Activities",
                             fontSize = 14.sp
                         )
 

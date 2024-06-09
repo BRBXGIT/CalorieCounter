@@ -134,6 +134,7 @@ fun ActivityScreen(
                 tonalElevation = 0.dp
             ) {
                 AllActivitiesContent(
+                    onActivityClick = { focusManager.clearFocus() },
                     activities = activitiesBySearch,
                     activityScreenVM = activityScreenVM,
                     selectedDate = selectedDate,

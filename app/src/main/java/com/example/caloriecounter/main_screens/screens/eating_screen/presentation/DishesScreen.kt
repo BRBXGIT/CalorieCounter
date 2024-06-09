@@ -165,6 +165,7 @@ fun DishesScreen(
                 tonalElevation = 0.dp
             ) {
                 AllDishesContent(
+                    onDishClick = { focusManager.clearFocus() },
                     dishes = dishesBySearch,
                     eatingScreenVM = eatingScreenVM,
                     selectedDate = selectedDate,

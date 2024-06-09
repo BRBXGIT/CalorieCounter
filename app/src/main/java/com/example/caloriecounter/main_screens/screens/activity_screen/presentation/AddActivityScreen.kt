@@ -114,13 +114,14 @@ fun AddActivityScreen(
                             spentCalories = calorieAmount.toInt(),
                             time = selectedTimeInFormat
                         ))
+                        navController.popBackStack()
                     }
                 },
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 16.dp)
             ) {
-                Text(text = "Add dish")
+                Text(text = "Add activity")
             }
         } }
     ) { innerPadding ->

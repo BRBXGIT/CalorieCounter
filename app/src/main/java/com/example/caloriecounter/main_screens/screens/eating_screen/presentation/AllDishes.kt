@@ -37,6 +37,7 @@ import com.example.caloriecounter.main_screens.screens.eating_screen.data.meal_d
 
 @Composable
 fun AllDishesContent(
+    onDishClick: () -> Unit = {},
     dishes: List<Meal>,
     eatingScreenVM: EatingScreenVM,
     selectedDate: String,
@@ -64,6 +65,7 @@ fun AllDishesContent(
                 modifier = Modifier
                     .fillMaxWidth()
                     .clickable {
+                        onDishClick()
                         openAddDishSheet = true
                     }
                     .padding(16.dp)

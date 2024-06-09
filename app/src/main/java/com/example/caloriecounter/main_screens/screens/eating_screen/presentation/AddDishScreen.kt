@@ -117,6 +117,7 @@ fun AddDishScreen(
                             measureInGram = measure.toInt(),
                             type = typeOfDish
                         ))
+                        navController.popBackStack()
                     }
                 },
                 modifier = Modifier

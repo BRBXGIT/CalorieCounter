@@ -37,6 +37,7 @@ import com.example.caloriecounter.main_screens.screens.activity_screen.data.acti
 
 @Composable
 fun AllActivitiesContent(
+    onActivityClick: () -> Unit = {},
     activities: List<Activity>,
     activityScreenVM: ActivityScreenVM,
     selectedDate: String,
@@ -62,6 +63,7 @@ fun AllActivitiesContent(
                 modifier = Modifier
                     .fillMaxWidth()
                     .clickable {
+                        onActivityClick()
                         openAddActivityBottomSheet = true
                     }
                     .padding(16.dp)
