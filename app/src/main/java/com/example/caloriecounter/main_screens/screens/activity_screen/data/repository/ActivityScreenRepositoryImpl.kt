@@ -22,7 +22,7 @@ class ActivityScreenRepositoryImpl @Inject constructor(
         activityDao.upsertActivity(activity)
     }
 
-    override fun updateFeaturedStatusById(isFeature: Boolean, id: Int) {
+    override suspend fun updateFeaturedStatusById(isFeature: Boolean, id: Int) {
         activityDao.updateFeaturedStatusById(isFeature, id)
     }
 

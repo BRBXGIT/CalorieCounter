@@ -38,10 +38,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.caloriecounter.R
-import com.example.caloriecounter.main_screens.data.day_calorie_data.DayCalorieData
 import com.example.caloriecounter.main_screens.screens.activity_screen.data.activity_db.Activity
-import com.example.caloriecounter.main_screens.screens.eating_screen.data.meal_db.Meal
-import com.example.caloriecounter.main_screens.screens.eating_screen.presentation.EatingScreenVM
 import kotlinx.coroutines.delay
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -50,7 +47,8 @@ fun AddActivityBottomSheet(
     onDismissRequest: () -> Unit,
     activity: Activity,
     activityScreenVM: ActivityScreenVM,
-    selectedDate: String
+    selectedDate: String,
+    spentCaloriesAmount: Int?
 ) {
     val state = rememberModalBottomSheetState(skipPartiallyExpanded = true)
 
@@ -161,7 +159,13 @@ fun AddActivityBottomSheet(
                 Button(
                     onClick = {
                         if(quantity.isNotBlank()) {
-                            activityScreenVM
+                            activityScreenVM.updateSpentCaloriesByDate(
+                                date = selectedDate,
+                                calorieAmount = (activity.spentCalories * quantity.toInt()) + spentCaloriesAmount!!
+                            )
+                            onDismissRequest()
+                        } else {
+                            quantityError = true
                         }
                     },
                     modifier = Modifier

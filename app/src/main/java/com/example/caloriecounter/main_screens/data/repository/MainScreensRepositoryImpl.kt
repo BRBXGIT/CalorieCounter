@@ -11,7 +11,7 @@ import javax.inject.Inject
 
 class MainScreensRepositoryImpl @Inject constructor(
     private val dayCalorieDao: DayCalorieDao,
-    private val nutrientDb: NutrientDb
+    nutrientDb: NutrientDb
 ): MainScreensRepository {
 
     override suspend fun upsertNewDay(dayCalorieData: DayCalorieData) {
@@ -50,5 +50,9 @@ class MainScreensRepositoryImpl @Inject constructor(
 
     override suspend fun updateNutrientAmountByDate(nutrientId: Int, date: String, amount: Int) {
         dayNutrientDao.updateNutrientAmountByDate(nutrientId, date, amount)
+    }
+
+    override suspend fun updateSpentCaloriesByDate(date: String, calorieAmount: Int) {
+        dayCalorieDao.updateSpentCaloriesByDate(date, calorieAmount)
     }
 }

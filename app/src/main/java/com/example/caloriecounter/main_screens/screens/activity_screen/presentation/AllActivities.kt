@@ -19,6 +19,10 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -28,12 +32,15 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.caloriecounter.R
+import com.example.caloriecounter.main_screens.screens.MainScreensSharedVM
 import com.example.caloriecounter.main_screens.screens.activity_screen.data.activity_db.Activity
 
 @Composable
 fun AllActivitiesContent(
     activities: List<Activity>,
-    activityScreenVM: ActivityScreenVM
+    activityScreenVM: ActivityScreenVM,
+    selectedDate: String,
+    spentCalorieAmount: Int?
 ) {
     LazyColumn(
         modifier = Modifier
@@ -41,9 +48,22 @@ fun AllActivitiesContent(
             .background(MaterialTheme.colorScheme.background)
     ) {
         items(activities, key = { activity -> activity.id }) { activity ->
+            var openAddActivityBottomSheet by rememberSaveable { mutableStateOf(false) }
+            if(openAddActivityBottomSheet) {
+                AddActivityBottomSheet(
+                    onDismissRequest = { openAddActivityBottomSheet = false },
+                    activity = activity,
+                    activityScreenVM = activityScreenVM,
+                    selectedDate = selectedDate,
+                    spentCaloriesAmount = spentCalorieAmount
+                )
+            }
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
+                    .clickable {
+                        openAddActivityBottomSheet = true
+                    }
                     .padding(16.dp)
                     .animateItem(),
                 verticalAlignment = Alignment.CenterVertically,
@@ -81,7 +101,7 @@ fun AllActivitiesContent(
                         horizontalArrangement = Arrangement.spacedBy(8.dp)
                     ) {
                         Text(
-                            text = "${activity.spentCalories} kcal",
+                            text = "-${activity.spentCalories} kcal",
                         )
 
                         Icon(

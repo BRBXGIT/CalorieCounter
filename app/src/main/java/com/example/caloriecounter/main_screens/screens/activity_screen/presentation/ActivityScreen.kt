@@ -71,6 +71,13 @@ fun ActivityScreen(
             .collectAsState(initial = emptyList())
             .value
 
+        val selectedDate = mainScreensSharedVM.selectedDate.value
+        val spentCaloriesAmount = activityScreenVM
+            .getSpentCalorieAmount(selectedDate)
+            .collectAsState(initial = null)
+            .value
+            ?.spentCaloriesAmount
+
         val featuredActivities = allActivities.filter { it.featured }
 
         Column(
@@ -128,7 +135,9 @@ fun ActivityScreen(
             ) {
                 AllActivitiesContent(
                     activities = activitiesBySearch,
-                    activityScreenVM = activityScreenVM
+                    activityScreenVM = activityScreenVM,
+                    selectedDate = selectedDate,
+                    spentCalorieAmount = spentCaloriesAmount
                 )
             }
 
@@ -161,11 +170,15 @@ fun ActivityScreen(
                 when(currentPage) {
                     0 -> ActivityTabs.entries[0].content(
                         allActivities,
-                        activityScreenVM
+                        activityScreenVM,
+                        selectedDate,
+                        spentCaloriesAmount
                     )
                     1 -> ActivityTabs.entries[1].content(
                         featuredActivities,
-                        activityScreenVM
+                        activityScreenVM,
+                        selectedDate,
+                        spentCaloriesAmount
                     )
                 }
             }
@@ -178,26 +191,32 @@ enum class ActivityTabs(
     val text: String,
     val content: @Composable (
         activities: List<Activity>,
-        activityScreenVM: ActivityScreenVM
+        activityScreenVM: ActivityScreenVM,
+        selectedDate: String,
+        spentCaloriesAmount: Int?
     ) -> Unit
 ) {
     AllActivities(
         text = "My activity",
         content = {
-            activities, activityScreenVM ->
+            activities, activityScreenVM, selectedDate, spentCaloriesAmount ->
             AllActivitiesContent(
                 activities = activities,
-                activityScreenVM = activityScreenVM
+                activityScreenVM = activityScreenVM,
+                selectedDate = selectedDate,
+                spentCalorieAmount = spentCaloriesAmount
             )
         }
     ),
     FeaturedActivities(
         text = "Featured",
         content = {
-            activities, activityScreenVM ->
+            activities, activityScreenVM, selectedDate, spentCaloriesAmount ->
             FeaturedActivitiesContent(
                 activities = activities,
-                activityScreenVM = activityScreenVM
+                activityScreenVM = activityScreenVM,
+                selectedDate = selectedDate,
+                spentCaloriesAmount = spentCaloriesAmount
             )
         }
     )

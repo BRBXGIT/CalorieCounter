@@ -2,6 +2,7 @@ package com.example.caloriecounter.main_screens.screens.activity_screen.presenta
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.caloriecounter.main_screens.data.day_calorie_data.DayCalorieData
 import com.example.caloriecounter.main_screens.data.repository.MainScreensRepositoryImpl
 import com.example.caloriecounter.main_screens.screens.activity_screen.data.activity_db.Activity
 import com.example.caloriecounter.main_screens.screens.activity_screen.data.repository.ActivityScreenRepositoryImpl
@@ -34,7 +35,9 @@ class ActivityScreenVM @Inject constructor(
     }
 
     fun updateActivityFeatureStatus(isFeature: Boolean, id: Int) {
-        activityScreenRepositoryImpl.updateFeaturedStatusById(isFeature, id)
+        viewModelScope.launch(Dispatchers.IO) {
+            activityScreenRepositoryImpl.updateFeaturedStatusById(isFeature, id)
+        }
     }
 
     fun getActivitiesByName(name: String): Flow<List<Activity>> {
@@ -42,6 +45,12 @@ class ActivityScreenVM @Inject constructor(
     }
 
     fun updateSpentCaloriesByDate(date: String, calorieAmount: Int) {
+        viewModelScope.launch(Dispatchers.IO) {
+            mainScreenRepositoryImpl.updateSpentCaloriesByDate(date, calorieAmount)
+        }
+    }
 
+    fun getSpentCalorieAmount(date: String): Flow<DayCalorieData> {
+        return mainScreenRepositoryImpl.getCaloriesByDate(date)
     }
 }

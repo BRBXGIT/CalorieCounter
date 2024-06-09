@@ -19,7 +19,7 @@ interface ActivityDao {
     fun getAllActivities(): Flow<List<Activity>>
 
     @Query("UPDATE activity SET featured = :isFeature WHERE id = :id")
-    fun updateFeaturedStatusById(isFeature: Boolean, id: Int)
+    suspend fun updateFeaturedStatusById(isFeature: Boolean, id: Int)
 
     @Query("SELECT * FROM activity WHERE name LIKE '%' || :name || '%'")
     fun getActivitiesByName(name: String): Flow<List<Activity>>

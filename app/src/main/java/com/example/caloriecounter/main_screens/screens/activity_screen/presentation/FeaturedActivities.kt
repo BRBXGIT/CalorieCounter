@@ -19,6 +19,11 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -34,7 +39,9 @@ import com.example.caloriecounter.main_screens.screens.activity_screen.data.acti
 @Composable
 fun FeaturedActivitiesContent(
     activities: List<Activity>,
-    activityScreenVM: ActivityScreenVM
+    activityScreenVM: ActivityScreenVM,
+    selectedDate: String,
+    spentCaloriesAmount: Int?
 ) {
     LazyColumn(
         modifier = Modifier
@@ -42,9 +49,22 @@ fun FeaturedActivitiesContent(
             .background(MaterialTheme.colorScheme.background)
     ) {
         items(activities, key = { activity -> activity.id }) { activity ->
+            var openAddActivityBottomSheet by rememberSaveable { mutableStateOf(false) }
+            if(openAddActivityBottomSheet) {
+                AddActivityBottomSheet(
+                    onDismissRequest = { openAddActivityBottomSheet = false },
+                    activity = activity,
+                    activityScreenVM = activityScreenVM,
+                    selectedDate = selectedDate,
+                    spentCaloriesAmount = spentCaloriesAmount
+                )
+            }
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
+                    .clickable {
+                        openAddActivityBottomSheet = true
+                    }
                     .padding(16.dp)
                     .animateItem(),
                 verticalAlignment = Alignment.CenterVertically,
