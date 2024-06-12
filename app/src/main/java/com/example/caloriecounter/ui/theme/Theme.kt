@@ -2,6 +2,7 @@ package com.example.caloriecounter.ui.theme
 
 import android.app.Activity
 import android.os.Build
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.dynamicDarkColorScheme
@@ -30,29 +31,30 @@ private val DarkColorScheme = darkColorScheme(
     onSurfaceVariant = Color(0xff77777c),
     surfaceDim = Color(0xff32313e),
     surfaceBright = Color(0xffb8b8b9),
-    error = Color(0xfffb8989)
+    error = Color(0xfffb8989),
+    primaryContainer = Color(0xff77777c)
 )
 
 private val LightColorScheme = lightColorScheme(
-    primary = Purple40,
-    secondary = PurpleGrey40,
-    tertiary = Pink40
-
-    /* Other default colors to override
-    background = Color(0xFFFFFBFE),
-    surface = Color(0xFFFFFBFE),
-    onPrimary = Color.White,
-    onSecondary = Color.White,
-    onTertiary = Color.White,
-    onBackground = Color(0xFF1C1B1F),
-    onSurface = Color(0xFF1C1B1F),
-    */
+    background = Color(0xfff9f9fb),
+    surface = Color(0xffeef0f4),
+    surfaceVariant = Color(0xffffffff),
+    primary = Color(0xff4ddc9b),
+    onPrimary = Color(0xff515857),
+    secondary = Color(0xff6bd7e5),
+    onBackground = Color(0xff373546),
+    onSurface = Color(0xff373546),
+    onSurfaceVariant = Color(0xffaeaeb1),
+    surfaceDim = Color(0xfff3f5f9),
+    surfaceBright = Color(0xffb8b8b9),
+    error = Color(0xfffb8989),
+    primaryContainer = Color(0xffeef5f4)
 )
 
 @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
 @Composable
 fun CalorieCounterTheme(
-    darkTheme: Boolean = true,
+    darkTheme: Boolean = isSystemInDarkTheme(),
     activity: Activity = LocalContext.current as MainActivity,
     content: @Composable () -> Unit
 ) {

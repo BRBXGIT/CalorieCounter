@@ -29,3 +29,6 @@ data class DishesScreen(
 
 @Serializable
 object AddActivityScreen
+
+@Serializable
+object ProfileScreen

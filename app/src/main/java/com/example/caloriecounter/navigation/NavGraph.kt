@@ -16,11 +16,13 @@ import com.example.caloriecounter.main_screens.screens.activity_screen.presentat
 import com.example.caloriecounter.main_screens.screens.activity_screen.presentation.ActivityScreenVM
 import com.example.caloriecounter.main_screens.screens.activity_screen.presentation.AddActivityScreen
 import com.example.caloriecounter.main_screens.screens.eating_screen.presentation.AddDishScreen
-import com.example.caloriecounter.main_screens.screens.eating_screen.presentation.DishesScreen
+import com.example.caloriecounter.main_screens.screens.eating_screen.presentation.dishes_screen.DishesScreen
 import com.example.caloriecounter.main_screens.screens.eating_screen.presentation.EatingScreen
 import com.example.caloriecounter.main_screens.screens.eating_screen.presentation.EatingScreenVM
 import com.example.caloriecounter.main_screens.screens.home_screen.HomeScreen
 import com.example.caloriecounter.main_screens.screens.home_screen.HomeScreenVM
+import com.example.caloriecounter.navigation_drawer_screens.screens.profile_screen.presentation.ProfileScreen
+import com.example.caloriecounter.navigation_drawer_screens.screens.profile_screen.presentation.ProfileScreenVM
 import com.example.caloriecounter.start_screen.StartScreen
 import com.example.caloriecounter.start_screen.StartScreenVM
 import com.google.firebase.auth.FirebaseAuth
@@ -39,6 +41,7 @@ fun NavGraph(
     val mainScreensSharedVM = viewModel<MainScreensSharedVM>()
     val eatingScreenVM = hiltViewModel<EatingScreenVM>()
     val activityScreenVM = hiltViewModel<ActivityScreenVM>()
+    val profileScreenVM = hiltViewModel<ProfileScreenVM>()
 
     val userSignIn = firebaseAuth.currentUser != null
     val calorieData = sharedPreferences.getBoolean("calorieDataReceived", false)
@@ -115,6 +118,14 @@ fun NavGraph(
                activityScreenVM = activityScreenVM,
                navController = navController
            )
+        }
+
+        composable<ProfileScreen> {
+            ProfileScreen(
+                navController = navController,
+                firebaseAuth = firebaseAuth,
+                profileScreenVM = profileScreenVM
+            )
         }
     }
 }

@@ -25,7 +25,7 @@ import kotlinx.coroutines.launch
 fun MainScreensTopBar(
     mainScreensSharedVM: MainScreensSharedVM,
     scope: CoroutineScope = rememberCoroutineScope(),
-    drawerState: DrawerState? = null
+    drawerState: DrawerState
 ) {
     CenterAlignedTopAppBar(
         title = {
@@ -47,11 +47,9 @@ fun MainScreensTopBar(
         navigationIcon = {
             IconButton(
                 onClick = {
-                    if(drawerState != null) {
-                        scope.launch {
-                            drawerState.apply {
-                                if(isClosed) open() else close()
-                            }
+                    scope.launch {
+                        drawerState.apply {
+                            if(isClosed) open() else close()
                         }
                     }
                 },

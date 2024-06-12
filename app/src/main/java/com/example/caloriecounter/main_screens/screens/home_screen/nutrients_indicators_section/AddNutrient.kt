@@ -63,7 +63,7 @@ fun AddNutrient(
     Surface(
         onClick = { openAddNutrientSheet = true },
         shape = RoundedCornerShape(10.dp),
-        tonalElevation = 20.dp,
+        shadowElevation = 2.dp,
         color = MaterialTheme.colorScheme.surfaceVariant,
         modifier = Modifier
             .height(190.dp)

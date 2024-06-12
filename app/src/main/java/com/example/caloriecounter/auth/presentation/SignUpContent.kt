@@ -37,6 +37,7 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.caloriecounter.R
+import com.example.caloriecounter.custom_toasts.ErrorMessage
 import com.example.caloriecounter.navigation.HomeScreen
 import com.example.caloriecounter.navigation.StartScreen
 import com.example.caloriecounter.ui.theme.dimens

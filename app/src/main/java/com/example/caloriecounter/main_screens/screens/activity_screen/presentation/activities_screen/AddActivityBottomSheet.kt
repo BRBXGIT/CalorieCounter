@@ -1,4 +1,4 @@
-package com.example.caloriecounter.main_screens.screens.activity_screen.presentation
+package com.example.caloriecounter.main_screens.screens.activity_screen.presentation.activities_screen
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -39,6 +39,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.caloriecounter.R
 import com.example.caloriecounter.main_screens.screens.activity_screen.data.activity_db.Activity
+import com.example.caloriecounter.main_screens.screens.activity_screen.presentation.ActivityScreenVM
 import kotlinx.coroutines.delay
 
 @OptIn(ExperimentalMaterial3Api::class)

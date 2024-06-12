@@ -36,7 +36,7 @@ fun NutrientStatusBox(
 ) {
     Surface(
         shape = RoundedCornerShape(10.dp),
-        tonalElevation = 20.dp,
+        shadowElevation = 2.dp,
         color = MaterialTheme.colorScheme.surfaceVariant,
         modifier = Modifier
             .height(190.dp)
@@ -96,7 +96,7 @@ fun NutrientStatusBox(
             }
             CircleNutrientIndicator(
                 color = Color(color),
-                backgroundColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                backgroundColor = MaterialTheme.colorScheme.primaryContainer,
                 progress = progress,
                 size = 76.dp
             )

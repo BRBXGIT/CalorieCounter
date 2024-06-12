@@ -1,4 +1,4 @@
-package com.example.caloriecounter.main_screens.screens.activity_screen.presentation
+package com.example.caloriecounter.main_screens.screens.eating_screen.presentation.dishes_screen
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -32,39 +32,40 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.caloriecounter.R
-import com.example.caloriecounter.main_screens.screens.MainScreensSharedVM
-import com.example.caloriecounter.main_screens.screens.activity_screen.data.activity_db.Activity
+import com.example.caloriecounter.main_screens.data.day_calorie_data.DayCalorieData
+import com.example.caloriecounter.main_screens.screens.eating_screen.data.meal_db.Meal
+import com.example.caloriecounter.main_screens.screens.eating_screen.presentation.EatingScreenVM
 
 @Composable
-fun AllActivitiesContent(
-    onActivityClick: () -> Unit = {},
-    activities: List<Activity>,
-    activityScreenVM: ActivityScreenVM,
+fun FeaturedDishesContent(
+    dishes: List<Meal>,
+    eatingScreenVM: EatingScreenVM,
     selectedDate: String,
-    spentCalorieAmount: Int?
+    todayCalorieData: DayCalorieData?,
+    todayNutrientsData: List<Int>
 ) {
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background)
     ) {
-        items(activities, key = { activity -> activity.id }) { activity ->
-            var openAddActivityBottomSheet by rememberSaveable { mutableStateOf(false) }
-            if(openAddActivityBottomSheet) {
-                AddActivityBottomSheet(
-                    onDismissRequest = { openAddActivityBottomSheet = false },
-                    activity = activity,
-                    activityScreenVM = activityScreenVM,
-                    selectedDate = selectedDate,
-                    spentCaloriesAmount = spentCalorieAmount
+        items(dishes, key = { dish -> dish.id }) { dish ->
+            var openAddDishSheet by rememberSaveable { mutableStateOf(false) }
+            if(openAddDishSheet) {
+                AddDishBottomSheet(
+                    onDismissRequest = { openAddDishSheet = false },
+                    dish = dish,
+                    eatingScreenVM = eatingScreenVM,
+                    todayCalorieData = todayCalorieData,
+                    todayNutrientsData = todayNutrientsData,
+                    selectedDate = selectedDate
                 )
             }
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
                     .clickable {
-                        onActivityClick()
-                        openAddActivityBottomSheet = true
+                        openAddDishSheet = true
                     }
                     .padding(16.dp)
                     .animateItem(),
@@ -79,7 +80,7 @@ fun AllActivitiesContent(
                     horizontalAlignment = Alignment.Start
                 ) {
                     Text(
-                        text = activity.name,
+                        text = dish.name,
                         fontSize = 17.sp,
                         fontWeight = FontWeight.Bold,
                         color = MaterialTheme.colorScheme.onSurface,
@@ -87,7 +88,7 @@ fun AllActivitiesContent(
                         overflow = TextOverflow.Ellipsis
                     )
                     Text(
-                        text = activity.time,
+                        text = "${dish.measureInGram} g",
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
                 }
@@ -103,7 +104,26 @@ fun AllActivitiesContent(
                         horizontalArrangement = Arrangement.spacedBy(8.dp)
                     ) {
                         Text(
-                            text = "-${activity.spentCalories} kcal",
+                            text = "${dish.calories} kcal",
+                        )
+
+                        var openInfoDialog by rememberSaveable { mutableStateOf(false) }
+                        if(openInfoDialog) {
+                            DishInfoDialog(
+                                dish = dish,
+                                onDismissRequest = { openInfoDialog = false }
+                            )
+                        }
+                        Icon(
+                            painter = painterResource(id = R.drawable.ic_info),
+                            contentDescription = null,
+                            modifier = Modifier
+                                .size(20.dp)
+                                .clip(CircleShape)
+                                .clickable {
+                                    openInfoDialog = true
+                                },
+                            tint = MaterialTheme.colorScheme.onSurfaceVariant
                         )
 
                         Icon(
@@ -113,7 +133,7 @@ fun AllActivitiesContent(
                                 .size(20.dp)
                                 .clip(CircleShape)
                                 .clickable {
-                                    activityScreenVM.deleteActivity(activity.id)
+                                    eatingScreenVM.deleteDishById(dish.id)
                                 },
                             tint = MaterialTheme.colorScheme.onSurfaceVariant
                         )

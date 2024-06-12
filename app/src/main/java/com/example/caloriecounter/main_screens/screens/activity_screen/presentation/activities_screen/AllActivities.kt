@@ -1,4 +1,4 @@
-package com.example.caloriecounter.main_screens.screens.activity_screen.presentation
+package com.example.caloriecounter.main_screens.screens.activity_screen.presentation.activities_screen
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -33,13 +33,15 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.caloriecounter.R
 import com.example.caloriecounter.main_screens.screens.activity_screen.data.activity_db.Activity
+import com.example.caloriecounter.main_screens.screens.activity_screen.presentation.ActivityScreenVM
 
 @Composable
-fun FeaturedActivitiesContent(
+fun AllActivitiesContent(
+    onActivityClick: () -> Unit = {},
     activities: List<Activity>,
     activityScreenVM: ActivityScreenVM,
     selectedDate: String,
-    spentCaloriesAmount: Int?
+    spentCalorieAmount: Int?
 ) {
     LazyColumn(
         modifier = Modifier
@@ -54,13 +56,14 @@ fun FeaturedActivitiesContent(
                     activity = activity,
                     activityScreenVM = activityScreenVM,
                     selectedDate = selectedDate,
-                    spentCaloriesAmount = spentCaloriesAmount
+                    spentCaloriesAmount = spentCalorieAmount
                 )
             }
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
                     .clickable {
+                        onActivityClick()
                         openAddActivityBottomSheet = true
                     }
                     .padding(16.dp)

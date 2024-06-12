@@ -3,22 +3,26 @@ package com.example.caloriecounter.main_screens.screens.activity_screen.presenta
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SearchBar
 import androidx.compose.material3.SearchBarDefaults
 import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRow
 import androidx.compose.material3.Text
+import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.derivedStateOf
@@ -36,7 +40,10 @@ import androidx.navigation.NavHostController
 import com.example.caloriecounter.R
 import com.example.caloriecounter.main_screens.screens.MainScreensSharedVM
 import com.example.caloriecounter.main_screens.screens.activity_screen.data.activity_db.Activity
+import com.example.caloriecounter.main_screens.screens.activity_screen.presentation.activities_screen.AllActivitiesContent
+import com.example.caloriecounter.main_screens.screens.activity_screen.presentation.activities_screen.FeaturedActivitiesContent
 import com.example.caloriecounter.main_screens.screens.main_screens_bars.bottom_bar.MainScreensBottomBar
+import com.example.caloriecounter.main_screens.screens.main_screens_bars.navigation_drawer_items.NavigationDrawerItems
 import com.example.caloriecounter.main_screens.screens.main_screens_bars.top_bar.MainScreensTopBar
 import com.example.caloriecounter.navigation.AddActivityScreen
 import kotlinx.coroutines.CoroutineScope
@@ -50,137 +57,163 @@ fun ActivityScreen(
     activityScreenVM: ActivityScreenVM,
     scope: CoroutineScope = rememberCoroutineScope()
 ) {
+    val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     Scaffold(
-        modifier = Modifier.fillMaxSize(),
-        bottomBar = { MainScreensBottomBar(navController = navController) },
-        topBar = { MainScreensTopBar(mainScreensSharedVM = mainScreensSharedVM) },
-        floatingActionButton = {
-            FloatingActionButton(
-                onClick = { navController.navigate(AddActivityScreen) },
-                containerColor = MaterialTheme.colorScheme.primary
-            ) {
-                Icon(
-                    painter = painterResource(id = R.drawable.ic_plus),
-                    contentDescription = null
-                )
-            }
-        }
+        modifier = Modifier.fillMaxSize()
     ) { innerPadding ->
-        val allActivities = activityScreenVM
-            .getAllActivities()
-            .collectAsState(initial = emptyList())
-            .value
-
-        val selectedDate = mainScreensSharedVM.selectedDate.value
-        val spentCaloriesAmount = activityScreenVM
-            .getSpentCalorieAmount(selectedDate)
-            .collectAsState(initial = null)
-            .value
-            ?.spentCaloriesAmount
-
-        val featuredActivities = allActivities.filter { it.featured }
-
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(MaterialTheme.colorScheme.background)
-                .padding(
-                    top = innerPadding.calculateTopPadding(),
-                    bottom = innerPadding.calculateBottomPadding()
-                )
+        ModalNavigationDrawer(
+            drawerState = drawerState,
+            drawerContent = {
+                Column(
+                    modifier = Modifier
+                        .fillMaxHeight()
+                        .fillMaxWidth(0.8f)
+                        .background(MaterialTheme.colorScheme.surfaceVariant)
+                        .padding(
+                            top = innerPadding.calculateTopPadding(),
+                            bottom = innerPadding.calculateBottomPadding()
+                        )
+                ) {
+                    NavigationDrawerItems(navController = navController)
+                }
+            }
         ) {
-            var query by rememberSaveable { mutableStateOf("") }
-            var active by rememberSaveable { mutableStateOf(false) }
+            Scaffold(
+                modifier = Modifier.fillMaxSize(),
+                bottomBar = { MainScreensBottomBar(navController = navController) },
+                topBar = { MainScreensTopBar(
+                    mainScreensSharedVM = mainScreensSharedVM,
+                    drawerState = drawerState
+                ) },
+                floatingActionButton = {
+                    FloatingActionButton(
+                        onClick = { navController.navigate(AddActivityScreen) },
+                        containerColor = MaterialTheme.colorScheme.primary
+                    ) {
+                        Icon(
+                            painter = painterResource(id = R.drawable.ic_plus),
+                            contentDescription = null
+                        )
+                    }
+                }
+            ) { innerPadding ->
+                val allActivities = activityScreenVM
+                    .getAllActivities()
+                    .collectAsState(initial = emptyList())
+                    .value
 
-            val activitiesBySearch = activityScreenVM
-                .getActivitiesByName(query)
-                .collectAsState(initial = emptyList())
-                .value
+                val selectedDate = mainScreensSharedVM.selectedDate.value
+                val spentCaloriesAmount = activityScreenVM
+                    .getSpentCalorieAmount(selectedDate)
+                    .collectAsState(initial = null)
+                    .value
+                    ?.spentCaloriesAmount
 
-            val focusManager = LocalFocusManager.current
-            SearchBar(
-                query = query,
-                onQueryChange = { query = it },
-                onSearch = {
-                    focusManager.clearFocus()
-                },
-                active = active,
-                onActiveChange = { active = it },
-                leadingIcon = {
-                    Icon(
-                        painter = painterResource(id = R.drawable.ic_search),
-                        contentDescription = null
-                    )
-                },
-                trailingIcon = {
-                    if(active) {
-                        IconButton(
-                            onClick = { active = false }
-                        ) {
+                val featuredActivities = allActivities.filter { it.featured }
+
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(MaterialTheme.colorScheme.background)
+                        .padding(
+                            top = innerPadding.calculateTopPadding(),
+                            bottom = innerPadding.calculateBottomPadding()
+                        )
+                ) {
+                    var query by rememberSaveable { mutableStateOf("") }
+                    var active by rememberSaveable { mutableStateOf(false) }
+
+                    val activitiesBySearch = activityScreenVM
+                        .getActivitiesByName(query)
+                        .collectAsState(initial = emptyList())
+                        .value
+
+                    val focusManager = LocalFocusManager.current
+                    SearchBar(
+                        query = query,
+                        onQueryChange = { query = it },
+                        onSearch = {
+                            focusManager.clearFocus()
+                        },
+                        active = active,
+                        onActiveChange = { active = it },
+                        leadingIcon = {
                             Icon(
-                                painter = painterResource(id = R.drawable.ic_cross),
+                                painter = painterResource(id = R.drawable.ic_search),
                                 contentDescription = null
+                            )
+                        },
+                        trailingIcon = {
+                            if(active) {
+                                IconButton(
+                                    onClick = { active = false }
+                                ) {
+                                    Icon(
+                                        painter = painterResource(id = R.drawable.ic_cross),
+                                        contentDescription = null
+                                    )
+                                }
+                            }
+                        },
+                        colors = SearchBarDefaults.colors(
+                            containerColor = MaterialTheme.colorScheme.surfaceVariant,
+                        ),
+                        windowInsets = WindowInsets(0, 0, 0, 0),
+                        modifier = Modifier
+                            .background(MaterialTheme.colorScheme.surface)
+                            .fillMaxWidth(),
+                        tonalElevation = 0.dp
+                    ) {
+                        AllActivitiesContent(
+                            onActivityClick = { focusManager.clearFocus() },
+                            activities = activitiesBySearch,
+                            activityScreenVM = activityScreenVM,
+                            selectedDate = selectedDate,
+                            spentCalorieAmount = spentCaloriesAmount
+                        )
+                    }
+
+                    val pagerState = rememberPagerState(pageCount = { ActivityTabs.entries.size })
+                    val selectedTabIndex = remember { derivedStateOf { pagerState.currentPage } }
+
+                    TabRow(
+                        selectedTabIndex = selectedTabIndex.value,
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        ActivityTabs.entries.forEachIndexed { index, tab ->
+                            Tab(
+                                selected = selectedTabIndex.value == index,
+                                onClick = {
+                                    scope.launch {
+                                        pagerState.animateScrollToPage(tab.ordinal)
+                                    }
+                                },
+                                text = { Text(text = tab.text) },
+                                selectedContentColor = MaterialTheme.colorScheme.onSurface,
+                                unselectedContentColor = MaterialTheme.colorScheme.onBackground,
                             )
                         }
                     }
-                },
-                colors = SearchBarDefaults.colors(
-                    containerColor = MaterialTheme.colorScheme.surfaceVariant,
-                ),
-                windowInsets = WindowInsets(0, 0, 0, 0),
-                modifier = Modifier
-                    .background(MaterialTheme.colorScheme.surface)
-                    .fillMaxWidth(),
-                tonalElevation = 0.dp
-            ) {
-                AllActivitiesContent(
-                    onActivityClick = { focusManager.clearFocus() },
-                    activities = activitiesBySearch,
-                    activityScreenVM = activityScreenVM,
-                    selectedDate = selectedDate,
-                    spentCalorieAmount = spentCaloriesAmount
-                )
-            }
 
-            val pagerState = rememberPagerState(pageCount = { ActivityTabs.entries.size })
-            val selectedTabIndex = remember { derivedStateOf { pagerState.currentPage } }
-
-            TabRow(
-                selectedTabIndex = selectedTabIndex.value,
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                ActivityTabs.entries.forEachIndexed { index, tab ->
-                    Tab(
-                        selected = selectedTabIndex.value == index,
-                        onClick = {
-                            scope.launch {
-                                pagerState.animateScrollToPage(tab.ordinal)
-                            }
-                        },
-                        text = { Text(text = tab.text) },
-                        selectedContentColor = MaterialTheme.colorScheme.onSurface,
-                        unselectedContentColor = MaterialTheme.colorScheme.onBackground,
-                    )
-                }
-            }
-
-            HorizontalPager(
-                state = pagerState,
-                modifier = Modifier.fillMaxWidth()
-            ) { currentPage ->
-                when(currentPage) {
-                    0 -> ActivityTabs.entries[0].content(
-                        allActivities,
-                        activityScreenVM,
-                        selectedDate,
-                        spentCaloriesAmount
-                    )
-                    1 -> ActivityTabs.entries[1].content(
-                        featuredActivities,
-                        activityScreenVM,
-                        selectedDate,
-                        spentCaloriesAmount
-                    )
+                    HorizontalPager(
+                        state = pagerState,
+                        modifier = Modifier.fillMaxWidth()
+                    ) { currentPage ->
+                        when(currentPage) {
+                            0 -> ActivityTabs.entries[0].content(
+                                allActivities,
+                                activityScreenVM,
+                                selectedDate,
+                                spentCaloriesAmount
+                            )
+                            1 -> ActivityTabs.entries[1].content(
+                                featuredActivities,
+                                activityScreenVM,
+                                selectedDate,
+                                spentCaloriesAmount
+                            )
+                        }
+                    }
                 }
             }
         }

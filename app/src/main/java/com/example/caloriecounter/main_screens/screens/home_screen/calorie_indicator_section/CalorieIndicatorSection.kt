@@ -43,7 +43,7 @@ fun CalorieIndicatorSection(
             .padding(start = 16.dp, end = 16.dp),
         color = MaterialTheme.colorScheme.surfaceVariant,
         shape = RoundedCornerShape(20.dp),
-        tonalElevation = 20.dp
+        shadowElevation = 2.dp
     ) {
         Row(
             modifier = Modifier
@@ -127,7 +127,7 @@ fun CalorieIndicatorSection(
             }
             CircleCalorieIndicator(
                 size = 120.dp,
-                backgroundColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                backgroundColor = MaterialTheme.colorScheme.primaryContainer,
                 targetProgress = progress,
                 totalAmount = totalAmount.toInt(),
                 progressBrush = Brush.horizontalGradient(listOf(
