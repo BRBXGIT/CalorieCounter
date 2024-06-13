@@ -84,7 +84,7 @@ fun AddDishScreen(
                 },
                 navigationIcon = {
                     IconButton(
-                        onClick = { navController.popBackStack() }
+                        onClick = { navController.navigateUp() }
                     ) {
                         Icon(
                             painter = painterResource(id = R.drawable.ic_navigation_arrow_left),
