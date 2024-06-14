@@ -40,6 +40,7 @@ import androidx.navigation.NavHostController
 import com.example.caloriecounter.app.data.user_calorie_db.UserCalorieData
 import com.example.caloriecounter.main_screens.screens.MainScreensSharedVM
 import com.example.caloriecounter.main_screens.screens.home_screen.calorie_indicator_section.CalorieIndicatorSection
+import com.example.caloriecounter.main_screens.screens.home_screen.chart_calories_section.ChartCaloriesSection
 import com.example.caloriecounter.main_screens.screens.home_screen.drinking_section.DrinkingSection
 import com.example.caloriecounter.main_screens.screens.home_screen.nutrients_indicators_section.AddNutrient
 import com.example.caloriecounter.main_screens.screens.home_screen.nutrients_indicators_section.NutrientStatusBox
@@ -190,6 +191,25 @@ fun HomeScreen(
                                 )
                             }
                         }
+                    }
+
+                    Column(
+                        verticalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                        Text(
+                            text = "Your calories",
+                            modifier = Modifier.padding(start = 14.dp),
+                            fontSize = 17.sp
+                        )
+
+                        val allCalorieData = homeScreenVM
+                            .getAllCalorieData()
+                            .collectAsState(initial = emptyList())
+                            .value
+                        ChartCaloriesSection(
+                            allCalorieData = allCalorieData,
+                            requiredCalorieAmount = userRequirementCalorie.requiredCalorieAmount
+                        )
                     }
 
                     Column(

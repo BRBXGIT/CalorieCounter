@@ -29,7 +29,10 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
+import androidx.compose.material3.pulltorefresh.PullToRefreshContainer
+import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.rememberCoroutineScope
@@ -64,6 +67,8 @@ fun ProfileScreen(
     profileScreenVM: ProfileScreenVM,
     scope: CoroutineScope = rememberCoroutineScope()
 ) {
+    val pullToRefreshState = rememberPullToRefreshState()
+    var isRefreshing by rememberSaveable { mutableStateOf(false) }
     var isError by rememberSaveable { mutableStateOf(false) }
     var isSuccess by rememberSaveable { mutableStateOf(false) }
     Scaffold(
@@ -110,126 +115,150 @@ fun ProfileScreen(
             )
         }
     ) { innerPadding ->
-        Column(
+        Box(
             modifier = Modifier
                 .fillMaxSize()
-                .background(MaterialTheme.colorScheme.background)
                 .padding(
                     top = innerPadding.calculateTopPadding(),
                     bottom = innerPadding.calculateBottomPadding()
-                ),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(32.dp)
+                )
         ) {
-            val user = User(
-                name = firebaseAuth.currentUser?.displayName,
-                profilePictureUrl = firebaseAuth.currentUser?.photoUrl
-            )
-            Spacer(modifier = Modifier.height(0.dp))
-
-            Box(
+            Column(
                 modifier = Modifier
-                    .size(164.dp)
-                    .border(
-                        width = 1.dp,
-                        shape = RoundedCornerShape(20.dp),
-                        color = MaterialTheme.colorScheme.primary
-                    )
+                    .fillMaxSize()
+                    .background(MaterialTheme.colorScheme.background),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.spacedBy(32.dp)
             ) {
-                val singlePhotoPickerLauncher = rememberLauncherForActivityResult(
-                    contract = ActivityResultContracts.PickVisualMedia(),
-                    onResult = { uri ->
-                        if(uri != null) {
-                            scope.launch {
-                                if(profileScreenVM.updateUserPicture(uri)) {
-                                    isSuccess = true
-                                } else {
-                                    isError = true
+                val user = User(
+                    name = firebaseAuth.currentUser?.displayName,
+                    profilePictureUrl = firebaseAuth.currentUser?.photoUrl
+                )
+                Spacer(modifier = Modifier.height(0.dp))
+
+                Box(
+                    modifier = Modifier
+                        .size(164.dp)
+                        .border(
+                            width = 1.dp,
+                            shape = RoundedCornerShape(20.dp),
+                            color = MaterialTheme.colorScheme.primary
+                        )
+                ) {
+                    val singlePhotoPickerLauncher = rememberLauncherForActivityResult(
+                        contract = ActivityResultContracts.PickVisualMedia(),
+                        onResult = { uri ->
+                            if(uri != null) {
+                                scope.launch {
+                                    isRefreshing = true
+                                    if(profileScreenVM.updateUserPicture(uri)) {
+                                        isSuccess = true
+                                    } else {
+                                        isError = true
+                                    }
+                                    isRefreshing = false
                                 }
                             }
                         }
-                    }
-                )
-
-                if(user.profilePictureUrl != null) {
-                    AsyncImage(
-                        model = user.profilePictureUrl,
-                        contentDescription = null,
-                        contentScale = ContentScale.Crop,
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .clip(RoundedCornerShape(20.dp))
-                            .clickable {
-                                singlePhotoPickerLauncher.launch(
-                                    PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
-                                )
-                            },
                     )
-                } else {
-                    Box(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .clip(RoundedCornerShape(20.dp))
-                            .clickable {
-                                singlePhotoPickerLauncher.launch(
-                                    PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
-                                )
-                            },
-                        contentAlignment = Alignment.Center
-                    ) {
-                        Icon(
-                            painter = painterResource(id = R.drawable.ic_plus),
-                            contentDescription = null
+
+                    if(user.profilePictureUrl != null) {
+                        AsyncImage(
+                            model = user.profilePictureUrl,
+                            contentDescription = null,
+                            contentScale = ContentScale.Crop,
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .clip(RoundedCornerShape(20.dp))
+                                .clickable {
+                                    singlePhotoPickerLauncher.launch(
+                                        PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
+                                    )
+                                },
                         )
-                    }
-                }
-            }
-
-            var userName by rememberSaveable { mutableStateOf(
-                if((user.name != null) && (user.name != "")) {
-                    user.name
-                } else {
-                    "User"
-                }
-            ) }
-
-            val focusManager = LocalFocusManager.current
-            TextField(
-                value = userName,
-                onValueChange = { userName = it },
-                maxLines = 1,
-                modifier = Modifier.width(220.dp),
-                textStyle = LocalTextStyle.current.copy(textAlign = TextAlign.Center),
-                shape = RoundedCornerShape(20.dp),
-                colors = TextFieldDefaults.colors(
-                    unfocusedIndicatorColor = Color.Transparent,
-                    focusedIndicatorColor = Color.Transparent
-                ),
-                keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
-                keyboardActions = KeyboardActions(onDone = {
-                    scope.launch {
-                        focusManager.clearFocus()
-                        if(profileScreenVM.updateUserName(userName)) {
-                            isSuccess = true
-                        } else {
-                            isError = true
+                    } else {
+                        Box(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .clip(RoundedCornerShape(20.dp))
+                                .clickable {
+                                    singlePhotoPickerLauncher.launch(
+                                        PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
+                                    )
+                                },
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Icon(
+                                painter = painterResource(id = R.drawable.ic_plus),
+                                contentDescription = null
+                            )
                         }
                     }
-                })
+                }
+
+                var userName by rememberSaveable { mutableStateOf(
+                    if((user.name != null) && (user.name != "")) {
+                        user.name
+                    } else {
+                        "User"
+                    }
+                ) }
+
+                val focusManager = LocalFocusManager.current
+                TextField(
+                    value = userName,
+                    onValueChange = { userName = it },
+                    maxLines = 1,
+                    modifier = Modifier.width(220.dp),
+                    textStyle = LocalTextStyle.current.copy(textAlign = TextAlign.Center),
+                    shape = RoundedCornerShape(20.dp),
+                    colors = TextFieldDefaults.colors(
+                        unfocusedIndicatorColor = Color.Transparent,
+                        focusedIndicatorColor = Color.Transparent
+                    ),
+                    keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
+                    keyboardActions = KeyboardActions(onDone = {
+                        scope.launch {
+                            isRefreshing = true
+                            focusManager.clearFocus()
+                            if(profileScreenVM.updateUserName(userName)) {
+                                isSuccess = true
+                            } else {
+                                isError = true
+                            }
+                            isRefreshing = false
+                        }
+                    })
+                )
+
+                Spacer(modifier = Modifier.weight(1f))
+
+                AnimatedVisibility(visible = isError) {
+                    ErrorMessage {
+                        isError = false
+                    }
+                }
+                AnimatedVisibility(visible = isSuccess) {
+                    SuccessMessage {
+                        isSuccess = false
+                    }
+                }
+            }
+
+            LaunchedEffect(isRefreshing) {
+                if(isRefreshing) {
+                    pullToRefreshState.startRefresh()
+                } else {
+                    pullToRefreshState.endRefresh()
+                }
+            }
+
+            PullToRefreshContainer(
+                state = pullToRefreshState,
+                modifier = Modifier.align(Alignment.TopCenter),
+                contentColor = MaterialTheme.colorScheme.primary,
+                containerColor = MaterialTheme.colorScheme.surfaceVariant
             )
-
-            Spacer(modifier = Modifier.weight(1f))
-
-            AnimatedVisibility(visible = isError) {
-                ErrorMessage {
-                    isError = false
-                }
-            }
-            AnimatedVisibility(visible = isSuccess) {
-                SuccessMessage {
-                    isSuccess = false
-                }
-            }
         }
     }
 }

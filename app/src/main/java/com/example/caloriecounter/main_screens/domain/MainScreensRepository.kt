@@ -26,4 +26,6 @@ interface MainScreensRepository {
     suspend fun updateNutrientAmountByDate(nutrientId: Int, date: String, amount: Int)
 
     suspend fun updateSpentCaloriesByDate(date: String, calorieAmount: Int)
+
+    fun getAllCalorieData(): Flow<List<DayCalorieData>>
 }

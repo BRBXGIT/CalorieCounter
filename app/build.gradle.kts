@@ -67,6 +67,7 @@ dependencies {
     //Room db impl
     implementation(libs.androidx.room.ktx)
     implementation(libs.firebase.storage.ktx)
+    implementation(libs.firebase.database)
     kapt(libs.androidx.room.compiler)
     //Hilt impl
     implementation(libs.hilt.android)
@@ -78,6 +79,7 @@ dependencies {
     implementation(libs.firebase.auth.ktx)
     implementation(libs.play.services.auth)
     implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.database)
     //DataStore impl
     implementation(libs.androidx.datastore.preferences)
     //Adaptivity impl

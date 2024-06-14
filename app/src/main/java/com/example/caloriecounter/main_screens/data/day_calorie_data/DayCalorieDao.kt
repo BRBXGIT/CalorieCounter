@@ -25,4 +25,7 @@ interface DayCalorieDao {
 
     @Query("UPDATE daycaloriedata SET spentCaloriesAmount = :spentAmount WHERE date = :date")
     suspend fun updateSpentCaloriesByDate(date: String, spentAmount: Int)
+
+    @Query("SELECT * FROM daycaloriedata")
+    fun getAllDayCaloriesData(): Flow<List<DayCalorieData>>
 }
