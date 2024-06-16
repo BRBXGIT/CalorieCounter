@@ -250,7 +250,7 @@ enum class DishesTabs(
         text = "Featured",
         content = {
             dishes, eatingScreenVM, selectedDate, todayCalorieData, todayNutrientsData ->
-            FeaturedDishesContent(
+            AllDishesContent(
                 dishes = dishes,
                 eatingScreenVM = eatingScreenVM,
                 selectedDate = selectedDate,

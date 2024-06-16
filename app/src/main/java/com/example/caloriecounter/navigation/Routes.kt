@@ -32,3 +32,6 @@ object AddActivityScreen
 
 @Serializable
 object ProfileScreen
+
+@Serializable
+object CalculationsScreen

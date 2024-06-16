@@ -68,6 +68,7 @@ dependencies {
     implementation(libs.androidx.room.ktx)
     implementation(libs.firebase.storage.ktx)
     implementation(libs.firebase.database)
+    implementation(libs.androidx.animation.graphics.android)
     kapt(libs.androidx.room.compiler)
     //Hilt impl
     implementation(libs.hilt.android)

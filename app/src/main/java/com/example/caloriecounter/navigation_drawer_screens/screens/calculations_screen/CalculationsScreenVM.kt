@@ -1,4 +1,4 @@
-package com.example.caloriecounter.start_screen
+package com.example.caloriecounter.navigation_drawer_screens.screens.calculations_screen
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -10,11 +10,11 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class StartScreenVM @Inject constructor(
+class CalculationsScreenVM @Inject constructor(
     private val appRepositoryImpl: AppRepositoryImpl
 ): ViewModel() {
 
-    fun storeCalculatedUserCalorie(
+    fun updateUserData(
         weight: Int,
         age: Int,
         height: Int,
@@ -35,8 +35,8 @@ class StartScreenVM @Inject constructor(
         }
 
         viewModelScope.launch(Dispatchers.IO) {
-            appRepositoryImpl.upsertUserCalorie(UserCalorieData(
-                id = 0,
+            appRepositoryImpl.updateUserCalorie(UserCalorieData(
+                id = 1,
                 requiredCalorieAmount = userCalorie.toInt(),
                 requiredWaterAmount = weight * 28,
                 weight = weight,

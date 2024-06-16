@@ -15,6 +15,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.caloriecounter.R
 import com.example.caloriecounter.navigation.ActivityScreen
+import com.example.caloriecounter.navigation.CalculationsScreen
 import com.example.caloriecounter.navigation.DishesScreen
 import com.example.caloriecounter.navigation.EatingScreen
 import com.example.caloriecounter.navigation.ProfileScreen
@@ -48,7 +49,7 @@ fun NavigationDrawerItems(
             fontSize = 16.sp
         ) },
         selected = false,
-        onClick = { /*TODO*/ },
+        onClick = { navController.navigate(CalculationsScreen) },
         icon = {
             Icon(
                 painter = painterResource(id = R.drawable.ic_calculator),

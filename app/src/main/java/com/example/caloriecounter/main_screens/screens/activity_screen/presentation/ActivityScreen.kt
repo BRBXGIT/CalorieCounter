@@ -41,7 +41,6 @@ import com.example.caloriecounter.R
 import com.example.caloriecounter.main_screens.screens.MainScreensSharedVM
 import com.example.caloriecounter.main_screens.screens.activity_screen.data.activity_db.Activity
 import com.example.caloriecounter.main_screens.screens.activity_screen.presentation.activities_screen.AllActivitiesContent
-import com.example.caloriecounter.main_screens.screens.activity_screen.presentation.activities_screen.FeaturedActivitiesContent
 import com.example.caloriecounter.main_screens.screens.main_screens_bars.bottom_bar.MainScreensBottomBar
 import com.example.caloriecounter.main_screens.screens.main_screens_bars.navigation_drawer_items.NavigationDrawerItems
 import com.example.caloriecounter.main_screens.screens.main_screens_bars.top_bar.MainScreensTopBar
@@ -246,11 +245,11 @@ enum class ActivityTabs(
         text = "Featured",
         content = {
             activities, activityScreenVM, selectedDate, spentCaloriesAmount ->
-            FeaturedActivitiesContent(
+            AllActivitiesContent(
                 activities = activities,
                 activityScreenVM = activityScreenVM,
                 selectedDate = selectedDate,
-                spentCaloriesAmount = spentCaloriesAmount
+                spentCalorieAmount = spentCaloriesAmount
             )
         }
     )

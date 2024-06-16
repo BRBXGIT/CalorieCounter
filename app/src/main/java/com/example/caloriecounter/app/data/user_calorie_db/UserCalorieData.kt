@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 @Entity
 data class UserCalorieData(
     @PrimaryKey(autoGenerate = true)
-    val id: Int,
+    val id: Int = 0,
     val requiredCalorieAmount: Int,
     val requiredWaterAmount: Int,
     val weight: Int,
