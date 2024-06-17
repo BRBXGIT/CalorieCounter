@@ -2,7 +2,6 @@ package com.example.caloriecounter.main_screens.screens.home_screen
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
@@ -14,7 +13,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.MaterialTheme
@@ -32,15 +30,12 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.caloriecounter.app.data.user_calorie_db.UserCalorieData
 import com.example.caloriecounter.main_screens.screens.MainScreensSharedVM
 import com.example.caloriecounter.main_screens.screens.home_screen.calorie_indicator_section.CalorieIndicatorSection
-import com.example.caloriecounter.main_screens.screens.home_screen.chart_calories_section.ChartCaloriesSection
 import com.example.caloriecounter.main_screens.screens.home_screen.drinking_section.DrinkingSection
 import com.example.caloriecounter.main_screens.screens.home_screen.nutrients_indicators_section.AddNutrient
 import com.example.caloriecounter.main_screens.screens.home_screen.nutrients_indicators_section.NutrientStatusBox
@@ -191,25 +186,6 @@ fun HomeScreen(
                                 )
                             }
                         }
-                    }
-
-                    Column(
-                        verticalArrangement = Arrangement.spacedBy(8.dp)
-                    ) {
-                        Text(
-                            text = "Your calories",
-                            modifier = Modifier.padding(start = 14.dp),
-                            fontSize = 17.sp
-                        )
-
-                        val allCalorieData = homeScreenVM
-                            .getAllCalorieData()
-                            .collectAsState(initial = emptyList())
-                            .value
-                        ChartCaloriesSection(
-                            allCalorieData = allCalorieData,
-                            requiredCalorieAmount = userRequirementCalorie.requiredCalorieAmount
-                        )
                     }
 
                     Column(

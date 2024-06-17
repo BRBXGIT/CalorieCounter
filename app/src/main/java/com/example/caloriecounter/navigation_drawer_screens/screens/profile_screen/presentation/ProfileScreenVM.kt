@@ -2,16 +2,20 @@ package com.example.caloriecounter.navigation_drawer_screens.screens.profile_scr
 
 import android.net.Uri
 import androidx.lifecycle.ViewModel
+import com.example.caloriecounter.app.data.repository.AppRepositoryImpl
+import com.example.caloriecounter.app.data.user_calorie_db.UserCalorieData
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.userProfileChangeRequest
 import com.google.firebase.storage.FirebaseStorage
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CompletableDeferred
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 @HiltViewModel
 class ProfileScreenVM @Inject constructor(
-    private val firebaseAuth: FirebaseAuth
+    private val firebaseAuth: FirebaseAuth,
+    private val appRepositoryImpl: AppRepositoryImpl
 ): ViewModel() {
 
     fun logOut() {
@@ -50,5 +54,9 @@ class ProfileScreenVM @Inject constructor(
         }
 
         return result.await()
+    }
+
+    fun getUserData(): Flow<UserCalorieData> {
+        return appRepositoryImpl.getUserCalorieData()
     }
 }
