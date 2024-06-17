@@ -23,6 +23,7 @@ import com.example.caloriecounter.main_screens.screens.home_screen.HomeScreen
 import com.example.caloriecounter.main_screens.screens.home_screen.HomeScreenVM
 import com.example.caloriecounter.navigation_drawer_screens.screens.calculations_screen.CalculationsScreen
 import com.example.caloriecounter.navigation_drawer_screens.screens.calculations_screen.CalculationsScreenVM
+import com.example.caloriecounter.navigation_drawer_screens.screens.notifictions_screen.NotificationsScreen
 import com.example.caloriecounter.navigation_drawer_screens.screens.profile_screen.presentation.ProfileScreen
 import com.example.caloriecounter.navigation_drawer_screens.screens.profile_screen.presentation.ProfileScreenVM
 import com.example.caloriecounter.start_screen.StartScreen
@@ -135,6 +136,12 @@ fun NavGraph(
             CalculationsScreen(
                 navController = navController,
                 calculationsScreenVM = calculationsScreenVM
+            )
+        }
+
+        composable<NotificationsScreen> {
+            NotificationsScreen(
+                navController = navController
             )
         }
     }

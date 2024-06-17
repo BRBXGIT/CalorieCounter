@@ -35,3 +35,6 @@ object ProfileScreen
 
 @Serializable
 object CalculationsScreen
+
+@Serializable
+object NotificationsScreen

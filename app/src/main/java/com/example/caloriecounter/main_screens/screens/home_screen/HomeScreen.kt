@@ -1,5 +1,9 @@
 package com.example.caloriecounter.main_screens.screens.home_screen
 
+import android.Manifest
+import android.content.Context
+import android.content.pm.PackageManager
+import android.os.Build
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -28,10 +32,13 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.traceEventStart
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.content.ContextCompat
 import androidx.navigation.NavHostController
 import com.example.caloriecounter.app.data.user_calorie_db.UserCalorieData
 import com.example.caloriecounter.main_screens.screens.MainScreensSharedVM
@@ -47,7 +54,7 @@ import com.example.caloriecounter.main_screens.screens.main_screens_bars.top_bar
 fun HomeScreen(
     homeScreenVM: HomeScreenVM,
     mainScreensSharedVM: MainScreensSharedVM,
-    navController: NavHostController
+    navController: NavHostController,
 ) {
     val selectedDate by rememberSaveable { mainScreensSharedVM.selectedDate }
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
