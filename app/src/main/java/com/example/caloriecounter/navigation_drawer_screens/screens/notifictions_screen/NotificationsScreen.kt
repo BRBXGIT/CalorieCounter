@@ -1,6 +1,8 @@
 package com.example.caloriecounter.navigation_drawer_screens.screens.notifictions_screen
 
 import android.Manifest
+import android.app.Notification
+import android.app.NotificationManager
 import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Build
@@ -37,7 +39,9 @@ import com.example.caloriecounter.R
 @Composable
 fun NotificationsScreen(
     navController: NavHostController,
-    context: Context = LocalContext.current
+    context: Context = LocalContext.current,
+    notification: Notification,
+    notificationManager: NotificationManager
 ) {
     Scaffold(
         modifier = Modifier.fillMaxSize(),
@@ -93,10 +97,10 @@ fun NotificationsScreen(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Spacer(modifier = Modifier.height(0.dp))
-            
+
             Button(
                 onClick = {
-                    TODO()
+                    notificationManager.notify(1, notification)
                 },
             ) {
                 Text(text = "Request notification")

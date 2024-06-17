@@ -1,7 +1,10 @@
 package com.example.caloriecounter.app.di
 
+import android.app.Notification
 import android.content.Context
+import androidx.core.app.NotificationCompat
 import androidx.room.Room
+import com.example.caloriecounter.R
 import com.example.caloriecounter.app.domain.AppRepository
 import com.example.caloriecounter.app.data.repository.AppRepositoryImpl
 import com.example.caloriecounter.app.data.user_calorie_db.UserCalorieDao
@@ -33,5 +36,15 @@ object AppModule {
     @Singleton
     fun provideAppRepositoryImpl(userCalorieDao: UserCalorieDao): AppRepository {
         return AppRepositoryImpl(userCalorieDao)
+    }
+
+    @Provides
+    @Singleton
+    fun provideBasicNotification(@ApplicationContext context: Context): Notification {
+        return NotificationCompat.Builder(context, "0")
+            .setSmallIcon(R.drawable.logo)
+            .setContentTitle("Time to eat)")
+            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+            .build()
     }
 }

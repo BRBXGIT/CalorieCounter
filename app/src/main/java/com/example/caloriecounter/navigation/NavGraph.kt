@@ -1,5 +1,7 @@
 package com.example.caloriecounter.navigation
 
+import android.app.Notification
+import android.app.NotificationManager
 import android.content.SharedPreferences
 import androidx.compose.runtime.Composable
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -34,7 +36,9 @@ import com.google.firebase.auth.FirebaseAuth
 fun NavGraph(
     googleAuthUiClient: GoogleAuthUiClient,
     firebaseAuth: FirebaseAuth,
-    sharedPreferences: SharedPreferences
+    sharedPreferences: SharedPreferences,
+    basicNotification: Notification,
+    notificationManager: NotificationManager
 ) {
     val navController = rememberNavController()
 
@@ -141,7 +145,9 @@ fun NavGraph(
 
         composable<NotificationsScreen> {
             NotificationsScreen(
-                navController = navController
+                navController = navController,
+                notification = basicNotification,
+                notificationManager = notificationManager
             )
         }
     }
