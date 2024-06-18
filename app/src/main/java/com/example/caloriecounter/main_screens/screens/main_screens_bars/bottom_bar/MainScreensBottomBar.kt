@@ -1,7 +1,5 @@
 package com.example.caloriecounter.main_screens.screens.main_screens_bars.bottom_bar
 
-import android.util.Log
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Icon
@@ -12,7 +10,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
@@ -25,7 +22,8 @@ data class NavItem(
     val title: String,
     val defaultIcon: Int,
     val chosenIcon: Int,
-    val route: Any
+    val route: Any,
+    val destination: String
 )
 
 @Composable
@@ -37,59 +35,51 @@ fun MainScreensBottomBar(
             title = "Home",
             defaultIcon = R.drawable.ic_home_outlined,
             chosenIcon = R.drawable.ic_home_filled,
-            route = HomeScreen
+            route = HomeScreen,
+            destination = "HomeScreen"
         ),
         NavItem(
             title = "Eating",
             defaultIcon = R.drawable.ic_eating_outlined,
             chosenIcon = R.drawable.ic_eating_filled,
-            route = EatingScreen
+            route = EatingScreen,
+            destination = "EatingScreen"
         ),
         NavItem(
             title = "Activity",
             defaultIcon = R.drawable.ic_run_outlined,
             chosenIcon = R.drawable.ic_run_filled,
-            route = ActivityScreen
+            route = ActivityScreen,
+            destination = "ActivityScreen"
         )
     )
 
-    val currentDestination = navController.currentDestination?.route
+    val currentDestination = navController.currentDestination?.route.toString().drop(38)
     BottomAppBar(
         containerColor = MaterialTheme.colorScheme.surface,
-        modifier = Modifier
-            .shadow(20.dp)
-            .height(74.dp),
+        modifier = Modifier.shadow(20.dp),
         tonalElevation = 0.dp,
     ) {
         navItems.forEach { navItem ->
             NavigationBarItem(
-                //Drop last(8) dropping hashcode of route
-                selected = currentDestination == navItem.route.toString().dropLast(8),
+                selected = currentDestination == navItem.destination,
                 colors = NavigationBarItemDefaults.colors(
                     selectedIconColor = MaterialTheme.colorScheme.primary,
                     selectedTextColor = MaterialTheme.colorScheme.primary,
-                    indicatorColor = Color.Transparent
                 ),
                 onClick = {
-                    if(navItem.route.toString().dropLast(8) != currentDestination) {
+                    if(currentDestination != navItem.destination) {
                         navController.navigate(navItem.route)
                     }
                 },
                 icon = {
-                    if(navItem.route.toString().dropLast(8) == currentDestination) {
-                        Log.d("XXXX", "true")
-                        Icon(
-                            painter = painterResource(id = navItem.chosenIcon),
-                            contentDescription = null,
-                            modifier = Modifier.size(20.dp)
-                        )
-                    } else {
-                        Icon(
-                            painter = painterResource(id = navItem.defaultIcon),
-                            contentDescription = null,
-                            modifier = Modifier.size(20.dp)
-                        )
-                    }
+                    Icon(
+                        painter = painterResource(
+                            id = if(navItem.destination == currentDestination) navItem.chosenIcon else navItem.defaultIcon
+                        ),
+                        contentDescription = null,
+                        modifier = Modifier.size(20.dp)
+                    )
                 },
                 label = {
                     Text(text = navItem.title)

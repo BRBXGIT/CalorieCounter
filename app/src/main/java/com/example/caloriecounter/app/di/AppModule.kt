@@ -43,7 +43,7 @@ object AppModule {
     fun provideBasicNotification(@ApplicationContext context: Context): Notification {
         return NotificationCompat.Builder(context, "0")
             .setSmallIcon(R.drawable.logo)
-            .setContentTitle("Time to eat)")
+            .setContentTitle("It's time to eat)")
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
             .build()
     }

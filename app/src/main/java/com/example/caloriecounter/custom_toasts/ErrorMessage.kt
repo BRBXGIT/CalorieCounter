@@ -22,7 +22,8 @@ import kotlinx.coroutines.delay
 //Custom error message toast
 @Composable
 fun ErrorMessage(
-    onTimeEnds: () -> Unit
+    onTimeEnds: () -> Unit,
+    text: String
 ) {
     LaunchedEffect(key1 = true) {
         delay(3000)
@@ -48,7 +49,7 @@ fun ErrorMessage(
             )
 
             Text(
-                text = "Something went wrong",
+                text = text,
                 color = MaterialTheme.colorScheme.onSurface
             )
         }

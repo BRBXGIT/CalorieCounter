@@ -96,7 +96,6 @@ fun AddDishScreen(
         },
         bottomBar = { BottomAppBar(
             tonalElevation = 0.dp,
-            modifier = Modifier.height(78.dp)
         ) {
             Button(
                 onClick = {

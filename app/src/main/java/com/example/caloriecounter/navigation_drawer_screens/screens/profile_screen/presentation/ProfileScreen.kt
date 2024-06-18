@@ -308,14 +308,16 @@ fun ProfileScreen(
                 Spacer(modifier = Modifier.weight(1f))
 
                 AnimatedVisibility(visible = isError) {
-                    ErrorMessage {
-                        isError = false
-                    }
+                    ErrorMessage(
+                        text = "Something went wrong",
+                        onTimeEnds = { isError = false }
+                    )
                 }
                 AnimatedVisibility(visible = isSuccess) {
-                    SuccessMessage {
-                        isSuccess = false
-                    }
+                    SuccessMessage(
+                        text = "Success",
+                        onTimeEnds = { isSuccess = false }
+                    )
                 }
             }
 

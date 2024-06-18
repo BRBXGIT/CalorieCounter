@@ -332,7 +332,8 @@ fun SignInContent(
 
         AnimatedVisibility(visible = authenticationError) {
             ErrorMessage(
-                onTimeEnds = { authenticationError = false }
+                onTimeEnds = { authenticationError = false },
+                text = "Something went wrong"
             )
         }
     }

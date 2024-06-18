@@ -14,6 +14,7 @@ import com.example.caloriecounter.auth.google_auth.GoogleAuthUiClient
 import com.example.caloriecounter.navigation.NavGraph
 import com.example.caloriecounter.ui.theme.CalorieCounterTheme
 import com.google.firebase.auth.FirebaseAuth
+import dagger.assisted.AssistedInject
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.qualifiers.ApplicationContext
 import java.util.Locale

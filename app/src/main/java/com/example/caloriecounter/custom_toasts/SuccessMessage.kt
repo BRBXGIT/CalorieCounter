@@ -21,7 +21,8 @@ import kotlinx.coroutines.delay
 
 @Composable
 fun SuccessMessage(
-    onTimeEnds: () -> Unit
+    onTimeEnds: () -> Unit,
+    text: String
 ) {
     LaunchedEffect(key1 = true) {
         delay(3000)
@@ -47,7 +48,7 @@ fun SuccessMessage(
             )
 
             Text(
-                text = "Success",
+                text = text,
                 color = MaterialTheme.colorScheme.onSurface
             )
         }

@@ -90,7 +90,6 @@ fun CalculationsScreen(
         bottomBar = {
             BottomAppBar(
                 tonalElevation = 0.dp,
-                modifier = Modifier.height(74.dp),
             ) {
                 Box(
                     modifier = Modifier.fillMaxSize(),

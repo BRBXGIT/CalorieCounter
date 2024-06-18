@@ -3,6 +3,8 @@ package com.example.caloriecounter.navigation
 import android.app.Notification
 import android.app.NotificationManager
 import android.content.SharedPreferences
+import androidx.compose.animation.EnterTransition
+import androidx.compose.animation.ExitTransition
 import androidx.compose.runtime.Composable
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -146,8 +148,6 @@ fun NavGraph(
         composable<NotificationsScreen> {
             NotificationsScreen(
                 navController = navController,
-                notification = basicNotification,
-                notificationManager = notificationManager
             )
         }
     }
