@@ -47,11 +47,11 @@ class MainActivity : ComponentActivity() {
         val sharedPreferences = getPreferences(Context.MODE_PRIVATE)
         setContent {
             CalorieCounterTheme {
-                ccAlarmManager.scheduleMealsAlarms()
                 NavGraph(
                     googleAuthUiClient = googleAuthUiClient,
                     firebaseAuth = firebaseAuth,
                     sharedPreferences = sharedPreferences,
+                    ccAlarmManager = ccAlarmManager
                 )
             }
         }

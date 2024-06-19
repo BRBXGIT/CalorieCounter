@@ -28,6 +28,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <receiver android:name=".navigation_drawer_screens.meal_time_screen.data.meal_time_alarms.CCAlarmReceiver" />
     </application>
 
 </manifest>

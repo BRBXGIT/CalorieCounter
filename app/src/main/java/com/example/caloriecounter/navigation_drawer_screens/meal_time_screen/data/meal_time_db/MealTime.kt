@@ -7,8 +7,8 @@ import androidx.room.PrimaryKey
     tableName = "meal_time"
 )
 data class MealTime(
-    @PrimaryKey(autoGenerate = true)
-    val id: Int = 0,
+    @PrimaryKey
     val name: String,
+    val id: Int,
     val time: Long
 )

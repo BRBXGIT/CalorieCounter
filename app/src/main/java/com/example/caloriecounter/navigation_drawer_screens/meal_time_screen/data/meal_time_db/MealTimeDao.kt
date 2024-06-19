@@ -12,8 +12,8 @@ interface MealTimeDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertMealTime(mealTime: MealTime)
 
-    @Query("UPDATE meal_time SET time = :time WHERE id = :id")
-    suspend fun updateMealTimeById(time: Long, id: Int)
+    @Query("UPDATE meal_time SET time = :time WHERE name = :name")
+    suspend fun updateMealTimeByName(time: Long, name: String)
 
     @Query("SELECT * FROM meal_time")
     fun getAllMealTime(): Flow<List<MealTime>>

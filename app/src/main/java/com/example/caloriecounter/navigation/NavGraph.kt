@@ -25,6 +25,7 @@ import com.example.caloriecounter.main_screens.screens.home_screen.HomeScreen
 import com.example.caloriecounter.main_screens.screens.home_screen.HomeScreenVM
 import com.example.caloriecounter.navigation_drawer_screens.calculations_screen.CalculationsScreen
 import com.example.caloriecounter.navigation_drawer_screens.calculations_screen.CalculationsScreenVM
+import com.example.caloriecounter.navigation_drawer_screens.meal_time_screen.data.meal_time_alarms.CCAlarmManager
 import com.example.caloriecounter.navigation_drawer_screens.meal_time_screen.presentation.MealTimeScreen
 import com.example.caloriecounter.navigation_drawer_screens.meal_time_screen.presentation.MealTimeScreenVM
 import com.example.caloriecounter.navigation_drawer_screens.profile_screen.presentation.ProfileScreen
@@ -38,6 +39,7 @@ fun NavGraph(
     googleAuthUiClient: GoogleAuthUiClient,
     firebaseAuth: FirebaseAuth,
     sharedPreferences: SharedPreferences,
+    ccAlarmManager: CCAlarmManager
 ) {
     val navController = rememberNavController()
 
@@ -146,7 +148,8 @@ fun NavGraph(
         composable<MealTimeScreen> {
             MealTimeScreen(
                 navController = navController,
-                mealTimeScreenVM = mealTimeScreenVM
+                mealTimeScreenVM = mealTimeScreenVM,
+                ccAlarmManager = ccAlarmManager
             )
         }
     }

@@ -18,7 +18,7 @@ class MealTimeScreenRepositoryImpl @Inject constructor(
         mealTimeDao.insertMealTime(mealTime)
     }
 
-    override suspend fun updateMealTimeById(time: Long, id: Int) {
-        mealTimeDao.updateMealTimeById(time, id)
+    override suspend fun updateMealTimeByName(time: Long, name: String) {
+        mealTimeDao.updateMealTimeByName(time, name)
     }
 }

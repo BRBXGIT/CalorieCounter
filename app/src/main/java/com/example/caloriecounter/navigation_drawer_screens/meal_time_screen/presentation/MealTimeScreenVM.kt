@@ -25,9 +25,9 @@ class MealTimeScreenVM @Inject constructor(
         }
     }
 
-    fun updateMealTimeById(time: Long, id: Int) {
+    fun updateMealTimeByName(time: Long, name: String) {
         viewModelScope.launch(Dispatchers.IO) {
-            mealTimeScreenRepositoryImpl.updateMealTimeById(time, id)
+            mealTimeScreenRepositoryImpl.updateMealTimeByName(time, name)
         }
     }
 }

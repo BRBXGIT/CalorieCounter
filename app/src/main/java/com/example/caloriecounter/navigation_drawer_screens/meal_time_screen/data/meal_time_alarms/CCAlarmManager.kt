@@ -6,6 +6,12 @@ import android.content.Context
 import android.content.Intent
 import android.os.SystemClock
 import com.example.caloriecounter.navigation_drawer_screens.meal_time_screen.data.meal_time_db.MealTimeDao
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.cancelChildren
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
 
@@ -14,10 +20,12 @@ class CCAlarmManager @Inject constructor(
     private val alarmManager: AlarmManager,
     private val mealTimeDao: MealTimeDao,
     private val context: Context
-){
+) {
+    private val coroutineScope = CoroutineScope(Dispatchers.IO + SupervisorJob())
+
     fun scheduleMealsAlarms() {
-        runBlocking {
-            mealTimeDao.getAllMealTime().collect{ meals ->
+        coroutineScope.launch {
+            mealTimeDao.getAllMealTime().collect { meals ->
                 meals.forEach { meal ->
                     val pendingIntent = PendingIntent.getBroadcast(
                         context,
@@ -26,18 +34,20 @@ class CCAlarmManager @Inject constructor(
                         PendingIntent.FLAG_IMMUTABLE
                     )
 
-                    alarmManager.setAndAllowWhileIdle(
+                    alarmManager.setExactAndAllowWhileIdle(
                         AlarmManager.RTC_WAKEUP,
                         SystemClock.elapsedRealtime() + 5000,
                         pendingIntent
                     )
                 }
             }
+
+            coroutineScope.cancel()
         }
     }
 
     fun cancelMealsAlarms() {
-        runBlocking {
+        coroutineScope.launch {
             mealTimeDao.getAllMealTime().collect{ meals ->
                 meals.forEach { meal ->
                     val pendingIntent = PendingIntent.getBroadcast(
@@ -50,6 +60,8 @@ class CCAlarmManager @Inject constructor(
                     alarmManager.cancel(pendingIntent)
                 }
             }
+
+            coroutineScope.cancel()
         }
     }
 }

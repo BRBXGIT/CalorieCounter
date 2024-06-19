@@ -7,6 +7,6 @@ import android.util.Log
 
 class CCAlarmReceiver: BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent?) {
-        Log.d("XXXX", "received")
+        Log.d("receiver", "received")
     }
 }

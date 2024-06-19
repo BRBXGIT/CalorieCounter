@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Button
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -38,6 +39,8 @@ import androidx.navigation.NavHostController
 import com.example.caloriecounter.R
 import com.example.caloriecounter.custom_toasts.ErrorMessage
 import com.example.caloriecounter.custom_toasts.SuccessMessage
+import com.example.caloriecounter.main_screens.screens.eating_screen.data.meal_db.Meal
+import com.example.caloriecounter.navigation_drawer_screens.meal_time_screen.data.meal_time_alarms.CCAlarmManager
 import com.example.caloriecounter.navigation_drawer_screens.meal_time_screen.data.meal_time_db.MealTime
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -45,7 +48,8 @@ import com.example.caloriecounter.navigation_drawer_screens.meal_time_screen.dat
 fun MealTimeScreen(
     navController: NavHostController,
     context: Context = LocalContext.current,
-    mealTimeScreenVM: MealTimeScreenVM
+    mealTimeScreenVM: MealTimeScreenVM,
+    ccAlarmManager: CCAlarmManager
 ) {
     val mealList = listOf(
         "Breakfast",
@@ -53,12 +57,13 @@ fun MealTimeScreen(
         "Dinner",
         "Snack"
     )
-    for(meal in mealList) {
+    mealList.forEachIndexed { index, meal ->
         mealTimeScreenVM.insertNewMealTime(
             MealTime(
-            name = meal,
-            time = 0
-        )
+                name = meal,
+                id = index,
+                time = 0
+            )
         )
     }
 
@@ -126,6 +131,12 @@ fun MealTimeScreen(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Spacer(modifier = Modifier.height(0.dp))
+
+            Button(onClick = {
+                ccAlarmManager.scheduleMealsAlarms()
+            }) {
+
+            }
 
             Spacer(modifier = Modifier.weight(1f))
             
