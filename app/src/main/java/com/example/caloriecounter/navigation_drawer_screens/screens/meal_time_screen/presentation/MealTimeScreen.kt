@@ -1,4 +1,4 @@
-package com.example.caloriecounter.navigation_drawer_screens.screens.meal_time_screen
+package com.example.caloriecounter.navigation_drawer_screens.screens.meal_time_screen.presentation
 
 import android.Manifest
 import android.app.AlarmManager

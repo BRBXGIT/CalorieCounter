@@ -1,14 +1,13 @@
 package com.example.caloriecounter.app.di
 
-import android.app.Notification
+import android.app.AlarmManager
+import android.app.Service
 import android.content.Context
-import androidx.core.app.NotificationCompat
 import androidx.room.Room
-import com.example.caloriecounter.R
-import com.example.caloriecounter.app.domain.AppRepository
 import com.example.caloriecounter.app.data.repository.AppRepositoryImpl
 import com.example.caloriecounter.app.data.user_calorie_db.UserCalorieDao
 import com.example.caloriecounter.app.data.user_calorie_db.UserCalorieDb
+import com.example.caloriecounter.app.domain.AppRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -38,13 +37,10 @@ object AppModule {
         return AppRepositoryImpl(userCalorieDao)
     }
 
+    //Providing alarm manager
     @Provides
     @Singleton
-    fun provideBasicNotification(@ApplicationContext context: Context): Notification {
-        return NotificationCompat.Builder(context, "0")
-            .setSmallIcon(R.drawable.logo)
-            .setContentTitle("It's time to eat)")
-            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-            .build()
+    fun provideAlarmManager(@ApplicationContext context: Context): AlarmManager {
+        return context.getSystemService(Service.ALARM_SERVICE) as AlarmManager
     }
 }

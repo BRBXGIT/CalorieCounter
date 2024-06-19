@@ -1,0 +1,20 @@
+package com.example.caloriecounter.navigation_drawer_screens.screens.meal_time_screen.data.meal_time_db
+
+import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
+import androidx.room.Query
+import kotlinx.coroutines.flow.Flow
+
+@Dao
+interface MealTimeDao {
+
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    suspend fun insertMealTime(mealTime: MealTime)
+
+    @Query("UPDATE meal_time SET time = :time WHERE id = :id")
+    suspend fun updateMealTimeById(time: Long, id: Int)
+
+    @Query("SELECT * FROM meal_time")
+    fun getAllMealTime(): Flow<List<MealTime>>
+}

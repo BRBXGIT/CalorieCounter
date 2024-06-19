@@ -3,8 +3,6 @@ package com.example.caloriecounter.navigation
 import android.app.Notification
 import android.app.NotificationManager
 import android.content.SharedPreferences
-import androidx.compose.animation.EnterTransition
-import androidx.compose.animation.ExitTransition
 import androidx.compose.runtime.Composable
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -27,7 +25,7 @@ import com.example.caloriecounter.main_screens.screens.home_screen.HomeScreen
 import com.example.caloriecounter.main_screens.screens.home_screen.HomeScreenVM
 import com.example.caloriecounter.navigation_drawer_screens.screens.calculations_screen.CalculationsScreen
 import com.example.caloriecounter.navigation_drawer_screens.screens.calculations_screen.CalculationsScreenVM
-import com.example.caloriecounter.navigation_drawer_screens.screens.meal_time_screen.MealTimeScreen
+import com.example.caloriecounter.navigation_drawer_screens.screens.meal_time_screen.presentation.MealTimeScreen
 import com.example.caloriecounter.navigation_drawer_screens.screens.profile_screen.presentation.ProfileScreen
 import com.example.caloriecounter.navigation_drawer_screens.screens.profile_screen.presentation.ProfileScreenVM
 import com.example.caloriecounter.start_screen.StartScreen
@@ -39,8 +37,6 @@ fun NavGraph(
     googleAuthUiClient: GoogleAuthUiClient,
     firebaseAuth: FirebaseAuth,
     sharedPreferences: SharedPreferences,
-    basicNotification: Notification,
-    notificationManager: NotificationManager
 ) {
     val navController = rememberNavController()
 
