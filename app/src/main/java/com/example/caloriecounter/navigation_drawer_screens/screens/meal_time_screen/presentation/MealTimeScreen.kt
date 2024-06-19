@@ -38,13 +38,28 @@ import androidx.navigation.NavHostController
 import com.example.caloriecounter.R
 import com.example.caloriecounter.custom_toasts.ErrorMessage
 import com.example.caloriecounter.custom_toasts.SuccessMessage
+import com.example.caloriecounter.navigation_drawer_screens.screens.meal_time_screen.data.meal_time_db.MealTime
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MealTimeScreen(
     navController: NavHostController,
-    context: Context = LocalContext.current
+    context: Context = LocalContext.current,
+    mealTimeScreenVM: MealTimeScreenVM
 ) {
+    val mealList = listOf(
+        "Breakfast",
+        "Lunch",
+        "Dinner",
+        "Snack"
+    )
+    for(meal in mealList) {
+        mealTimeScreenVM.insertNewMealTime(MealTime(
+            name = meal,
+            time = 0
+        ))
+    }
+
     var notificationsGranted by remember { mutableStateOf(false) }
     var notificationsDenied by rememberSaveable { mutableStateOf(false) }
 

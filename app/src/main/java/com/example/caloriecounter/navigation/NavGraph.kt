@@ -26,6 +26,7 @@ import com.example.caloriecounter.main_screens.screens.home_screen.HomeScreenVM
 import com.example.caloriecounter.navigation_drawer_screens.screens.calculations_screen.CalculationsScreen
 import com.example.caloriecounter.navigation_drawer_screens.screens.calculations_screen.CalculationsScreenVM
 import com.example.caloriecounter.navigation_drawer_screens.screens.meal_time_screen.presentation.MealTimeScreen
+import com.example.caloriecounter.navigation_drawer_screens.screens.meal_time_screen.presentation.MealTimeScreenVM
 import com.example.caloriecounter.navigation_drawer_screens.screens.profile_screen.presentation.ProfileScreen
 import com.example.caloriecounter.navigation_drawer_screens.screens.profile_screen.presentation.ProfileScreenVM
 import com.example.caloriecounter.start_screen.StartScreen
@@ -48,6 +49,7 @@ fun NavGraph(
     val activityScreenVM = hiltViewModel<ActivityScreenVM>()
     val profileScreenVM = hiltViewModel<ProfileScreenVM>()
     val calculationsScreenVM = hiltViewModel<CalculationsScreenVM>()
+    val mealTimeScreenVM = hiltViewModel<MealTimeScreenVM>()
 
     val userSignIn = firebaseAuth.currentUser != null
     val calorieData = sharedPreferences.getBoolean("calorieDataReceived", false)
@@ -143,7 +145,8 @@ fun NavGraph(
 
         composable<MealTimeScreen> {
             MealTimeScreen(
-                navController = navController
+                navController = navController,
+                mealTimeScreenVM = mealTimeScreenVM
             )
         }
     }
