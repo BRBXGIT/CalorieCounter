@@ -18,7 +18,7 @@ import com.example.caloriecounter.navigation.ActivityScreen
 import com.example.caloriecounter.navigation.CalculationsScreen
 import com.example.caloriecounter.navigation.DishesScreen
 import com.example.caloriecounter.navigation.EatingScreen
-import com.example.caloriecounter.navigation.NotificationsScreen
+import com.example.caloriecounter.navigation.MealTimeScreen
 import com.example.caloriecounter.navigation.ProfileScreen
 
 @Composable
@@ -72,29 +72,10 @@ fun NavigationDrawerItems(
             fontSize = 16.sp
         ) },
         selected = false,
-        onClick = { /*TODO*/ },
+        onClick = { navController.navigate(MealTimeScreen) },
         icon = {
             Icon(
                 painter = painterResource(id = R.drawable.ic_stopwatch),
-                contentDescription = null
-            )
-        },
-        colors = NavigationDrawerItemDefaults.colors(
-            unselectedContainerColor = Color.Transparent,
-            unselectedTextColor = MaterialTheme.colorScheme.onPrimary
-        ),
-        shape = RoundedCornerShape(0.dp)
-    )
-    NavigationDrawerItem(
-        label = { Text(
-            text = "Notifications",
-            fontSize = 16.sp
-        ) },
-        selected = false,
-        onClick = { navController.navigate(NotificationsScreen) },
-        icon = {
-            Icon(
-                painter = painterResource(id = R.drawable.ic_notifications),
                 contentDescription = null
             )
         },

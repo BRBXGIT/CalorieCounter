@@ -37,4 +37,4 @@ object ProfileScreen
 object CalculationsScreen
 
 @Serializable
-object NotificationsScreen
+object MealTimeScreen
