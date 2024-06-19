@@ -1,4 +1,4 @@
-package com.example.caloriecounter.navigation_drawer_screens.screens.calculations_screen
+package com.example.caloriecounter.navigation_drawer_screens.calculations_screen
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

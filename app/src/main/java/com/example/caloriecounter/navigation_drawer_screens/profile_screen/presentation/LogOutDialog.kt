@@ -1,4 +1,4 @@
-package com.example.caloriecounter.navigation_drawer_screens.screens.profile_screen.presentation
+package com.example.caloriecounter.navigation_drawer_screens.profile_screen.presentation
 
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.AlertDialog

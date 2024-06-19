@@ -1,4 +1,4 @@
-package com.example.caloriecounter.navigation_drawer_screens.screens.meal_time_screen.presentation
+package com.example.caloriecounter.navigation_drawer_screens.meal_time_screen.presentation
 
 import android.Manifest
 import android.app.AlarmManager
@@ -38,7 +38,7 @@ import androidx.navigation.NavHostController
 import com.example.caloriecounter.R
 import com.example.caloriecounter.custom_toasts.ErrorMessage
 import com.example.caloriecounter.custom_toasts.SuccessMessage
-import com.example.caloriecounter.navigation_drawer_screens.screens.meal_time_screen.data.meal_time_db.MealTime
+import com.example.caloriecounter.navigation_drawer_screens.meal_time_screen.data.meal_time_db.MealTime
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -54,10 +54,12 @@ fun MealTimeScreen(
         "Snack"
     )
     for(meal in mealList) {
-        mealTimeScreenVM.insertNewMealTime(MealTime(
+        mealTimeScreenVM.insertNewMealTime(
+            MealTime(
             name = meal,
             time = 0
-        ))
+        )
+        )
     }
 
     var notificationsGranted by remember { mutableStateOf(false) }

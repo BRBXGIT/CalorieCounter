@@ -1,4 +1,4 @@
-package com.example.caloriecounter.navigation_drawer_screens.screens.profile_screen.presentation
+package com.example.caloriecounter.navigation_drawer_screens.profile_screen.presentation
 
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
@@ -58,7 +58,7 @@ import com.example.caloriecounter.app.data.user_calorie_db.UserCalorieData
 import com.example.caloriecounter.custom_toasts.ErrorMessage
 import com.example.caloriecounter.custom_toasts.SuccessMessage
 import com.example.caloriecounter.navigation.AuthScreen
-import com.example.caloriecounter.navigation_drawer_screens.screens.profile_screen.data.User
+import com.example.caloriecounter.navigation_drawer_screens.profile_screen.data.User
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch

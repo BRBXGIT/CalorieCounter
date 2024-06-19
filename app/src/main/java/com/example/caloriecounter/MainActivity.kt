@@ -1,5 +1,6 @@
 package com.example.caloriecounter
 
+import android.app.AlarmManager
 import android.content.Context
 import android.content.res.Configuration
 import android.os.Bundle
@@ -9,6 +10,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.example.caloriecounter.auth.google_auth.GoogleAuthUiClient
 import com.example.caloriecounter.navigation.NavGraph
+import com.example.caloriecounter.navigation_drawer_screens.meal_time_screen.data.meal_time_alarms.CCAlarmManager
 import com.example.caloriecounter.ui.theme.CalorieCounterTheme
 import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint
@@ -24,6 +26,9 @@ class MainActivity : ComponentActivity() {
 
     @Inject
     lateinit var firebaseAuth: FirebaseAuth
+
+    @Inject
+    lateinit var ccAlarmManager: CCAlarmManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,6 +47,7 @@ class MainActivity : ComponentActivity() {
         val sharedPreferences = getPreferences(Context.MODE_PRIVATE)
         setContent {
             CalorieCounterTheme {
+                ccAlarmManager.scheduleMealsAlarms()
                 NavGraph(
                     googleAuthUiClient = googleAuthUiClient,
                     firebaseAuth = firebaseAuth,

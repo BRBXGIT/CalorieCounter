@@ -1,4 +1,4 @@
-package com.example.caloriecounter.navigation_drawer_screens.screens.profile_screen.presentation
+package com.example.caloriecounter.navigation_drawer_screens.profile_screen.presentation
 
 import android.net.Uri
 import androidx.lifecycle.ViewModel

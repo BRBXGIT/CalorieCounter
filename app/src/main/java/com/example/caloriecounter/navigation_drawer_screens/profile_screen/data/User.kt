@@ -1,4 +1,4 @@
-package com.example.caloriecounter.navigation_drawer_screens.screens.profile_screen.data
+package com.example.caloriecounter.navigation_drawer_screens.profile_screen.data
 
 import android.net.Uri
 

@@ -36,11 +36,4 @@ object AppModule {
     fun provideAppRepositoryImpl(userCalorieDao: UserCalorieDao): AppRepository {
         return AppRepositoryImpl(userCalorieDao)
     }
-
-    //Providing alarm manager
-    @Provides
-    @Singleton
-    fun provideAlarmManager(@ApplicationContext context: Context): AlarmManager {
-        return context.getSystemService(Service.ALARM_SERVICE) as AlarmManager
-    }
 }

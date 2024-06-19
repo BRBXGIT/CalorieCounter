@@ -1,9 +1,9 @@
-package com.example.caloriecounter.navigation_drawer_screens.screens.meal_time_screen.presentation
+package com.example.caloriecounter.navigation_drawer_screens.meal_time_screen.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.caloriecounter.navigation_drawer_screens.screens.meal_time_screen.data.meal_time_db.MealTime
-import com.example.caloriecounter.navigation_drawer_screens.screens.meal_time_screen.data.repository.MealTimeScreenRepositoryImpl
+import com.example.caloriecounter.navigation_drawer_screens.meal_time_screen.data.meal_time_db.MealTime
+import com.example.caloriecounter.navigation_drawer_screens.meal_time_screen.data.repository.MealTimeScreenRepositoryImpl
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
