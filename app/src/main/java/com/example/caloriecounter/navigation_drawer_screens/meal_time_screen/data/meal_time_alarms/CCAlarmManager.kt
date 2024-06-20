@@ -10,9 +10,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
-import kotlinx.coroutines.cancelChildren
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
 
 //Calorie counter alarm manager)
@@ -48,7 +46,7 @@ class CCAlarmManager @Inject constructor(
 
     fun cancelMealsAlarms() {
         coroutineScope.launch {
-            mealTimeDao.getAllMealTime().collect{ meals ->
+            mealTimeDao.getAllMealTime().collect { meals ->
                 meals.forEach { meal ->
                     val pendingIntent = PendingIntent.getBroadcast(
                         context,

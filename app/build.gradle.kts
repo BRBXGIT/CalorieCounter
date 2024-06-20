@@ -92,6 +92,7 @@ dependencies {
     implementation(libs.com.maxkeppeler.sheets.compose.dialogs.core4)
     implementation(libs.calendar)
     implementation(libs.duration)
+    implementation(libs.clock)
 
     //Basic impl
     implementation(libs.androidx.core.ktx)
