@@ -25,18 +25,20 @@ class CCAlarmManager @Inject constructor(
         coroutineScope.launch {
             mealTimeDao.getAllMealTime().collect { meals ->
                 meals.forEach { meal ->
-                    val pendingIntent = PendingIntent.getBroadcast(
-                        context,
-                        meal.id,
-                        Intent(context, CCAlarmReceiver::class.java),
-                        PendingIntent.FLAG_IMMUTABLE
-                    )
+                    if(meal.alarmTurnOn) {
+                        val pendingIntent = PendingIntent.getBroadcast(
+                            context,
+                            meal.id,
+                            Intent(context, CCAlarmReceiver::class.java),
+                            PendingIntent.FLAG_IMMUTABLE
+                        )
 
-                    alarmManager.setExactAndAllowWhileIdle(
-                        AlarmManager.RTC_WAKEUP,
-                        SystemClock.elapsedRealtime() + 5000,
-                        pendingIntent
-                    )
+                        alarmManager.setExactAndAllowWhileIdle(
+                            AlarmManager.RTC_WAKEUP,
+                            SystemClock.elapsedRealtime() + 5000,
+                            pendingIntent
+                        )
+                    }
                 }
             }
 

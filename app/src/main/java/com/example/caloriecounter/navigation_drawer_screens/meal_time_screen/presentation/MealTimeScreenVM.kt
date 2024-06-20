@@ -30,4 +30,10 @@ class MealTimeScreenVM @Inject constructor(
             mealTimeScreenRepositoryImpl.updateMealTimeByName(time, name)
         }
     }
+
+    fun updateAlarmTurnOnByName(isOn: Boolean, name: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            mealTimeScreenRepositoryImpl.updateAlarmTurnOnByName(isOn, name)
+        }
+    }
 }

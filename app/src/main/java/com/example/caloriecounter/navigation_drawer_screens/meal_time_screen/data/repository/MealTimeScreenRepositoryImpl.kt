@@ -21,4 +21,8 @@ class MealTimeScreenRepositoryImpl @Inject constructor(
     override suspend fun updateMealTimeByName(time: Long, name: String) {
         mealTimeDao.updateMealTimeByName(time, name)
     }
+
+    override suspend fun updateAlarmTurnOnByName(isOn: Boolean, name: String) {
+        mealTimeDao.updateAlarmStatusByName(isOn, name)
+    }
 }

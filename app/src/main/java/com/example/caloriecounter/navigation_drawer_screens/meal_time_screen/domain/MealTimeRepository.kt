@@ -10,4 +10,6 @@ interface MealTimeRepository {
     suspend fun updateMealTimeByName(time: Long, name: String)
 
     fun getAllMealTime(): Flow<List<MealTime>>
+
+    suspend fun updateAlarmTurnOnByName(isOn: Boolean, name: String)
 }
