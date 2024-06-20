@@ -4,6 +4,7 @@ import android.app.AlarmManager
 import android.app.Service
 import android.content.Context
 import androidx.room.Room
+import com.example.caloriecounter.app.data.preferences_data_store.PreferencesDataStoreManager
 import com.example.caloriecounter.app.data.repository.AppRepositoryImpl
 import com.example.caloriecounter.app.data.user_calorie_db.UserCalorieDao
 import com.example.caloriecounter.app.data.user_calorie_db.UserCalorieDb
@@ -35,5 +36,13 @@ object AppModule {
     @Singleton
     fun provideAppRepositoryImpl(userCalorieDao: UserCalorieDao): AppRepository {
         return AppRepositoryImpl(userCalorieDao)
+    }
+
+    @Provides
+    @Singleton
+    fun providePreferencesDataStoreManager(
+        @ApplicationContext context: Context
+    ): PreferencesDataStoreManager {
+        return PreferencesDataStoreManager(context)
     }
 }

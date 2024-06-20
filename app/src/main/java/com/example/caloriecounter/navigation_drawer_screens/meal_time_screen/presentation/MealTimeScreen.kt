@@ -36,6 +36,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -48,6 +49,7 @@ import androidx.compose.ui.unit.sp
 import androidx.core.content.ContextCompat
 import androidx.navigation.NavHostController
 import com.example.caloriecounter.R
+import com.example.caloriecounter.app.data.preferences_data_store.PreferencesDataStoreManager
 import com.example.caloriecounter.custom_toasts.ErrorMessage
 import com.example.caloriecounter.custom_toasts.SuccessMessage
 import com.example.caloriecounter.navigation_drawer_screens.meal_time_screen.data.meal_time_alarms.CCAlarmManager
@@ -56,6 +58,8 @@ import com.maxkeppeker.sheets.core.models.base.rememberUseCaseState
 import com.maxkeppeler.sheets.clock.ClockDialog
 import com.maxkeppeler.sheets.clock.models.ClockConfig
 import com.maxkeppeler.sheets.clock.models.ClockSelection
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 import java.time.Instant
 import java.time.LocalTime
 import java.time.ZoneId
@@ -67,7 +71,9 @@ fun MealTimeScreen(
     navController: NavHostController,
     context: Context = LocalContext.current,
     mealTimeScreenVM: MealTimeScreenVM,
-    ccAlarmManager: CCAlarmManager
+    ccAlarmManager: CCAlarmManager,
+    preferencesDataStoreManager: PreferencesDataStoreManager,
+    scope: CoroutineScope = rememberCoroutineScope()
 ) {
     val mealList = listOf(
         "Breakfast",
@@ -120,6 +126,18 @@ fun MealTimeScreen(
         }
     }
 
+    val notificationsFlow = preferencesDataStoreManager
+        .notificationsStatus
+        .collectAsState(initial = null)
+        .value
+    var enableNotifications by rememberSaveable { mutableStateOf(
+        notificationsFlow ?: false
+    ) }
+    LaunchedEffect(notificationsFlow) {
+        if(notificationsFlow != null) {
+            enableNotifications = notificationsFlow
+        }
+    }
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         topBar = {
@@ -144,17 +162,16 @@ fun MealTimeScreen(
                 .padding(
                     top = innerPadding.calculateTopPadding(),
                     bottom = innerPadding.calculateBottomPadding(),
-                    start = 16.dp,
-                    end = 16.dp
                 ),
             verticalArrangement = Arrangement.spacedBy(32.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Spacer(modifier = Modifier.height(0.dp))
 
-            var enableNotifications by rememberSaveable { mutableStateOf(false) }
             Row(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
@@ -163,7 +180,9 @@ fun MealTimeScreen(
                 Switch(
                     checked = enableNotifications,
                     onCheckedChange = {
-                        enableNotifications = it
+                        scope.launch {
+                            preferencesDataStoreManager.storeNotificationsStatus(it)
+                        }
                         if(enableNotifications) {
                             ccAlarmManager.scheduleMealsAlarms()
                         } else {
@@ -191,7 +210,8 @@ fun MealTimeScreen(
                 val formatterFromMillisToDate = DateTimeFormatter.ofPattern("HH:mm").withZone(ZoneId.systemDefault())
                 LazyColumn(
                     verticalArrangement = Arrangement.spacedBy(32.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    modifier = Modifier.padding(horizontal = 16.dp)
                 ) {
                     items(allMeals) { meal ->
                         Row(

@@ -1,7 +1,5 @@
 package com.example.caloriecounter.navigation
 
-import android.app.Notification
-import android.app.NotificationManager
 import android.content.SharedPreferences
 import androidx.compose.runtime.Composable
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -10,6 +8,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
+import com.example.caloriecounter.app.data.preferences_data_store.PreferencesDataStoreManager
 import com.example.caloriecounter.auth.google_auth.GoogleAuthUiClient
 import com.example.caloriecounter.auth.presentation.AuthScreen
 import com.example.caloriecounter.auth.presentation.AuthScreenVM
@@ -18,9 +17,9 @@ import com.example.caloriecounter.main_screens.screens.activity_screen.presentat
 import com.example.caloriecounter.main_screens.screens.activity_screen.presentation.ActivityScreenVM
 import com.example.caloriecounter.main_screens.screens.activity_screen.presentation.AddActivityScreen
 import com.example.caloriecounter.main_screens.screens.eating_screen.presentation.AddDishScreen
-import com.example.caloriecounter.main_screens.screens.eating_screen.presentation.dishes_screen.DishesScreen
 import com.example.caloriecounter.main_screens.screens.eating_screen.presentation.EatingScreen
 import com.example.caloriecounter.main_screens.screens.eating_screen.presentation.EatingScreenVM
+import com.example.caloriecounter.main_screens.screens.eating_screen.presentation.dishes_screen.DishesScreen
 import com.example.caloriecounter.main_screens.screens.home_screen.HomeScreen
 import com.example.caloriecounter.main_screens.screens.home_screen.HomeScreenVM
 import com.example.caloriecounter.navigation_drawer_screens.calculations_screen.CalculationsScreen
@@ -39,7 +38,8 @@ fun NavGraph(
     googleAuthUiClient: GoogleAuthUiClient,
     firebaseAuth: FirebaseAuth,
     sharedPreferences: SharedPreferences,
-    ccAlarmManager: CCAlarmManager
+    ccAlarmManager: CCAlarmManager,
+    preferencesDataStoreManager: PreferencesDataStoreManager
 ) {
     val navController = rememberNavController()
 
@@ -149,7 +149,8 @@ fun NavGraph(
             MealTimeScreen(
                 navController = navController,
                 mealTimeScreenVM = mealTimeScreenVM,
-                ccAlarmManager = ccAlarmManager
+                ccAlarmManager = ccAlarmManager,
+                preferencesDataStoreManager = preferencesDataStoreManager
             )
         }
     }

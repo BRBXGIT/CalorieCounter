@@ -8,6 +8,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import com.example.caloriecounter.app.data.preferences_data_store.PreferencesDataStoreManager
 import com.example.caloriecounter.auth.google_auth.GoogleAuthUiClient
 import com.example.caloriecounter.navigation.NavGraph
 import com.example.caloriecounter.navigation_drawer_screens.meal_time_screen.data.meal_time_alarms.CCAlarmManager
@@ -30,6 +31,9 @@ class MainActivity : ComponentActivity() {
     @Inject
     lateinit var ccAlarmManager: CCAlarmManager
 
+    @Inject
+    lateinit var preferencesDataStoreManager: PreferencesDataStoreManager
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -51,7 +55,8 @@ class MainActivity : ComponentActivity() {
                     googleAuthUiClient = googleAuthUiClient,
                     firebaseAuth = firebaseAuth,
                     sharedPreferences = sharedPreferences,
-                    ccAlarmManager = ccAlarmManager
+                    ccAlarmManager = ccAlarmManager,
+                    preferencesDataStoreManager = preferencesDataStoreManager
                 )
             }
         }
