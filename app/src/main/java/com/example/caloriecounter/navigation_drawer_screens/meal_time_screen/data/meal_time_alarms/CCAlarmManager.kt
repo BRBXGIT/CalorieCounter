@@ -11,6 +11,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
+import java.util.Calendar
 import javax.inject.Inject
 
 //Calorie counter alarm manager)
@@ -26,12 +27,26 @@ class CCAlarmManager @Inject constructor(
             mealTimeDao.getAllMealTime().collect { meals ->
                 meals.forEach { meal ->
                     if(meal.alarmTurnOn) {
+                        val intent = Intent(context, CCAlarmReceiver::class.java).apply {
+                            putExtra("mealName", meal.name)
+                        }
                         val pendingIntent = PendingIntent.getBroadcast(
                             context,
                             meal.id,
-                            Intent(context, CCAlarmReceiver::class.java),
+                            intent,
                             PendingIntent.FLAG_IMMUTABLE
                         )
+                        val hours = meal.time.split(":")[0].take(2).toInt()
+                        val minutes = meal.time.split(":")[1].take(2).toInt()
+                        val calendar = Calendar.getInstance().apply {
+                            set(Calendar.HOUR_OF_DAY, hours)
+                            set(Calendar.MINUTE, minutes)
+                            set(Calendar.SECOND, 0)
+                            set(Calendar.MILLISECOND, 0)
+                            if(timeInMillis <= System.currentTimeMillis()) {
+                                add(Calendar.DAY_OF_MONTH, 1)
+                            }
+                        }
 
                         alarmManager.setExactAndAllowWhileIdle(
                             AlarmManager.RTC_WAKEUP,

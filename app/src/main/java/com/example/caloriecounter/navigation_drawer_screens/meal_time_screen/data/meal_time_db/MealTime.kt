@@ -10,6 +10,6 @@ data class MealTime(
     @PrimaryKey
     val name: String,
     val id: Int,
-    val time: Long,
+    val time: String,
     val alarmTurnOn: Boolean = false
 )

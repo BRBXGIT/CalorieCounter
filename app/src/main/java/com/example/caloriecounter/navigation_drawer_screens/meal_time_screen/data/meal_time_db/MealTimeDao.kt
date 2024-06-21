@@ -13,7 +13,7 @@ interface MealTimeDao {
     suspend fun insertMealTime(mealTime: MealTime)
 
     @Query("UPDATE meal_time SET time = :time WHERE name = :name")
-    suspend fun updateMealTimeByName(time: Long, name: String)
+    suspend fun updateMealTimeByName(time: String, name: String)
 
     @Query("SELECT * FROM meal_time")
     fun getAllMealTime(): Flow<List<MealTime>>

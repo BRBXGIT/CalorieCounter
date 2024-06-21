@@ -7,7 +7,7 @@ interface MealTimeRepository {
 
     suspend fun insertMealTime(mealTime: MealTime)
 
-    suspend fun updateMealTimeByName(time: Long, name: String)
+    suspend fun updateMealTimeByName(time: String, name: String)
 
     fun getAllMealTime(): Flow<List<MealTime>>
 

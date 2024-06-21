@@ -60,12 +60,6 @@ import com.maxkeppeler.sheets.clock.models.ClockConfig
 import com.maxkeppeler.sheets.clock.models.ClockSelection
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
-import okhttp3.internal.format
-import java.time.Instant
-import java.time.LocalTime
-import java.time.ZoneId
-import java.time.ZoneOffset
-import java.time.format.DateTimeFormatter
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -88,7 +82,7 @@ fun MealTimeScreen(
             MealTime(
                 name = meal,
                 id = index,
-                time = 0
+                time = "00:00"
             )
         )
     }
@@ -204,7 +198,6 @@ fun MealTimeScreen(
                 .collectAsState(initial = emptyList())
                 .value
             AnimatedVisibility(enableNotifications) {
-                val formatter = DateTimeFormatter.ofPattern("HH:mm").withZone(ZoneOffset.UTC)
                 LazyColumn(
                     verticalArrangement = Arrangement.spacedBy(32.dp),
                     horizontalAlignment = Alignment.CenterHorizontally,
@@ -220,9 +213,8 @@ fun MealTimeScreen(
                                 val formattedMinutes = if (minutes < 10) "0$minutes" else "$minutes"
                                 val time = "$formattedHours:$formattedMinutes"
 
-                                val timeInMillis = LocalTime.parse(time, formatter).toSecondOfDay() * 1000L
                                 mealTimeScreenVM.updateMealTimeByName(
-                                    time = timeInMillis,
+                                    time = time,
                                     name = meal.name
                                 )
                             },
@@ -250,19 +242,17 @@ fun MealTimeScreen(
                                     modifier = Modifier.align(Alignment.CenterStart)
                                 )
 
-                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-                                    Text(
-                                        text = formatter.format(Instant.ofEpochMilli(meal.time)),
-                                        fontSize = 18.sp,
-                                        modifier = Modifier.align(Alignment.Center)
-                                    )
-                                }
-
+                                Text(
+                                    text = meal.time,
+                                    fontSize = 18.sp,
+                                    modifier = Modifier.align(Alignment.Center)
+                                )
 
                                 Switch(
                                     checked = meal.alarmTurnOn,
                                     onCheckedChange = {
                                         mealTimeScreenVM.updateAlarmTurnOnByName(it, meal.name)
+                                        ccAlarmManager.scheduleMealsAlarms()
                                     },
                                     modifier = Modifier.align(Alignment.CenterEnd)
                                 )

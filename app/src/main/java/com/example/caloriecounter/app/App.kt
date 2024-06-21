@@ -13,7 +13,7 @@ class App: Application() {
     override fun onCreate() {
         super.onCreate()
         val channel = NotificationChannel(
-            "0",
+            "cc_notifications",
             "Calorie counter notifications",
             NotificationManager.IMPORTANCE_DEFAULT
         )
