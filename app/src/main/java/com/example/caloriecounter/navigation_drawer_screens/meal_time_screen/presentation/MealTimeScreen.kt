@@ -182,7 +182,8 @@ fun MealTimeScreen(
                             .fillMaxWidth()
                             .height(60.dp),
                         color = MaterialTheme.colorScheme.surfaceVariant,
-                        shape = RoundedCornerShape(10.dp)
+                        shape = RoundedCornerShape(10.dp),
+                        shadowElevation = 1.dp
                     ) {
                         Box(
                             modifier = Modifier
@@ -217,6 +218,10 @@ fun MealTimeScreen(
                             )
                         }
                     }
+                }
+                
+                item { 
+                    Spacer(modifier = Modifier.height(1.dp))
                 }
             }
 

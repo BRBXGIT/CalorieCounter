@@ -36,7 +36,7 @@ fun NutrientStatusBox(
 ) {
     Surface(
         shape = RoundedCornerShape(10.dp),
-        shadowElevation = 2.dp,
+        shadowElevation = 1.dp,
         color = MaterialTheme.colorScheme.surfaceVariant,
         modifier = Modifier
             .height(190.dp)

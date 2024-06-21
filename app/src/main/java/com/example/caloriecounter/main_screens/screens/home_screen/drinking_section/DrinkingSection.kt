@@ -57,7 +57,7 @@ fun DrinkingSection(
             .padding(horizontal = 16.dp),
         color = MaterialTheme.colorScheme.surfaceVariant,
         shape = RoundedCornerShape(20.dp),
-        shadowElevation = 2.dp
+        shadowElevation = 1.dp
     ) {
         Row(
             modifier = Modifier

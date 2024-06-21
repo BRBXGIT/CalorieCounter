@@ -44,6 +44,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalFocusManager
@@ -214,7 +215,12 @@ fun ProfileScreen(
                     value = userName,
                     onValueChange = { userName = it },
                     maxLines = 1,
-                    modifier = Modifier.width(220.dp),
+                    modifier = Modifier
+                        .width(220.dp)
+                        .shadow(
+                            elevation = 1.dp,
+                            shape = RoundedCornerShape(20.dp)
+                        ),
                     textStyle = LocalTextStyle.current.copy(textAlign = TextAlign.Center),
                     shape = RoundedCornerShape(20.dp),
                     colors = TextFieldDefaults.colors(

@@ -27,6 +27,7 @@ import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Shadow
 import androidx.compose.ui.res.painterResource
@@ -95,6 +96,7 @@ fun EatingScreen(
                 ) {
                     items(mealsList) { meal ->
                         Surface(
+                            shadowElevation = 1.dp,
                             color = MaterialTheme.colorScheme.surfaceVariant,
                             shape = RoundedCornerShape(10.dp),
                             onClick = {
@@ -102,8 +104,7 @@ fun EatingScreen(
                             },
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .height(64.dp)
-                                .animateContentSize(),
+                                .height(64.dp),
                         ) {
                             Box(
                                 modifier = Modifier
