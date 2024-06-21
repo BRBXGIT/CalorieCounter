@@ -20,6 +20,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.FabPosition
+import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -87,9 +88,7 @@ fun CalculationsScreen(
             )
         },
         floatingActionButton = {
-            ExtendedFloatingActionButton(
-                text = { Text(text = "Change my parameters") },
-                icon = {  },
+            FloatingActionButton(
                 onClick = {
                     if(weight.isBlank()) {
                         weightError = true
@@ -112,11 +111,14 @@ fun CalculationsScreen(
                         navController.navigateUp()
                     }
                 },
-                modifier = Modifier.height(38.dp),
                 containerColor = MaterialTheme.colorScheme.primary
-            )
-        },
-        floatingActionButtonPosition = FabPosition.Center
+            ) {
+                Icon(
+                    painter = painterResource(id = R.drawable.ic_check),
+                    contentDescription = null
+                )
+            }
+        }
     ) { innerPadding ->
         val mainColumnScroll = rememberScrollState()
         Column(
@@ -389,6 +391,8 @@ fun CalculationsScreen(
                     userTarget = 2
                 }
             }
+
+            Spacer(modifier = Modifier.height(0.dp))
         }
     }
 }

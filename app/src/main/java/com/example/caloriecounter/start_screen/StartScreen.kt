@@ -391,6 +391,8 @@ fun StartScreen(
                     userTarget = 2
                 }
             }
+
+            Spacer(modifier = Modifier.height(0.dp))
         }
     }
 }

@@ -59,6 +59,7 @@ import com.example.caloriecounter.custom_toasts.ErrorMessage
 import com.example.caloriecounter.custom_toasts.SuccessMessage
 import com.example.caloriecounter.navigation.AuthScreen
 import com.example.caloriecounter.navigation_drawer_screens.profile_screen.data.User
+import com.example.caloriecounter.ui.theme.dimens
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -132,7 +133,7 @@ fun ProfileScreen(
                     .fillMaxSize()
                     .background(MaterialTheme.colorScheme.background),
                 horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.spacedBy(32.dp)
+                verticalArrangement = Arrangement.spacedBy(MaterialTheme.dimens.profileScreenSpacer)
             ) {
                 val user = User(
                     name = firebaseAuth.currentUser?.displayName,
