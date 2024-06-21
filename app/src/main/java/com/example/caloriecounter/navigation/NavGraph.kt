@@ -1,6 +1,7 @@
 package com.example.caloriecounter.navigation
 
 import android.content.SharedPreferences
+import android.icu.text.IDNA.Info
 import androidx.compose.runtime.Composable
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -24,6 +25,7 @@ import com.example.caloriecounter.main_screens.screens.home_screen.HomeScreen
 import com.example.caloriecounter.main_screens.screens.home_screen.HomeScreenVM
 import com.example.caloriecounter.navigation_drawer_screens.calculations_screen.CalculationsScreen
 import com.example.caloriecounter.navigation_drawer_screens.calculations_screen.CalculationsScreenVM
+import com.example.caloriecounter.navigation_drawer_screens.info_screen.InfoScreen
 import com.example.caloriecounter.navigation_drawer_screens.meal_time_screen.data.meal_time_alarms.CCAlarmManager
 import com.example.caloriecounter.navigation_drawer_screens.meal_time_screen.presentation.MealTimeScreen
 import com.example.caloriecounter.navigation_drawer_screens.meal_time_screen.presentation.MealTimeScreenVM
@@ -151,6 +153,10 @@ fun NavGraph(
                 mealTimeScreenVM = mealTimeScreenVM,
                 ccAlarmManager = ccAlarmManager,
             )
+        }
+
+        composable<InfoScreen> {
+            InfoScreen(navController = navController)
         }
     }
 }

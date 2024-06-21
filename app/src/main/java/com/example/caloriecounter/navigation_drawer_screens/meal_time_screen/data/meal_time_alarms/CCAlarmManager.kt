@@ -37,6 +37,7 @@ class CCAlarmManager @Inject constructor(
                     PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
                 )
 
+                //Cancel alarm if it exists, doesn't work
                 alarmManager.cancel(pendingIntent)
 
                 val hours = meal.time.split(":")[0].take(2).toInt()

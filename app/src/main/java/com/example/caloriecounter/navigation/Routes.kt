@@ -38,3 +38,6 @@ object CalculationsScreen
 
 @Serializable
 object MealTimeScreen
+
+@Serializable
+object InfoScreen

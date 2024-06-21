@@ -40,15 +40,15 @@ fun MainScreensBottomBar(
         ),
         NavItem(
             title = "Eating",
-            defaultIcon = R.drawable.ic_eating_outlined,
-            chosenIcon = R.drawable.ic_eating_filled,
+            defaultIcon = R.drawable.ic_fish_outlined,
+            chosenIcon = R.drawable.ic_fish_filled,
             route = EatingScreen,
             destination = "EatingScreen"
         ),
         NavItem(
             title = "Activity",
-            defaultIcon = R.drawable.ic_run_outlined,
-            chosenIcon = R.drawable.ic_run_filled,
+            defaultIcon = R.drawable.ic_activity_outlined,
+            chosenIcon = R.drawable.ic_activity_filled,
             route = ActivityScreen,
             destination = "ActivityScreen"
         )

@@ -18,6 +18,7 @@ import com.example.caloriecounter.navigation.ActivityScreen
 import com.example.caloriecounter.navigation.CalculationsScreen
 import com.example.caloriecounter.navigation.DishesScreen
 import com.example.caloriecounter.navigation.EatingScreen
+import com.example.caloriecounter.navigation.InfoScreen
 import com.example.caloriecounter.navigation.MealTimeScreen
 import com.example.caloriecounter.navigation.ProfileScreen
 
@@ -87,6 +88,25 @@ fun NavigationDrawerItems(
     )
     HorizontalDivider(
         thickness = 1.dp
+    )
+    NavigationDrawerItem(
+        label = { Text(
+            text = "Info",
+            fontSize = 16.sp
+        ) },
+        selected = false,
+        onClick = { navController.navigate(InfoScreen) },
+        icon = {
+            Icon(
+                painter = painterResource(id = R.drawable.ic_info),
+                contentDescription = null
+            )
+        },
+        colors = NavigationDrawerItemDefaults.colors(
+            unselectedContainerColor = Color.Transparent,
+            unselectedTextColor = MaterialTheme.colorScheme.onPrimary
+        ),
+        shape = RoundedCornerShape(0.dp)
     )
     NavigationDrawerItem(
         label = { Text(
