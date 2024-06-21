@@ -1,12 +1,10 @@
 package com.example.caloriecounter.navigation_drawer_screens.meal_time_screen.di
 
 import android.app.AlarmManager
-import android.app.NotificationManager
 import android.app.Service
 import android.content.Context
 import androidx.room.Room
 import com.example.caloriecounter.navigation_drawer_screens.meal_time_screen.data.meal_time_alarms.CCAlarmManager
-import com.example.caloriecounter.navigation_drawer_screens.meal_time_screen.data.meal_time_alarms.CCAlarmReceiver
 import com.example.caloriecounter.navigation_drawer_screens.meal_time_screen.data.meal_time_db.MealTimeDao
 import com.example.caloriecounter.navigation_drawer_screens.meal_time_screen.data.meal_time_db.MealTimeDb
 import com.example.caloriecounter.navigation_drawer_screens.meal_time_screen.data.repository.MealTimeScreenRepositoryImpl
@@ -48,11 +46,11 @@ object MealTimeScreenModule {
     fun provideCCAlarmManager(
         @ApplicationContext context: Context,
         alarmManager: AlarmManager,
-        mealTimeDao: MealTimeDao
+        mealTimeScreenRepositoryImpl: MealTimeScreenRepositoryImpl
     ): CCAlarmManager {
         return CCAlarmManager(
             alarmManager = alarmManager,
-            mealTimeDao = mealTimeDao,
+            mealTimeScreenRepositoryImpl = mealTimeScreenRepositoryImpl,
             context = context
         )
     }

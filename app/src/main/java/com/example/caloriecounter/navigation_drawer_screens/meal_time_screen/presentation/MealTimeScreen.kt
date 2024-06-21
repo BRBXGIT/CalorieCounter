@@ -168,7 +168,7 @@ fun MealTimeScreen(
                                 name = meal.name
                             )
                             if(isOn) {
-                                ccAlarmManager.scheduleMealsAlarms()
+                                ccAlarmManager.scheduleMealAlarm(meal.name)
                             }
                         },
                         config = ClockConfig(
@@ -206,10 +206,11 @@ fun MealTimeScreen(
                                 onCheckedChange = { isOn ->
                                     if(isOn) {
                                         mealTimeScreenVM.updateAlarmTurnOnByName(true, meal.name)
-                                        ccAlarmManager.scheduleMealsAlarms()
-                                    } else {
+                                        ccAlarmManager.scheduleMealAlarm(meal.name)
+                                    }
+                                    if(!isOn) {
                                         mealTimeScreenVM.updateAlarmTurnOnByName(false, meal.name)
-                                        ccAlarmManager.cancelMealsAlarms()
+                                        ccAlarmManager.cancelMealAlarm(meal.name)
                                     }
                                 },
                                 modifier = Modifier.align(Alignment.CenterEnd)

@@ -20,4 +20,7 @@ interface MealTimeDao {
 
     @Query("UPDATE meal_time SET alarmTurnOn = :isOn WHERE name = :name")
     suspend fun updateAlarmStatusByName(isOn: Boolean, name: String)
+
+    @Query("SELECT * FROM meal_time WHERE name = :name")
+    fun getMealTimeByName(name: String): Flow<MealTime>
 }
