@@ -4,8 +4,9 @@ import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
-import android.os.SystemClock
+import android.util.Log
 import com.example.caloriecounter.navigation_drawer_screens.meal_time_screen.data.meal_time_db.MealTimeDao
+import com.example.caloriecounter.navigation_drawer_screens.meal_time_screen.presentation.MealTimeScreenVM
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -27,6 +28,7 @@ class CCAlarmManager @Inject constructor(
             mealTimeDao.getAllMealTime().collect { meals ->
                 meals.forEach { meal ->
                     if(meal.alarmTurnOn) {
+                        Log.d("XXXX", "start alarm for: ${meal.name}")
                         val intent = Intent(context, CCAlarmReceiver::class.java).apply {
                             putExtra("mealName", meal.name)
                         }
@@ -43,15 +45,13 @@ class CCAlarmManager @Inject constructor(
                             set(Calendar.MINUTE, minutes)
                             set(Calendar.SECOND, 0)
                             set(Calendar.MILLISECOND, 0)
-                            if(timeInMillis <= System.currentTimeMillis()) {
-                                add(Calendar.DAY_OF_MONTH, 1)
-                            }
                         }
 
-                        alarmManager.setExactAndAllowWhileIdle(
+                        alarmManager.setRepeating(
                             AlarmManager.RTC_WAKEUP,
-                            SystemClock.elapsedRealtime() + 5000,
-                            pendingIntent
+                            calendar.timeInMillis,
+                            AlarmManager.INTERVAL_DAY,
+                            pendingIntent,
                         )
                     }
                 }
@@ -61,18 +61,33 @@ class CCAlarmManager @Inject constructor(
         }
     }
 
-    fun cancelMealsAlarms() {
+    fun cancelMealsAlarms(
+        cancelAll: Boolean = false,
+        mealTimeScreenVM: MealTimeScreenVM
+    ) {
         coroutineScope.launch {
             mealTimeDao.getAllMealTime().collect { meals ->
                 meals.forEach { meal ->
-                    val pendingIntent = PendingIntent.getBroadcast(
-                        context,
-                        meal.id,
-                        Intent(context, CCAlarmReceiver::class.java),
-                        PendingIntent.FLAG_IMMUTABLE
-                    )
-
-                    alarmManager.cancel(pendingIntent)
+                    if(cancelAll) {
+                        val pendingIntent = PendingIntent.getBroadcast(
+                            context,
+                            meal.id,
+                            Intent(context, CCAlarmReceiver::class.java),
+                            PendingIntent.FLAG_IMMUTABLE
+                        )
+                        alarmManager.cancel(pendingIntent)
+                        mealTimeScreenVM.updateAlarmTurnOnByName(false, meal.name)
+                    } else {
+                        if(meal.alarmTurnOn) {
+                            val pendingIntent = PendingIntent.getBroadcast(
+                                context,
+                                meal.id,
+                                Intent(context, CCAlarmReceiver::class.java),
+                                PendingIntent.FLAG_IMMUTABLE
+                            )
+                            alarmManager.cancel(pendingIntent)
+                        }
+                    }
                 }
             }
 

@@ -175,9 +175,15 @@ fun MealTimeScreen(
 
                 Switch(
                     checked = enableNotifications,
-                    onCheckedChange = {
+                    onCheckedChange = { isOn ->
                         scope.launch {
-                            preferencesDataStoreManager.storeNotificationsStatus(it)
+                            preferencesDataStoreManager.storeNotificationsStatus(isOn)
+                        }
+                        if(!isOn) {
+                            ccAlarmManager.cancelMealsAlarms(
+                                cancelAll = true,
+                                mealTimeScreenVM = mealTimeScreenVM
+                            )
                         }
                     },
                     thumbContent = {
@@ -250,9 +256,15 @@ fun MealTimeScreen(
 
                                 Switch(
                                     checked = meal.alarmTurnOn,
-                                    onCheckedChange = {
-                                        mealTimeScreenVM.updateAlarmTurnOnByName(it, meal.name)
-                                        ccAlarmManager.scheduleMealsAlarms()
+                                    onCheckedChange = { isOn ->
+                                        mealTimeScreenVM.updateAlarmTurnOnByName(isOn, meal.name)
+                                        if(isOn) {
+                                            ccAlarmManager.scheduleMealsAlarms()
+                                        } else {
+                                            ccAlarmManager.cancelMealsAlarms(
+                                                mealTimeScreenVM = mealTimeScreenVM
+                                            )
+                                        }
                                     },
                                     modifier = Modifier.align(Alignment.CenterEnd)
                                 )
