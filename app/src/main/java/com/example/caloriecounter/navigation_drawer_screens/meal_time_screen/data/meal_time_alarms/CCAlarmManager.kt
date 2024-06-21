@@ -36,6 +36,9 @@ class CCAlarmManager @Inject constructor(
                     intent,
                     PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
                 )
+
+                alarmManager.cancel(pendingIntent)
+
                 val hours = meal.time.split(":")[0].take(2).toInt()
                 val minutes = meal.time.split(":")[1].take(2).toInt()
                 val calendar = Calendar.getInstance().apply {
