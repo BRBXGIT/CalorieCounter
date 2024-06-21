@@ -12,8 +12,11 @@ import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Button
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ExtendedFloatingActionButton
+import androidx.compose.material3.FabPosition
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -96,11 +99,10 @@ fun AddActivityScreen(
                 }
             )
         },
-        bottomBar = { BottomAppBar(
-            tonalElevation = 0.dp,
-            modifier = Modifier.height(78.dp)
-        ) {
-            Button(
+        floatingActionButton = {
+            ExtendedFloatingActionButton(
+                text = { Text(text = "Add activity") },
+                icon = {  },
                 onClick = {
                     if(name.isBlank()) {
                         nameError = true
@@ -114,16 +116,14 @@ fun AddActivityScreen(
                             spentCalories = calorieAmount.toInt(),
                             time = selectedTimeInFormat
                         ))
-                        navController.popBackStack()
+                        navController.navigateUp()
                     }
                 },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp)
-            ) {
-                Text(text = "Add activity")
-            }
-        } }
+                modifier = Modifier.height(38.dp),
+                containerColor = MaterialTheme.colorScheme.primary
+            )
+        },
+        floatingActionButtonPosition = FabPosition.Center
     ) { innerPadding ->
         Column(
             modifier = Modifier

@@ -21,6 +21,8 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuBox
+import androidx.compose.material3.ExtendedFloatingActionButton
+import androidx.compose.material3.FabPosition
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
@@ -60,8 +62,60 @@ fun StartScreen(
     sharedPreferences: SharedPreferences
 ) {
     val mainColumnScroll = rememberScrollState()
+
+    var weight by rememberSaveable { mutableStateOf("") }
+    weight = weight.filter { it.isDigit() }
+    var height by rememberSaveable { mutableStateOf("") }
+    height = height.filter { it.isDigit() }
+    var age by rememberSaveable { mutableStateOf("") }
+    age = age.filter { it.isDigit() }
+    var sex by rememberSaveable { mutableStateOf("Male") }
+    var activity by rememberSaveable { mutableDoubleStateOf(1.2) }
+
+    var weightError by rememberSaveable { mutableStateOf(false) }
+    var heightError by rememberSaveable { mutableStateOf(false) }
+    var ageError by rememberSaveable { mutableStateOf(false) }
+
+    var userTarget by rememberSaveable { mutableIntStateOf(0) }
     Scaffold(
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier.fillMaxSize(),
+        floatingActionButton = {
+            ExtendedFloatingActionButton(
+                text = { Text(text = "Let's start") },
+                icon = {  },
+                onClick = {
+                    if(weight.isBlank()) {
+                        weightError = true
+                    }
+                    if(height.isBlank()) {
+                        heightError = true
+                    }
+                    if(age.isBlank()) {
+                        ageError = true
+                    }
+                    if((!ageError) && (!heightError) && (!weightError)) {
+                        startScreenVM.storeCalculatedUserCalorie(
+                            weight = weight.toInt(),
+                            age = age.toInt(),
+                            height = height.toInt(),
+                            activityCoefficient = activity,
+                            sex = sex,
+                            target = userTarget
+                        )
+                        sharedPreferences.edit().apply {
+                            putBoolean("calorieDataReceived", true)
+                            apply()
+                        }
+                        navController.navigate(HomeScreen) {
+                            popUpTo(0)
+                        }
+                    }
+                },
+                modifier = Modifier.height(38.dp),
+                containerColor = MaterialTheme.colorScheme.primary
+            )
+        },
+        floatingActionButtonPosition = FabPosition.Center
     ) { innerPadding ->
         Column(
             modifier = Modifier
@@ -87,19 +141,6 @@ fun StartScreen(
                 text = "Before you start we need to calculate your parameters",
                 textAlign = TextAlign.Center
             )
-
-            var weight by rememberSaveable { mutableStateOf("") }
-            weight = weight.filter { it.isDigit() }
-            var height by rememberSaveable { mutableStateOf("") }
-            height = height.filter { it.isDigit() }
-            var age by rememberSaveable { mutableStateOf("") }
-            age = age.filter { it.isDigit() }
-            var sex by rememberSaveable { mutableStateOf("Male") }
-            var activity by rememberSaveable { mutableDoubleStateOf(1.2) }
-
-            var weightError by rememberSaveable { mutableStateOf(false) }
-            var heightError by rememberSaveable { mutableStateOf(false) }
-            var ageError by rememberSaveable { mutableStateOf(false) }
 
             LaunchedEffect(
                 key1 = weightError,
@@ -326,7 +367,6 @@ fun StartScreen(
                 color = MaterialTheme.colorScheme.onSurface,
             )
 
-            var userTarget by rememberSaveable { mutableIntStateOf(0) }
             Column(
                 verticalArrangement = Arrangement.spacedBy(16.dp),
                 horizontalAlignment = Alignment.Start,
@@ -350,59 +390,6 @@ fun StartScreen(
                 ) {
                     userTarget = 2
                 }
-            }
-            
-            Spacer(modifier = Modifier.weight(1f))
-
-            Button(
-                onClick = {
-                    if(weight.isBlank()) {
-                        weightError = true
-                    }
-                    if(height.isBlank()) {
-                        heightError = true
-                    }
-                    if(age.isBlank()) {
-                        ageError = true
-                    }
-                    if((!ageError) && (!heightError) && (!weightError)) {
-                        startScreenVM.storeCalculatedUserCalorie(
-                            weight = weight.toInt(),
-                            age = age.toInt(),
-                            height = height.toInt(),
-                            activityCoefficient = activity,
-                            sex = sex,
-                            target = userTarget
-                        )
-                        sharedPreferences.edit().apply {
-                            putBoolean("calorieDataReceived", true)
-                            apply()
-                        }
-                        navController.navigate(HomeScreen) {
-                            popUpTo(0)
-                        }
-                    }
-                },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(start = 16.dp, end = 16.dp, bottom = 16.dp)
-                    .height(48.dp)
-                    .clip(RoundedCornerShape(100.dp))
-                    .background(
-                        Brush.horizontalGradient(
-                            listOf(
-                                MaterialTheme.colorScheme.primary,
-                                MaterialTheme.colorScheme.secondary
-                            )
-                        )
-                    ),
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = Color.Transparent
-                )
-            ) {
-                Text(
-                    text = "LET'S START"
-                )
             }
         }
     }

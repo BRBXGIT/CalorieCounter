@@ -17,6 +17,8 @@ import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Button
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ExtendedFloatingActionButton
+import androidx.compose.material3.FabPosition
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -94,10 +96,10 @@ fun AddDishScreen(
                 }
             )
         },
-        bottomBar = { BottomAppBar(
-            tonalElevation = 0.dp,
-        ) {
-            Button(
+        floatingActionButton = {
+            ExtendedFloatingActionButton(
+                text = { Text(text = "Add dish") },
+                icon = {  },
                 onClick = {
                     if(calorieAmount.isBlank()) {
                         calorieAmountError = true
@@ -116,16 +118,14 @@ fun AddDishScreen(
                             measureInGram = measure.toInt(),
                             type = typeOfDish
                         ))
-                        navController.popBackStack()
+                        navController.navigateUp()
                     }
                 },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp)
-            ) {
-                Text(text = "Add dish")
-            }
-        } }
+                modifier = Modifier.height(38.dp),
+                containerColor = MaterialTheme.colorScheme.primary
+            )
+        },
+        floatingActionButtonPosition = FabPosition.Center
     ) { innerPadding ->
         val columnScroll = rememberScrollState()
         
