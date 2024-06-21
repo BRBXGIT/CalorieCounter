@@ -12,13 +12,11 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -37,7 +35,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -49,7 +46,6 @@ import androidx.compose.ui.unit.sp
 import androidx.core.content.ContextCompat
 import androidx.navigation.NavHostController
 import com.example.caloriecounter.R
-import com.example.caloriecounter.app.data.preferences_data_store.PreferencesDataStoreManager
 import com.example.caloriecounter.custom_toasts.ErrorMessage
 import com.example.caloriecounter.custom_toasts.SuccessMessage
 import com.example.caloriecounter.navigation_drawer_screens.meal_time_screen.data.meal_time_alarms.CCAlarmManager
@@ -58,8 +54,6 @@ import com.maxkeppeker.sheets.core.models.base.rememberUseCaseState
 import com.maxkeppeler.sheets.clock.ClockDialog
 import com.maxkeppeler.sheets.clock.models.ClockConfig
 import com.maxkeppeler.sheets.clock.models.ClockSelection
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -68,8 +62,6 @@ fun MealTimeScreen(
     context: Context = LocalContext.current,
     mealTimeScreenVM: MealTimeScreenVM,
     ccAlarmManager: CCAlarmManager,
-    preferencesDataStoreManager: PreferencesDataStoreManager,
-    scope: CoroutineScope = rememberCoroutineScope()
 ) {
     val mealList = listOf(
         "Breakfast",
@@ -121,19 +113,6 @@ fun MealTimeScreen(
             }
         }
     }
-
-    val notificationsFlow = preferencesDataStoreManager
-        .notificationsStatus
-        .collectAsState(initial = null)
-        .value
-    var enableNotifications by rememberSaveable { mutableStateOf(
-        notificationsFlow ?: false
-    ) }
-    LaunchedEffect(notificationsFlow) {
-        if(notificationsFlow != null) {
-            enableNotifications = notificationsFlow
-        }
-    }
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         topBar = {
@@ -164,111 +143,77 @@ fun MealTimeScreen(
         ) {
             Spacer(modifier = Modifier.height(0.dp))
 
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                Text(text = "Enable notifications")
-
-                Switch(
-                    checked = enableNotifications,
-                    onCheckedChange = { isOn ->
-                        scope.launch {
-                            preferencesDataStoreManager.storeNotificationsStatus(isOn)
-                        }
-                        if(!isOn) {
-                            ccAlarmManager.cancelMealsAlarms(
-                                cancelAll = true,
-                                mealTimeScreenVM = mealTimeScreenVM
-                            )
-                        }
-                    },
-                    thumbContent = {
-                        if(enableNotifications) {
-                            Icon(
-                                painter = painterResource(id = R.drawable.ic_check),
-                                contentDescription = null,
-                                modifier = Modifier.size(16.dp),
-                                tint = MaterialTheme.colorScheme.background
-                            )
-                        }
-                    }
-                )
-            }
-
             val allMeals = mealTimeScreenVM
                 .getAllMealTime()
                 .collectAsState(initial = emptyList())
                 .value
-            AnimatedVisibility(enableNotifications) {
-                LazyColumn(
-                    verticalArrangement = Arrangement.spacedBy(32.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    modifier = Modifier.padding(horizontal = 16.dp)
-                ) {
-                    items(allMeals) { meal ->
-                        val clockState = rememberUseCaseState()
-                        ClockDialog(
-                            state = clockState,
-                            selection = ClockSelection.HoursMinutes { hours, minutes ->
-                                //This clock dialog has bug with "0", i solved it with this method
-                                val formattedHours = if (hours < 10) "0$hours" else "$hours"
-                                val formattedMinutes = if (minutes < 10) "0$minutes" else "$minutes"
-                                val time = "$formattedHours:$formattedMinutes"
+            LazyColumn(
+                verticalArrangement = Arrangement.spacedBy(32.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = Modifier.padding(horizontal = 16.dp)
+            ) {
+                items(allMeals) { meal ->
+                    val clockState = rememberUseCaseState()
+                    val isOn = meal.alarmTurnOn
+                    ClockDialog(
+                        state = clockState,
+                        selection = ClockSelection.HoursMinutes { hours, minutes ->
+                            //This clock dialog has bug with "0", i solved it with this method
+                            val formattedHours = if (hours < 10) "0$hours" else "$hours"
+                            val formattedMinutes = if (minutes < 10) "0$minutes" else "$minutes"
+                            val time = "$formattedHours:$formattedMinutes"
 
-                                mealTimeScreenVM.updateMealTimeByName(
-                                    time = time,
-                                    name = meal.name
-                                )
-                            },
-                            config = ClockConfig(
-                                is24HourFormat = true
+                            mealTimeScreenVM.updateMealTimeByName(
+                                time = time,
+                                name = meal.name
                             )
+                            if(isOn) {
+                                ccAlarmManager.scheduleMealsAlarms()
+                            }
+                        },
+                        config = ClockConfig(
+                            is24HourFormat = true
                         )
+                    )
 
-                        Surface(
-                            onClick = { clockState.show() },
+                    Surface(
+                        onClick = { clockState.show() },
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(60.dp),
+                        color = MaterialTheme.colorScheme.surfaceVariant,
+                        shape = RoundedCornerShape(10.dp)
+                    ) {
+                        Box(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .height(60.dp),
-                            color = MaterialTheme.colorScheme.surfaceVariant,
-                            shape = RoundedCornerShape(10.dp)
+                                .padding(horizontal = 16.dp)
                         ) {
-                            Box(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(horizontal = 16.dp)
-                            ) {
-                                Text(
-                                    text = meal.name,
-                                    fontSize = 18.sp,
-                                    modifier = Modifier.align(Alignment.CenterStart)
-                                )
+                            Text(
+                                text = meal.name,
+                                fontSize = 18.sp,
+                                modifier = Modifier.align(Alignment.CenterStart)
+                            )
 
-                                Text(
-                                    text = meal.time,
-                                    fontSize = 18.sp,
-                                    modifier = Modifier.align(Alignment.Center)
-                                )
+                            Text(
+                                text = meal.time,
+                                fontSize = 18.sp,
+                                modifier = Modifier.align(Alignment.Center)
+                            )
 
-                                Switch(
-                                    checked = meal.alarmTurnOn,
-                                    onCheckedChange = { isOn ->
-                                        mealTimeScreenVM.updateAlarmTurnOnByName(isOn, meal.name)
-                                        if(isOn) {
-                                            ccAlarmManager.scheduleMealsAlarms()
-                                        } else {
-                                            ccAlarmManager.cancelMealsAlarms(
-                                                mealTimeScreenVM = mealTimeScreenVM
-                                            )
-                                        }
-                                    },
-                                    modifier = Modifier.align(Alignment.CenterEnd)
-                                )
-                            }
+                            Switch(
+                                checked = isOn,
+                                onCheckedChange = { isOn ->
+                                    if(isOn) {
+                                        mealTimeScreenVM.updateAlarmTurnOnByName(true, meal.name)
+                                        ccAlarmManager.scheduleMealsAlarms()
+                                    } else {
+                                        mealTimeScreenVM.updateAlarmTurnOnByName(false, meal.name)
+                                        ccAlarmManager.cancelMealsAlarms()
+                                    }
+                                },
+                                modifier = Modifier.align(Alignment.CenterEnd)
+                            )
                         }
                     }
                 }

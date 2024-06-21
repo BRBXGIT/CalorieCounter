@@ -150,7 +150,6 @@ fun NavGraph(
                 navController = navController,
                 mealTimeScreenVM = mealTimeScreenVM,
                 ccAlarmManager = ccAlarmManager,
-                preferencesDataStoreManager = preferencesDataStoreManager
             )
         }
     }

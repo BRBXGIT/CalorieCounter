@@ -45,6 +45,9 @@ class CCAlarmManager @Inject constructor(
                             set(Calendar.MINUTE, minutes)
                             set(Calendar.SECOND, 0)
                             set(Calendar.MILLISECOND, 0)
+                            if(timeInMillis <= System.currentTimeMillis()) {
+                                add(Calendar.DAY_OF_MONTH, 1)
+                            }
                         }
 
                         alarmManager.setRepeating(
@@ -61,14 +64,11 @@ class CCAlarmManager @Inject constructor(
         }
     }
 
-    fun cancelMealsAlarms(
-        cancelAll: Boolean = false,
-        mealTimeScreenVM: MealTimeScreenVM
-    ) {
+    fun cancelMealsAlarms() {
         coroutineScope.launch {
             mealTimeDao.getAllMealTime().collect { meals ->
                 meals.forEach { meal ->
-                    if(cancelAll) {
+                    if(!meal.alarmTurnOn) {
                         val pendingIntent = PendingIntent.getBroadcast(
                             context,
                             meal.id,
@@ -76,17 +76,6 @@ class CCAlarmManager @Inject constructor(
                             PendingIntent.FLAG_IMMUTABLE
                         )
                         alarmManager.cancel(pendingIntent)
-                        mealTimeScreenVM.updateAlarmTurnOnByName(false, meal.name)
-                    } else {
-                        if(meal.alarmTurnOn) {
-                            val pendingIntent = PendingIntent.getBroadcast(
-                                context,
-                                meal.id,
-                                Intent(context, CCAlarmReceiver::class.java),
-                                PendingIntent.FLAG_IMMUTABLE
-                            )
-                            alarmManager.cancel(pendingIntent)
-                        }
                     }
                 }
             }
