@@ -1,21 +1,15 @@
 package com.example.caloriecounter.main_screens.screens.home_screen.nutrients_indicators_section
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
+import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
@@ -36,9 +30,8 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
@@ -47,6 +40,11 @@ import androidx.compose.ui.unit.sp
 import com.example.caloriecounter.R
 import com.example.caloriecounter.main_screens.data.day_nutrient_data.nutrient.Nutrient
 import com.example.caloriecounter.main_screens.screens.home_screen.HomeScreenVM
+import com.maxkeppeker.sheets.core.models.base.rememberUseCaseState
+import com.maxkeppeler.sheets.color.ColorDialog
+import com.maxkeppeler.sheets.color.models.ColorConfig
+import com.maxkeppeler.sheets.color.models.ColorSelection
+import com.maxkeppeler.sheets.color.models.MultipleColors
 import kotlinx.coroutines.delay
 
 @Composable
@@ -137,40 +135,41 @@ fun AddNutrientBottomSheet(
                 keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number)
             )
 
-            val nutrientColor = listOf(
-                0xfffc87bf, 0xfff8e38a,
-                0xff6fe5e9, 0xff5be4b2,
-                0xffb95cf4
+            val nutrientColor = MultipleColors.ColorsInt(
+                Color(0xfffc87bf).toArgb(),
+                Color(0xfff8e38a).toArgb(),
+                Color(0xff6fe5e9).toArgb(),
+                Color(0xff5be4b2).toArgb(),
+                Color(0xffb95cf4).toArgb()
             )
-            var chosenColor by rememberSaveable { mutableLongStateOf(nutrientColor[0]) }
+            var chosenColor by rememberSaveable { mutableLongStateOf(0) }
 
-            LazyRow(
-                modifier = Modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween,
-                contentPadding = PaddingValues(
-                    start = 16.dp,
-                    end = 16.dp
-                )
+            val colorDialogState = rememberUseCaseState()
+            ColorDialog(
+                state = colorDialogState,
+                selection = ColorSelection(
+                    onSelectColor = {
+                        chosenColor = (it.toLong() and 0xffffffffL)
+                        Log.d("XXXX", chosenColor.toString())
+                    },
+                ),
+                config = ColorConfig(
+                    templateColors = nutrientColor,
+                ),
+            )
+
+            Button(
+                onClick = {
+                    colorDialogState.show()
+                },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(48.dp)
             ) {
-                items(nutrientColor) { color ->
-                    Box(
-                        modifier = Modifier
-                            .size(52.dp)
-                            .clip(CircleShape)
-                            .alpha(
-                                if (chosenColor == color) {
-                                    1f
-                                } else {
-                                    0.3f
-                                }
-                            )
-                            .background(Color(color))
-                            .clickable {
-                                chosenColor = color
-                            }
-                    )
-                }
+                Text(
+                    text = "Choose color",
+                    fontSize = 17.sp
+                )
             }
 
             Button(
