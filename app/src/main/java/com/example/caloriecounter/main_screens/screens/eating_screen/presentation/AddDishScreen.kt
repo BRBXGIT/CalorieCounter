@@ -19,6 +19,7 @@ import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.FabPosition
+import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -97,9 +98,7 @@ fun AddDishScreen(
             )
         },
         floatingActionButton = {
-            ExtendedFloatingActionButton(
-                text = { Text(text = "Add dish") },
-                icon = {  },
+            FloatingActionButton(
                 onClick = {
                     if(calorieAmount.isBlank()) {
                         calorieAmountError = true
@@ -121,9 +120,13 @@ fun AddDishScreen(
                         navController.navigateUp()
                     }
                 },
-                modifier = Modifier.height(38.dp),
+                modifier = Modifier
+                    .height(38.dp)
+                    .fillMaxWidth(0.5f),
                 containerColor = MaterialTheme.colorScheme.primary
-            )
+            ) {
+                Text(text = "Add dish")
+            }
         },
         floatingActionButtonPosition = FabPosition.Center
     ) { innerPadding ->

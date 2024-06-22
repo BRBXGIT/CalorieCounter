@@ -1,6 +1,6 @@
 package com.example.caloriecounter.main_screens.screens.home_screen.nutrients_indicators_section
 
-import android.util.Log
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -142,7 +143,7 @@ fun AddNutrientBottomSheet(
                 Color(0xff5be4b2).toArgb(),
                 Color(0xffb95cf4).toArgb()
             )
-            var chosenColor by rememberSaveable { mutableLongStateOf(0) }
+            var chosenColor by rememberSaveable { mutableLongStateOf(0xfffc87bf) }
 
             val colorDialogState = rememberUseCaseState()
             ColorDialog(
@@ -150,7 +151,6 @@ fun AddNutrientBottomSheet(
                 selection = ColorSelection(
                     onSelectColor = {
                         chosenColor = (it.toLong() and 0xffffffffL)
-                        Log.d("XXXX", chosenColor.toString())
                     },
                 ),
                 config = ColorConfig(
@@ -165,6 +165,14 @@ fun AddNutrientBottomSheet(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(48.dp)
+                    .border(
+                        width = 1.dp,
+                        color = MaterialTheme.colorScheme.primary,
+                        shape = RoundedCornerShape(100.dp)
+                    ),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color.Transparent
+                )
             ) {
                 Text(
                     text = "Choose color",

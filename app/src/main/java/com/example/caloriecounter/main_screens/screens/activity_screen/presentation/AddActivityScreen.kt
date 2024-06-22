@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Button
@@ -14,6 +15,7 @@ import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.FabPosition
+import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -100,9 +102,7 @@ fun AddActivityScreen(
             )
         },
         floatingActionButton = {
-            ExtendedFloatingActionButton(
-                text = { Text(text = "Add activity") },
-                icon = {  },
+            FloatingActionButton(
                 onClick = {
                     if(name.isBlank()) {
                         nameError = true
@@ -119,9 +119,13 @@ fun AddActivityScreen(
                         navController.navigateUp()
                     }
                 },
-                modifier = Modifier.height(38.dp),
+                modifier = Modifier
+                    .height(38.dp)
+                    .fillMaxWidth(0.5f),
                 containerColor = MaterialTheme.colorScheme.primary
-            )
+            ) {
+                Text(text = "Add activity")
+            }
         },
         floatingActionButtonPosition = FabPosition.Center
     ) { innerPadding ->
@@ -159,10 +163,11 @@ fun AddActivityScreen(
             )
             
             Button(
-                onClick = {
-                    durationState.show()
-                },
-                modifier = Modifier.fillMaxWidth(),
+                onClick = { durationState.show() },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(48.dp),
+                shape = RoundedCornerShape(10.dp)
             ) {
                 Text(text = "Select time")
             }
