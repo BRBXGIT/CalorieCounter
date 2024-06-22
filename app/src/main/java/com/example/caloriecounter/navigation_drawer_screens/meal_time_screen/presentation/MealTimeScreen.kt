@@ -50,6 +50,7 @@ import com.example.caloriecounter.custom_toasts.ErrorMessage
 import com.example.caloriecounter.custom_toasts.SuccessMessage
 import com.example.caloriecounter.navigation_drawer_screens.meal_time_screen.data.meal_time_alarms.CCAlarmManager
 import com.example.caloriecounter.navigation_drawer_screens.meal_time_screen.data.meal_time_db.MealTime
+import com.example.caloriecounter.navigation_drawer_screens.nav_drawer_screens_top_bar.NavigationDrawerScreensTopBar
 import com.maxkeppeker.sheets.core.models.base.rememberUseCaseState
 import com.maxkeppeler.sheets.clock.ClockDialog
 import com.maxkeppeler.sheets.clock.models.ClockConfig
@@ -116,18 +117,9 @@ fun MealTimeScreen(
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         topBar = {
-            CenterAlignedTopAppBar(
-                title = { Text(text = "Meal time") },
-                navigationIcon = {
-                    IconButton(
-                        onClick = { navController.navigateUp() }
-                    ) {
-                        Icon(
-                            painter = painterResource(id = R.drawable.ic_navigation_arrow_left),
-                            contentDescription = null
-                        )
-                    }
-                }
+            NavigationDrawerScreensTopBar(
+                navController = navController,
+                title = "Meal time"
             )
         },
     ) { innerPadding ->

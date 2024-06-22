@@ -59,6 +59,7 @@ import com.example.caloriecounter.app.data.user_calorie_db.UserCalorieData
 import com.example.caloriecounter.custom_toasts.ErrorMessage
 import com.example.caloriecounter.custom_toasts.SuccessMessage
 import com.example.caloriecounter.navigation.AuthScreen
+import com.example.caloriecounter.navigation_drawer_screens.nav_drawer_screens_top_bar.NavigationDrawerScreensTopBar
 import com.example.caloriecounter.navigation_drawer_screens.profile_screen.data.User
 import com.example.caloriecounter.ui.theme.dimens
 import com.google.firebase.auth.FirebaseAuth
@@ -80,18 +81,9 @@ fun ProfileScreen(
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         topBar = {
-            CenterAlignedTopAppBar(
-                title = { Text(text = "Profile") },
-                navigationIcon = {
-                    IconButton(
-                        onClick = { navController.navigateUp() }
-                    ) {
-                        Icon(
-                            painter = painterResource(id = R.drawable.ic_navigation_arrow_left),
-                            contentDescription = null
-                        )
-                    }
-                },
+            NavigationDrawerScreensTopBar(
+                navController = navController,
+                title = "Profile",
                 actions = {
                     var logOutDialogOpen by rememberSaveable { mutableStateOf(false) }
                     if(logOutDialogOpen) {

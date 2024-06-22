@@ -47,6 +47,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.caloriecounter.R
+import com.example.caloriecounter.navigation_drawer_screens.nav_drawer_screens_top_bar.NavigationDrawerScreensTopBar
 import com.example.caloriecounter.start_screen.UserTarget
 import kotlinx.coroutines.delay
 
@@ -73,18 +74,9 @@ fun CalculationsScreen(
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         topBar = {
-            CenterAlignedTopAppBar(
-                title = { Text(text = "Calculations") },
-                navigationIcon = {
-                    IconButton(
-                        onClick = { navController.navigateUp() }
-                    ) {
-                        Icon(
-                            painter = painterResource(id = R.drawable.ic_navigation_arrow_left),
-                            contentDescription = null
-                        )
-                    }
-                }
+            NavigationDrawerScreensTopBar(
+                navController = navController,
+                title = "Calculations"
             )
         },
         floatingActionButton = {

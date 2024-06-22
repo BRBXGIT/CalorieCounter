@@ -31,6 +31,7 @@ import com.example.caloriecounter.navigation_drawer_screens.meal_time_screen.pre
 import com.example.caloriecounter.navigation_drawer_screens.meal_time_screen.presentation.MealTimeScreenVM
 import com.example.caloriecounter.navigation_drawer_screens.profile_screen.presentation.ProfileScreen
 import com.example.caloriecounter.navigation_drawer_screens.profile_screen.presentation.ProfileScreenVM
+import com.example.caloriecounter.navigation_drawer_screens.settings_screen.SettingsScreen
 import com.example.caloriecounter.start_screen.StartScreen
 import com.example.caloriecounter.start_screen.StartScreenVM
 import com.google.firebase.auth.FirebaseAuth
@@ -157,6 +158,13 @@ fun NavGraph(
 
         composable<InfoScreen> {
             InfoScreen(navController = navController)
+        }
+
+        composable<SettingsScreen> {
+            SettingsScreen(
+                preferencesDataStoreManager = preferencesDataStoreManager,
+                navController = navController
+            )
         }
     }
 }

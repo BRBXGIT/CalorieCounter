@@ -41,3 +41,6 @@ object MealTimeScreen
 
 @Serializable
 object InfoScreen
+
+@Serializable
+object SettingsScreen

@@ -13,17 +13,17 @@ class PreferencesDataStoreManager(
     private val context: Context
 ) {
     private val Context.dataStore: DataStore<Preferences> by
-        preferencesDataStore(name = "foodies_preferences")
+        preferencesDataStore(name = "calorie_counter_preferences")
 
-    private val notificationsEnabledKey = booleanPreferencesKey("notificationsEnabled")
+    private val darkThemeKey = booleanPreferencesKey("darkThemeEnabled")
 
-    suspend fun storeNotificationsStatus(isOn: Boolean) {
+    suspend fun storeDarkTheme(isOn: Boolean) {
         context.dataStore.edit { preferences ->
-            preferences[notificationsEnabledKey] = isOn
+            preferences[darkThemeKey] = isOn
         }
     }
 
-    val notificationsStatus: Flow<Boolean?> = context.dataStore.data.map { preferences ->
-        preferences[notificationsEnabledKey]
+    val darkThemeStatus: Flow<Boolean?> = context.dataStore.data.map { preferences ->
+        preferences[darkThemeKey]
     }
 }

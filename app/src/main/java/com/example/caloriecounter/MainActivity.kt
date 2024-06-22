@@ -50,7 +50,9 @@ class MainActivity : ComponentActivity() {
 
         val sharedPreferences = getPreferences(Context.MODE_PRIVATE)
         setContent {
-            CalorieCounterTheme {
+            CalorieCounterTheme(
+                preferencesDataStoreManager = preferencesDataStoreManager
+            ) {
                 NavGraph(
                     googleAuthUiClient = googleAuthUiClient,
                     firebaseAuth = firebaseAuth,
