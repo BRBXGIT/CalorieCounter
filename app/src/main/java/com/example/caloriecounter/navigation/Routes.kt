@@ -44,3 +44,6 @@ object InfoScreen
 
 @Serializable
 object SettingsScreen
+
+@Serializable
+object RecoverPasswordScreen

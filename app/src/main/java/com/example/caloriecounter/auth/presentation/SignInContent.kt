@@ -17,6 +17,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.ClickableText
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.HorizontalDivider
@@ -25,6 +26,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
@@ -41,10 +43,15 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
@@ -53,6 +60,7 @@ import com.example.caloriecounter.auth.google_auth.GoogleAuthUiClient
 import com.example.caloriecounter.auth.google_auth.GoogleSignInVM
 import com.example.caloriecounter.custom_toasts.ErrorMessage
 import com.example.caloriecounter.navigation.HomeScreen
+import com.example.caloriecounter.navigation.RecoverPasswordScreen
 import com.example.caloriecounter.navigation.StartScreen
 import com.example.caloriecounter.ui.theme.dimens
 import kotlinx.coroutines.CoroutineScope
@@ -62,13 +70,13 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun SignInContent(
-    authScreenVM: AuthScreenVM,
+    authVM: AuthVM,
     googleAuthUiClient: GoogleAuthUiClient,
     navController: NavHostController,
     googleSignInVM: GoogleSignInVM = viewModel<GoogleSignInVM>(),
     scope: CoroutineScope = rememberCoroutineScope(),
 ) {
-    val userCalorieData = authScreenVM.getUserCalorieData().collectAsState(initial = null).value
+    val userCalorieData = authVM.getUserCalorieData().collectAsState(initial = null).value
     Column(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -174,7 +182,7 @@ fun SignInContent(
                         passwordError = true
                     }
                     if((!passwordError) && (!emailError)) {
-                        if(!authScreenVM.signIn(email, password)) {
+                        if(!authVM.signIn(email, password)) {
                             authenticationError = true
                         } else {
                             if(userCalorieData == null) {
@@ -322,11 +330,17 @@ fun SignInContent(
         }
         
         Spacer(modifier = Modifier.height(MaterialTheme.dimens.signInScreenBottomSpacer))
-        
-        Text(
-            text = "Lost password?",
-            fontWeight = FontWeight.Bold
-        )
+
+        TextButton(
+            onClick = { navController.navigate(RecoverPasswordScreen) }
+        ) {
+            Text(
+                text = "Lost password?",
+                fontWeight = FontWeight.Bold,
+                fontSize = 16.sp,
+                color = MaterialTheme.colorScheme.onBackground
+            )
+        }
 
         Spacer(modifier = Modifier.weight(1f))
 

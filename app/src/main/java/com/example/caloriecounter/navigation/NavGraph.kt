@@ -1,7 +1,6 @@
 package com.example.caloriecounter.navigation
 
 import android.content.SharedPreferences
-import android.icu.text.IDNA.Info
 import androidx.compose.runtime.Composable
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -12,7 +11,8 @@ import androidx.navigation.toRoute
 import com.example.caloriecounter.app.data.preferences_data_store.PreferencesDataStoreManager
 import com.example.caloriecounter.auth.google_auth.GoogleAuthUiClient
 import com.example.caloriecounter.auth.presentation.AuthScreen
-import com.example.caloriecounter.auth.presentation.AuthScreenVM
+import com.example.caloriecounter.auth.presentation.AuthVM
+import com.example.caloriecounter.auth.presentation.RecoverPasswordScreen
 import com.example.caloriecounter.main_screens.screens.MainScreensSharedVM
 import com.example.caloriecounter.main_screens.screens.activity_screen.presentation.ActivityScreen
 import com.example.caloriecounter.main_screens.screens.activity_screen.presentation.ActivityScreenVM
@@ -46,7 +46,7 @@ fun NavGraph(
 ) {
     val navController = rememberNavController()
 
-    val authScreenVM = hiltViewModel<AuthScreenVM>()
+    val authVM = hiltViewModel<AuthVM>()
     val startScreenVM = hiltViewModel<StartScreenVM>()
     val homeScreenVM = hiltViewModel<HomeScreenVM>()
     val mainScreensSharedVM = viewModel<MainScreensSharedVM>()
@@ -70,7 +70,7 @@ fun NavGraph(
     ) {
         composable<AuthScreen> {
             AuthScreen(
-                authScreenVM = authScreenVM,
+                authVM = authVM,
                 googleAuthUiClient = googleAuthUiClient,
                 navController = navController
             )
@@ -164,6 +164,13 @@ fun NavGraph(
             SettingsScreen(
                 preferencesDataStoreManager = preferencesDataStoreManager,
                 navController = navController
+            )
+        }
+
+        composable<RecoverPasswordScreen> {
+            RecoverPasswordScreen(
+                navController = navController,
+                authVM = authVM
             )
         }
     }

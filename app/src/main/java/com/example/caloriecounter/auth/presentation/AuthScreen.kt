@@ -30,7 +30,7 @@ import kotlinx.coroutines.launch
 @Composable
 fun AuthScreen(
     scope: CoroutineScope = rememberCoroutineScope(),
-    authScreenVM: AuthScreenVM,
+    authVM: AuthVM,
     googleAuthUiClient: GoogleAuthUiClient,
     navController: NavHostController
 ) {
@@ -83,8 +83,8 @@ fun AuthScreen(
                     .weight(1f)
             ) { currentPage ->
                 when(currentPage) {
-                    0 -> SignTabs.entries[0].content(authScreenVM, googleAuthUiClient, navController)
-                    1 -> SignTabs.entries[1].content(authScreenVM, null, navController)
+                    0 -> SignTabs.entries[0].content(authVM, googleAuthUiClient, navController)
+                    1 -> SignTabs.entries[1].content(authVM, null, navController)
                 }
             }
         }
@@ -95,7 +95,7 @@ fun AuthScreen(
 enum class SignTabs(
     val text: String,
     val content: @Composable (
-        authScreenVM: AuthScreenVM,
+        authVM: AuthVM,
         googleAuthUiClient: GoogleAuthUiClient?,
         navController: NavHostController
     ) -> Unit

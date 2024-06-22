@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 @HiltViewModel
-class AuthScreenVM @Inject constructor(
+class AuthVM @Inject constructor(
     private val firebaseAuth: FirebaseAuth,
     private val appRepositoryImpl: AppRepositoryImpl
 ): ViewModel() {
@@ -36,5 +36,14 @@ class AuthScreenVM @Inject constructor(
     //Check have been user used this app before
     fun getUserCalorieData(): Flow<UserCalorieData?> {
         return appRepositoryImpl.getUserCalorieData()
+    }
+
+    fun sendMailForRecoverPassword(email: String): Boolean {
+        try {
+            firebaseAuth.sendPasswordResetEmail(email)
+            return true
+        } catch(e: Exception) {
+            return false
+        }
     }
 }

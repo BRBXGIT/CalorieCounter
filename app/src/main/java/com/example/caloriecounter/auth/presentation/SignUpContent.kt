@@ -49,7 +49,7 @@ import kotlinx.coroutines.launch
 //Simple sign up screen, nothing to comment)
 @Composable
 fun SignUpContent(
-    authScreenVM: AuthScreenVM,
+    authVM: AuthVM,
     navController: NavHostController,
     scope: CoroutineScope = rememberCoroutineScope(),
 ) {
@@ -181,7 +181,7 @@ fun SignUpContent(
 
         Spacer(modifier = Modifier.height(0.dp))
 
-        val userCalorieData = authScreenVM.getUserCalorieData().collectAsState(initial = null).value
+        val userCalorieData = authVM.getUserCalorieData().collectAsState(initial = null).value
         Button(
             onClick = {
                 scope.launch(Dispatchers.Main) {
@@ -195,7 +195,7 @@ fun SignUpContent(
                         confirmPasswordError = true
                     }
                     if((!emailError) && (!passwordError) && (!confirmPasswordError)) {
-                        if(!authScreenVM.createUser(email, password)) {
+                        if(!authVM.createUser(email, password)) {
                             authenticationError = true
                         } else {
                             if(userCalorieData == null) {
