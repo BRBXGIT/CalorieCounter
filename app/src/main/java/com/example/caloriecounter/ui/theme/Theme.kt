@@ -55,8 +55,8 @@ private val DaiquiriDarkTheme = darkColorScheme(
     primary = Color(0xfffcb4ba),
     onPrimary = Color(0xfff7f7fb),
     secondary = Color(0xffe8c294),
-    onBackground = Color(0xffeadede),
-    onSurface = Color(0xffb1a5a5),
+    onBackground = Color(0xffb1a5a5),
+    onSurface = Color(0xffeadede),
     onSurfaceVariant = Color(0xfff7f7fb),
     surfaceDim = Color(0xffb8b8b9),
     surfaceBright = Color(0xffb8b8b9),
@@ -108,7 +108,7 @@ fun CalorieCounterTheme(
         .collectAsState(initial = null)
         .value
     val chosenTheme = when(theme) {
-        null -> DarkColorScheme
+        null -> if(isSystemInDarkTheme()) DarkColorScheme else LightColorScheme
         "DarkColorScheme" -> DarkColorScheme
         "LightColorScheme" -> LightColorScheme
         "DaiquiriDarkTheme" -> DaiquiriDarkTheme
