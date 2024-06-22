@@ -62,9 +62,6 @@ fun NavigationDrawerItems(
         ),
         shape = RoundedCornerShape(0.dp)
     )
-    HorizontalDivider(
-        thickness = 1.dp
-    )
     NavigationDrawerItem(
         label = { Text(
             text = "Meal time",
@@ -83,9 +80,6 @@ fun NavigationDrawerItems(
             unselectedTextColor = MaterialTheme.colorScheme.onPrimary
         ),
         shape = RoundedCornerShape(0.dp)
-    )
-    HorizontalDivider(
-        thickness = 1.dp
     )
     NavigationDrawerItem(
         label = { Text(

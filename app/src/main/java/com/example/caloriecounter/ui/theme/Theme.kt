@@ -32,22 +32,6 @@ private val DarkColorScheme = darkColorScheme(
     primaryContainer = Color(0xff77777c)
 )
 
-private val SakuraDarkTheme = darkColorScheme(
-    background = Color(0xff1a1920),
-    surface = Color(0xff22222d),
-    surfaceVariant = Color(0xff272634),
-    primary = Color(0xffdfb0b6),
-    onPrimary = Color(0xfff7f7fb),
-    secondary = Color(0xffbf8065),
-    onBackground = Color(0xffa2a2ac),
-    onSurface = Color(0xffd8d8da),
-    onSurfaceVariant = Color(0xff77777c),
-    surfaceDim = Color(0xff32313e),
-    surfaceBright = Color(0xffb8b8b9),
-    error = Color(0xfffb8989),
-    primaryContainer = Color(0xff77777c)
-)
-
 private val LightColorScheme = lightColorScheme(
     background = Color(0xfff7f7fb),
     surface = Color(0xffeff0f4),
@@ -64,7 +48,23 @@ private val LightColorScheme = lightColorScheme(
     primaryContainer = Color(0xffeef5f4)
 )
 
-private val SakuraLightTheme = darkColorScheme(
+private val DaiquiriDarkTheme = darkColorScheme(
+    background = Color(0xff2e2928),
+    surface = Color(0xff5c4e4e),
+    surfaceVariant = Color(0xFF474242),
+    primary = Color(0xfffcb4ba),
+    onPrimary = Color(0xfff7f7fb),
+    secondary = Color(0xffe8c294),
+    onBackground = Color(0xffeadede),
+    onSurface = Color(0xffb1a5a5),
+    onSurfaceVariant = Color(0xfff7f7fb),
+    surfaceDim = Color(0xffb8b8b9),
+    surfaceBright = Color(0xffb8b8b9),
+    error = Color(0xfffb8989),
+    primaryContainer = Color(0xff77777c)
+)
+
+private val SakuraLightTheme = lightColorScheme(
     background = Color(0xfff7f7fb),
     surface = Color(0xffeff0f4),
     surfaceVariant = Color(0xffffffff),
@@ -80,6 +80,22 @@ private val SakuraLightTheme = darkColorScheme(
     primaryContainer = Color(0xffeef5f4)
 )
 
+private val SakuraDarkTheme = darkColorScheme(
+    background = Color(0xff1a1920),
+    surface = Color(0xff22222d),
+    surfaceVariant = Color(0xff272634),
+    primary = Color(0xffdfb0b6),
+    onPrimary = Color(0xfff7f7fb),
+    secondary = Color(0xffbf8065),
+    onBackground = Color(0xffa2a2ac),
+    onSurface = Color(0xffd8d8da),
+    onSurfaceVariant = Color(0xff77777c),
+    surfaceDim = Color(0xff32313e),
+    surfaceBright = Color(0xffb8b8b9),
+    error = Color(0xfffb8989),
+    primaryContainer = Color(0xff77777c)
+)
+
 @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
 @Composable
 fun CalorieCounterTheme(
@@ -87,18 +103,17 @@ fun CalorieCounterTheme(
     activity: Activity = LocalContext.current as MainActivity,
     content: @Composable () -> Unit
 ) {
-    val darkMode = preferencesDataStoreManager
-        .darkThemeStatus
+    val theme = preferencesDataStoreManager
+        .theme
         .collectAsState(initial = null)
         .value
-    val darkTheme = when(darkMode) {
-        null -> isSystemInDarkTheme()
-        else -> darkMode
-    }
-
-    val colorScheme = when {
-        darkTheme -> DarkColorScheme
-        else -> LightColorScheme
+    val chosenTheme = when(theme) {
+        null -> DarkColorScheme
+        "DarkColorScheme" -> DarkColorScheme
+        "LightColorScheme" -> LightColorScheme
+        "DaiquiriDarkTheme" -> DaiquiriDarkTheme
+        "SakuraLightTheme" -> SakuraLightTheme
+        else -> SakuraDarkTheme
     }
 
     val window = calculateWindowSizeClass(activity = activity)
@@ -122,7 +137,7 @@ fun CalorieCounterTheme(
 
     AppUtils(appDimens = appDimens) {
         MaterialTheme(
-            colorScheme = colorScheme,
+            colorScheme = chosenTheme,
             typography = Typography,
             content = content
         )
