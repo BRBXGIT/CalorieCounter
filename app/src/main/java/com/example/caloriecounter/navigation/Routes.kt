@@ -24,6 +24,9 @@ object EatingScreen
 object ActivityScreen
 
 @Serializable
+object MainScreensGraph
+
+@Serializable
 data class AddDishScreen(
     val dishType: String
 )

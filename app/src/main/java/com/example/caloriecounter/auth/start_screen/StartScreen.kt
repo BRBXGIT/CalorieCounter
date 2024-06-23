@@ -46,7 +46,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.caloriecounter.R
+import com.example.caloriecounter.navigation.AuthScreensGraph
 import com.example.caloriecounter.navigation.HomeScreen
+import com.example.caloriecounter.navigation.MainScreensGraph
 import kotlinx.coroutines.delay
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -99,8 +101,10 @@ fun StartScreen(
                             putBoolean("calorieDataReceived", true)
                             apply()
                         }
-                        navController.navigate(HomeScreen) {
-                            popUpTo(0)
+                        navController.navigate(MainScreensGraph) {
+                            popUpTo(AuthScreensGraph) {
+                                inclusive = true
+                            }
                         }
                     }
                 },

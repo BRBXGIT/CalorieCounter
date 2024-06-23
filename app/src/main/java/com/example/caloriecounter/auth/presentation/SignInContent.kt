@@ -60,7 +60,10 @@ import com.example.caloriecounter.R
 import com.example.caloriecounter.auth.google_auth.GoogleAuthUiClient
 import com.example.caloriecounter.auth.google_auth.GoogleSignInVM
 import com.example.caloriecounter.custom_toasts.ErrorMessage
+import com.example.caloriecounter.navigation.AuthScreen
+import com.example.caloriecounter.navigation.AuthScreensGraph
 import com.example.caloriecounter.navigation.HomeScreen
+import com.example.caloriecounter.navigation.MainScreensGraph
 import com.example.caloriecounter.navigation.RecoverPasswordScreen
 import com.example.caloriecounter.navigation.StartScreen
 import com.example.caloriecounter.ui.theme.dimens
@@ -188,11 +191,15 @@ fun SignInContent(
                         } else {
                             if(userCalorieData == null) {
                                 navController.navigate(StartScreen) {
-                                    popUpTo(0)
+                                    popUpTo(AuthScreen) {
+                                        inclusive = true
+                                    }
                                 }
                             } else {
-                                navController.navigate(HomeScreen) {
-                                    popUpTo(0)
+                                navController.navigate(MainScreensGraph) {
+                                    popUpTo(AuthScreensGraph) {
+                                        inclusive = true
+                                    }
                                 }
                             }
                         }
@@ -268,11 +275,15 @@ fun SignInContent(
                 googleSignInVM.resetState()
                 if(userCalorieData == null) {
                     navController.navigate(StartScreen) {
-                        popUpTo(0)
+                        popUpTo(AuthScreen) {
+                            inclusive = true
+                        }
                     }
                 } else {
-                    navController.navigate(HomeScreen) {
-                        popUpTo(0)
+                    navController.navigate(MainScreensGraph) {
+                        popUpTo(AuthScreensGraph) {
+                            inclusive = true
+                        }
                     }
                 }
             }

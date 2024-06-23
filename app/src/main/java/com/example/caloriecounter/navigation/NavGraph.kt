@@ -7,6 +7,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.navigation
 import androidx.navigation.toRoute
 import com.example.caloriecounter.app.data.preferences_data_store.PreferencesDataStoreManager
 import com.example.caloriecounter.auth.google_auth.GoogleAuthUiClient
@@ -51,92 +52,98 @@ fun NavGraph(
     val calorieData = sharedPreferences.getBoolean("calorieDataReceived", false)
     NavHost(
         navController = navController,
-        startDestination = if(userSignIn && calorieData) {
-            HomeScreen
-        } else if((!calorieData) && (userSignIn)) {
-            StartScreen
-        } else {
-            AuthScreen
-        }
+        startDestination = if(userSignIn && calorieData) MainScreensGraph else AuthScreensGraph
     ) {
-        composable<AuthScreen> {
-            val authVM = hiltViewModel<AuthVM>()
-            AuthScreen(
-                authVM = authVM,
-                googleAuthUiClient = googleAuthUiClient,
-                navController = navController
-            )
+        navigation<AuthScreensGraph>(
+            startDestination = if((!calorieData) && (userSignIn)) {
+                StartScreen
+            } else {
+                AuthScreen
+            }
+        ) {
+            composable<AuthScreen> {
+                val authVM = hiltViewModel<AuthVM>()
+                AuthScreen(
+                    authVM = authVM,
+                    googleAuthUiClient = googleAuthUiClient,
+                    navController = navController
+                )
+            }
+
+            composable<RecoverPasswordScreen> {
+                val authVM = hiltViewModel<AuthVM>()
+                RecoverPasswordScreen(
+                    navController = navController,
+                    authVM = authVM
+                )
+            }
+
+            composable<StartScreen> {
+                val startScreenVM = hiltViewModel<StartScreenVM>()
+                StartScreen(
+                    startScreenVM = startScreenVM,
+                    navController = navController,
+                    sharedPreferences = sharedPreferences
+                )
+            }
         }
 
-        composable<RecoverPasswordScreen> {
-            val authVM = hiltViewModel<AuthVM>()
-            RecoverPasswordScreen(
-                navController = navController,
-                authVM = authVM
-            )
-        }
+        navigation<MainScreensGraph>(
+            startDestination = HomeScreen
+        ) {
+            composable<HomeScreen> {
+                val homeScreenVM = hiltViewModel<HomeScreenVM>()
+                HomeScreen(
+                    homeScreenVM = homeScreenVM,
+                    mainScreensSharedVM = mainScreensSharedVM,
+                    navController = navController
+                )
+            }
 
-        composable<StartScreen> {
-            val startScreenVM = hiltViewModel<StartScreenVM>()
-            StartScreen(
-                startScreenVM = startScreenVM,
-                navController = navController,
-                sharedPreferences = sharedPreferences
-            )
-        }
+            composable<EatingScreen> {
+                EatingScreen(
+                    navController = navController,
+                    mainScreensSharedVM = mainScreensSharedVM,
+                )
+            }
 
-        composable<HomeScreen> {
-            val homeScreenVM = hiltViewModel<HomeScreenVM>()
-            HomeScreen(
-                homeScreenVM = homeScreenVM,
-                mainScreensSharedVM = mainScreensSharedVM,
-                navController = navController
-            )
-        }
+            composable<ActivityScreen> {
+                val activityScreenVM = hiltViewModel<ActivityScreenVM>()
+                ActivityScreen(
+                    navController = navController,
+                    mainScreensSharedVM = mainScreensSharedVM,
+                    activityScreenVM = activityScreenVM
+                )
+            }
 
-        composable<EatingScreen> {
-            EatingScreen(
-                navController = navController,
-                mainScreensSharedVM = mainScreensSharedVM,
-            )
-        }
+            composable<AddDishScreen> {
+                val eatingScreenVM = hiltViewModel<EatingScreenVM>()
+                val args = it.toRoute<AddDishScreen>()
+                AddDishScreen(
+                    eatingScreenVM = eatingScreenVM,
+                    navController = navController,
+                    typeOfDish = args.dishType
+                )
+            }
 
-        composable<AddDishScreen> {
-            val eatingScreenVM = hiltViewModel<EatingScreenVM>()
-            val args = it.toRoute<AddDishScreen>()
-            AddDishScreen(
-                eatingScreenVM = eatingScreenVM,
-                navController = navController,
-                typeOfDish = args.dishType
-            )
-        }
+            composable<DishesScreen> {
+                val eatingScreenVM = hiltViewModel<EatingScreenVM>()
+                val args = it.toRoute<DishesScreen>()
+                DishesScreen(
+                    typeOfDish = args.dishType,
+                    eatingScreenVM = eatingScreenVM,
+                    navController = navController,
+                    mainScreensSharedVM = mainScreensSharedVM
+                )
+            }
 
-        composable<DishesScreen> {
-            val eatingScreenVM = hiltViewModel<EatingScreenVM>()
-            val args = it.toRoute<DishesScreen>()
-            DishesScreen(
-                typeOfDish = args.dishType,
-                eatingScreenVM = eatingScreenVM,
-                navController = navController,
-                mainScreensSharedVM = mainScreensSharedVM
-            )
-        }
-
-        composable<ActivityScreen> {
-            val activityScreenVM = hiltViewModel<ActivityScreenVM>()
-            ActivityScreen(
-                navController = navController,
-                mainScreensSharedVM = mainScreensSharedVM,
-                activityScreenVM = activityScreenVM
-            )
-        }
-
-        composable<AddActivityScreen> {
-            val activityScreenVM = hiltViewModel<ActivityScreenVM>()
-           AddActivityScreen(
-               activityScreenVM = activityScreenVM,
-               navController = navController
-           )
+            composable<AddActivityScreen> {
+                val activityScreenVM = hiltViewModel<ActivityScreenVM>()
+                AddActivityScreen(
+                    activityScreenVM = activityScreenVM,
+                    navController = navController
+                )
+            }
         }
 
         composable<ProfileScreen> {
