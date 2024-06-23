@@ -1,4 +1,4 @@
-package com.example.caloriecounter.start_screen
+package com.example.caloriecounter.auth.start_screen
 
 import android.content.SharedPreferences
 import androidx.compose.foundation.layout.Arrangement
@@ -17,7 +17,6 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuBox
-import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.FabPosition
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
@@ -33,6 +32,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableDoubleStateOf
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -67,9 +67,9 @@ fun StartScreen(
     var sex by rememberSaveable { mutableStateOf("Male") }
     var activity by rememberSaveable { mutableDoubleStateOf(1.2) }
 
-    var weightError by rememberSaveable { mutableStateOf(false) }
-    var heightError by rememberSaveable { mutableStateOf(false) }
-    var ageError by rememberSaveable { mutableStateOf(false) }
+    var weightError by remember { mutableStateOf(false) }
+    var heightError by remember { mutableStateOf(false) }
+    var ageError by remember { mutableStateOf(false) }
 
     var userTarget by rememberSaveable { mutableIntStateOf(0) }
     Scaffold(
@@ -212,7 +212,7 @@ fun StartScreen(
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
                 )
 
-                var isExpandedActivityMenu by rememberSaveable { mutableStateOf(false) }
+                var isExpandedActivityMenu by remember { mutableStateOf(false) }
                 var activityType by rememberSaveable { mutableStateOf("Absent or minimal activity") }
                 ExposedDropdownMenuBox(
                     expanded = isExpandedActivityMenu,
@@ -306,7 +306,7 @@ fun StartScreen(
                     }
                 }
 
-                var isExpandedSexMenu by rememberSaveable { mutableStateOf(false) }
+                var isExpandedSexMenu by remember { mutableStateOf(false) }
                 ExposedDropdownMenuBox(
                     expanded = isExpandedSexMenu,
                     onExpandedChange = { isExpandedSexMenu = it },

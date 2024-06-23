@@ -14,15 +14,11 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuBox
-import androidx.compose.material3.ExtendedFloatingActionButton
-import androidx.compose.material3.FabPosition
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
@@ -35,6 +31,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableDoubleStateOf
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -48,7 +45,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.caloriecounter.R
 import com.example.caloriecounter.navigation_drawer_screens.nav_drawer_screens_top_bar.NavigationDrawerScreensTopBar
-import com.example.caloriecounter.start_screen.UserTarget
+import com.example.caloriecounter.auth.start_screen.UserTarget
 import kotlinx.coroutines.delay
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -66,9 +63,9 @@ fun CalculationsScreen(
     var sex by rememberSaveable { mutableStateOf("Male") }
     var activity by rememberSaveable { mutableDoubleStateOf(1.2) }
 
-    var weightError by rememberSaveable { mutableStateOf(false) }
-    var heightError by rememberSaveable { mutableStateOf(false) }
-    var ageError by rememberSaveable { mutableStateOf(false) }
+    var weightError by remember { mutableStateOf(false) }
+    var heightError by remember { mutableStateOf(false) }
+    var ageError by remember { mutableStateOf(false) }
 
     var userTarget by rememberSaveable { mutableIntStateOf(0) }
     Scaffold(
@@ -207,7 +204,7 @@ fun CalculationsScreen(
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
                 )
 
-                var isExpandedActivityMenu by rememberSaveable { mutableStateOf(false) }
+                var isExpandedActivityMenu by remember { mutableStateOf(false) }
                 var activityType by rememberSaveable { mutableStateOf("Absent or minimal activity") }
                 ExposedDropdownMenuBox(
                     expanded = isExpandedActivityMenu,
@@ -301,7 +298,7 @@ fun CalculationsScreen(
                     }
                 }
 
-                var isExpandedSexMenu by rememberSaveable { mutableStateOf(false) }
+                var isExpandedSexMenu by remember { mutableStateOf(false) }
                 ExposedDropdownMenuBox(
                     expanded = isExpandedSexMenu,
                     onExpandedChange = { isExpandedSexMenu = it },

@@ -23,6 +23,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
@@ -62,11 +63,11 @@ fun SignUpContent(
         var password by rememberSaveable { mutableStateOf("") }
         var confirmPassword by rememberSaveable { mutableStateOf("") }
 
-        var emailError by rememberSaveable { mutableStateOf(false) }
-        var passwordError by rememberSaveable { mutableStateOf(false) }
-        var confirmPasswordError by rememberSaveable { mutableStateOf(false) }
+        var emailError by remember { mutableStateOf(false) }
+        var passwordError by remember { mutableStateOf(false) }
+        var confirmPasswordError by remember { mutableStateOf(false) }
 
-        var authenticationError by rememberSaveable { mutableStateOf(false) }
+        var authenticationError by remember { mutableStateOf(false) }
 
         LaunchedEffect(key1 = emailError, key2 = passwordError, key3 = confirmPasswordError) {
             delay(3000)
@@ -102,7 +103,7 @@ fun SignUpContent(
             },
         )
 
-        var passwordVisible by rememberSaveable { mutableStateOf(false) }
+        var passwordVisible by remember { mutableStateOf(false) }
         TextField(
             value = password,
             onValueChange = { password = it },

@@ -30,7 +30,8 @@ android {
 
     buildTypes {
         release {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
+            isShrinkResources = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -90,7 +91,7 @@ dependencies {
     implementation(libs.kotlinx.serialization.json)
     //Calendar impl
     implementation(libs.com.maxkeppeler.sheets.compose.dialogs.core4)
-    implementation("com.maxkeppeler.sheets-compose-dialogs:color:1.3.0")
+    implementation(libs.color)
     implementation(libs.calendar)
     implementation(libs.duration)
     implementation(libs.clock)

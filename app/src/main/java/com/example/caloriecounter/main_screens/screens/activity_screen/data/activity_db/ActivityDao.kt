@@ -3,7 +3,6 @@ package com.example.caloriecounter.main_screens.screens.activity_screen.data.act
 import androidx.room.Dao
 import androidx.room.Query
 import androidx.room.Upsert
-import com.example.caloriecounter.main_screens.screens.eating_screen.data.meal_db.Meal
 import kotlinx.coroutines.flow.Flow
 
 @Dao

@@ -63,8 +63,4 @@ class HomeScreenVM @Inject constructor(
     fun getNutrientAmountByDate(nutrientId: Int, date: String): Flow<Int> {
         return mainScreensRepositoryImpl.getNutrientAmountByDate(nutrientId, date)
     }
-
-    fun getAllCalorieData(): Flow<List<DayCalorieData>> {
-        return mainScreensRepositoryImpl.getAllCalorieData()
-    }
 }

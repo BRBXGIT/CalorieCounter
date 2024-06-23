@@ -1,6 +1,5 @@
 package com.example.caloriecounter.navigation_drawer_screens.meal_time_screen.data.meal_time_alarms
 
-import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.Service
 import android.content.BroadcastReceiver

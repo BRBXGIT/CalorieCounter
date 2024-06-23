@@ -22,6 +22,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -124,8 +125,8 @@ fun DrinkingSection(
                     0f
                 }
             }
-            var addWaterDialogOpen by rememberSaveable { mutableStateOf(false) }
-            var reduceWaterAmountDialogOpen by rememberSaveable { mutableStateOf(false) }
+            var addWaterDialogOpen by remember { mutableStateOf(false) }
+            var reduceWaterAmountDialogOpen by remember { mutableStateOf(false) }
             if(addWaterDialogOpen) {
                 AddWaterAmountDialog(
                     homeScreenVM = homeScreenVM,
@@ -179,7 +180,7 @@ fun AddWaterAmountDialog(
                     color = MaterialTheme.colorScheme.onPrimary
                 )
 
-                var amountError by rememberSaveable { mutableStateOf(false) }
+                var amountError by remember { mutableStateOf(false) }
                 LaunchedEffect(key1 = amountError) {
                     delay(3000)
                     amountError = false
@@ -255,7 +256,7 @@ fun ReduceWaterAmountDialog(
                     color = MaterialTheme.colorScheme.onPrimary
                 )
 
-                var amountError by rememberSaveable { mutableStateOf(false) }
+                var amountError by remember { mutableStateOf(false) }
                 LaunchedEffect(key1 = amountError) {
                     delay(3000)
                     amountError = false

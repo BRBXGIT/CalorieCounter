@@ -4,9 +4,9 @@ import android.content.SharedPreferences
 import androidx.compose.runtime.Composable
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
 import com.example.caloriecounter.app.data.preferences_data_store.PreferencesDataStoreManager
 import com.example.caloriecounter.auth.google_auth.GoogleAuthUiClient
@@ -32,8 +32,8 @@ import com.example.caloriecounter.navigation_drawer_screens.meal_time_screen.pre
 import com.example.caloriecounter.navigation_drawer_screens.profile_screen.presentation.ProfileScreen
 import com.example.caloriecounter.navigation_drawer_screens.profile_screen.presentation.ProfileScreenVM
 import com.example.caloriecounter.navigation_drawer_screens.settings_screen.SettingsScreen
-import com.example.caloriecounter.start_screen.StartScreen
-import com.example.caloriecounter.start_screen.StartScreenVM
+import com.example.caloriecounter.auth.start_screen.StartScreen
+import com.example.caloriecounter.auth.start_screen.StartScreenVM
 import com.google.firebase.auth.FirebaseAuth
 
 @Composable
@@ -42,19 +42,10 @@ fun NavGraph(
     firebaseAuth: FirebaseAuth,
     sharedPreferences: SharedPreferences,
     ccAlarmManager: CCAlarmManager,
-    preferencesDataStoreManager: PreferencesDataStoreManager
+    preferencesDataStoreManager: PreferencesDataStoreManager,
+    navController: NavHostController
 ) {
-    val navController = rememberNavController()
-
-    val authVM = hiltViewModel<AuthVM>()
-    val startScreenVM = hiltViewModel<StartScreenVM>()
-    val homeScreenVM = hiltViewModel<HomeScreenVM>()
     val mainScreensSharedVM = viewModel<MainScreensSharedVM>()
-    val eatingScreenVM = hiltViewModel<EatingScreenVM>()
-    val activityScreenVM = hiltViewModel<ActivityScreenVM>()
-    val profileScreenVM = hiltViewModel<ProfileScreenVM>()
-    val calculationsScreenVM = hiltViewModel<CalculationsScreenVM>()
-    val mealTimeScreenVM = hiltViewModel<MealTimeScreenVM>()
 
     val userSignIn = firebaseAuth.currentUser != null
     val calorieData = sharedPreferences.getBoolean("calorieDataReceived", false)
@@ -69,6 +60,7 @@ fun NavGraph(
         }
     ) {
         composable<AuthScreen> {
+            val authVM = hiltViewModel<AuthVM>()
             AuthScreen(
                 authVM = authVM,
                 googleAuthUiClient = googleAuthUiClient,
@@ -76,7 +68,16 @@ fun NavGraph(
             )
         }
 
+        composable<RecoverPasswordScreen> {
+            val authVM = hiltViewModel<AuthVM>()
+            RecoverPasswordScreen(
+                navController = navController,
+                authVM = authVM
+            )
+        }
+
         composable<StartScreen> {
+            val startScreenVM = hiltViewModel<StartScreenVM>()
             StartScreen(
                 startScreenVM = startScreenVM,
                 navController = navController,
@@ -85,6 +86,7 @@ fun NavGraph(
         }
 
         composable<HomeScreen> {
+            val homeScreenVM = hiltViewModel<HomeScreenVM>()
             HomeScreen(
                 homeScreenVM = homeScreenVM,
                 mainScreensSharedVM = mainScreensSharedVM,
@@ -99,15 +101,8 @@ fun NavGraph(
             )
         }
 
-        composable<ActivityScreen> {
-            ActivityScreen(
-                navController = navController,
-                mainScreensSharedVM = mainScreensSharedVM,
-                activityScreenVM = activityScreenVM
-            )
-        }
-
         composable<AddDishScreen> {
+            val eatingScreenVM = hiltViewModel<EatingScreenVM>()
             val args = it.toRoute<AddDishScreen>()
             AddDishScreen(
                 eatingScreenVM = eatingScreenVM,
@@ -117,6 +112,7 @@ fun NavGraph(
         }
 
         composable<DishesScreen> {
+            val eatingScreenVM = hiltViewModel<EatingScreenVM>()
             val args = it.toRoute<DishesScreen>()
             DishesScreen(
                 typeOfDish = args.dishType,
@@ -126,7 +122,17 @@ fun NavGraph(
             )
         }
 
+        composable<ActivityScreen> {
+            val activityScreenVM = hiltViewModel<ActivityScreenVM>()
+            ActivityScreen(
+                navController = navController,
+                mainScreensSharedVM = mainScreensSharedVM,
+                activityScreenVM = activityScreenVM
+            )
+        }
+
         composable<AddActivityScreen> {
+            val activityScreenVM = hiltViewModel<ActivityScreenVM>()
            AddActivityScreen(
                activityScreenVM = activityScreenVM,
                navController = navController
@@ -134,6 +140,7 @@ fun NavGraph(
         }
 
         composable<ProfileScreen> {
+            val profileScreenVM = hiltViewModel<ProfileScreenVM>()
             ProfileScreen(
                 navController = navController,
                 firebaseAuth = firebaseAuth,
@@ -142,6 +149,7 @@ fun NavGraph(
         }
 
         composable<CalculationsScreen> {
+            val calculationsScreenVM = hiltViewModel<CalculationsScreenVM>()
             CalculationsScreen(
                 navController = navController,
                 calculationsScreenVM = calculationsScreenVM
@@ -149,6 +157,7 @@ fun NavGraph(
         }
 
         composable<MealTimeScreen> {
+            val mealTimeScreenVM = hiltViewModel<MealTimeScreenVM>()
             MealTimeScreen(
                 navController = navController,
                 mealTimeScreenVM = mealTimeScreenVM,
@@ -164,13 +173,6 @@ fun NavGraph(
             SettingsScreen(
                 preferencesDataStoreManager = preferencesDataStoreManager,
                 navController = navController
-            )
-        }
-
-        composable<RecoverPasswordScreen> {
-            RecoverPasswordScreen(
-                navController = navController,
-                authVM = authVM
             )
         }
     }

@@ -259,9 +259,7 @@ fun SettingsScreen(
                                                             shape = CircleShape
                                                         )
                                                         .align(Alignment.CenterEnd)
-                                                ) {
-
-                                                }
+                                                )
                                             }
                                         }
                                     }

@@ -1,7 +1,6 @@
 package com.example.caloriecounter.auth.google_auth
 
 import androidx.lifecycle.ViewModel
-import com.google.firebase.auth.FirebaseUser
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update

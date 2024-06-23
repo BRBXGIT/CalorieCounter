@@ -52,11 +52,11 @@ fun AddActivityScreen(
     navController: NavHostController,
 ) {
     var name by rememberSaveable { mutableStateOf("") }
-    var nameError by rememberSaveable { mutableStateOf(false) }
+    var nameError by remember { mutableStateOf(false) }
 
     var calorieAmount by rememberSaveable { mutableStateOf("") }
     calorieAmount = calorieAmount.filter { it.isDigit() }
-    var calorieAmountError by rememberSaveable { mutableStateOf(false) }
+    var calorieAmountError by remember { mutableStateOf(false) }
 
     LaunchedEffect(key1 = nameError, key2 = calorieAmountError) {
         delay(3000)

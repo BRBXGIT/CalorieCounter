@@ -9,6 +9,12 @@ object AuthScreen
 object StartScreen
 
 @Serializable
+object RecoverPasswordScreen
+
+@Serializable
+object AuthScreensGraph
+
+@Serializable
 object HomeScreen
 
 @Serializable
@@ -44,6 +50,3 @@ object InfoScreen
 
 @Serializable
 object SettingsScreen
-
-@Serializable
-object RecoverPasswordScreen

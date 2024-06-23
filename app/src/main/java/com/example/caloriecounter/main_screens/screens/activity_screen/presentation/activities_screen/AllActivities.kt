@@ -2,11 +2,6 @@ package com.example.caloriecounter.main_screens.screens.activity_screen.presenta
 
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
-import androidx.compose.animation.graphics.ExperimentalAnimationGraphicsApi
-import androidx.compose.animation.graphics.res.animatedVectorResource
-import androidx.compose.animation.graphics.res.rememberAnimatedVectorPainter
-import androidx.compose.animation.graphics.vector.AnimatedImageVector
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -34,10 +29,8 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.graphicsLayer
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
@@ -47,7 +40,6 @@ import com.example.caloriecounter.R
 import com.example.caloriecounter.main_screens.screens.activity_screen.data.activity_db.Activity
 import com.example.caloriecounter.main_screens.screens.activity_screen.presentation.ActivityScreenVM
 
-@OptIn(ExperimentalAnimationGraphicsApi::class)
 @Composable
 fun AllActivitiesContent(
     onActivityClick: () -> Unit = {},
@@ -63,7 +55,7 @@ fun AllActivitiesContent(
                 .background(MaterialTheme.colorScheme.background)
         ) {
             items(activities, key = { activity -> activity.id }) { activity ->
-                var openAddActivityBottomSheet by rememberSaveable { mutableStateOf(false) }
+                var openAddActivityBottomSheet by remember { mutableStateOf(false) }
                 if(openAddActivityBottomSheet) {
                     AddActivityBottomSheet(
                         onDismissRequest = { openAddActivityBottomSheet = false },

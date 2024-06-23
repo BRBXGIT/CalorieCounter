@@ -1,7 +1,6 @@
 package com.example.caloriecounter.main_screens.screens.main_screens_bars.navigation_drawer_items
 
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationDrawerItem

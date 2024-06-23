@@ -27,6 +27,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableLongStateOf
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -52,7 +53,7 @@ import kotlinx.coroutines.delay
 fun AddNutrient(
     homeScreenVM: HomeScreenVM
 ) {
-    var openAddNutrientSheet by rememberSaveable { mutableStateOf(false) }
+    var openAddNutrientSheet by remember { mutableStateOf(false) }
     if(openAddNutrientSheet) {
         AddNutrientBottomSheet(
             onDismissRequest = { openAddNutrientSheet = false },
@@ -113,7 +114,7 @@ fun AddNutrientBottomSheet(
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             var name by rememberSaveable { mutableStateOf("") }
-            var nameError by rememberSaveable { mutableStateOf(false) }
+            var nameError by remember { mutableStateOf(false) }
             OutlinedTextField(
                 value = name,
                 onValueChange = { name = it },
@@ -125,7 +126,7 @@ fun AddNutrientBottomSheet(
 
             var requiredAmount by rememberSaveable { mutableStateOf("") }
             requiredAmount = requiredAmount.filter { it.isDigit() }
-            var requiredAmountError by rememberSaveable { mutableStateOf(false) }
+            var requiredAmountError by remember { mutableStateOf(false) }
             OutlinedTextField(
                 value = requiredAmount,
                 onValueChange = { requiredAmount = it },

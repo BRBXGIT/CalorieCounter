@@ -25,6 +25,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -131,7 +132,7 @@ fun AddDishBottomSheet(
             ) {
                 var quantity by rememberSaveable { mutableStateOf("1") }
                 quantity = quantity.filter { it.isDigit() }
-                var quantityError by rememberSaveable { mutableStateOf(false) }
+                var quantityError by remember { mutableStateOf(false) }
 
                 LaunchedEffect(key1 = quantityError) {
                     delay(2000)

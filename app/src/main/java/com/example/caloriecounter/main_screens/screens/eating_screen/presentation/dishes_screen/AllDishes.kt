@@ -2,11 +2,6 @@ package com.example.caloriecounter.main_screens.screens.eating_screen.presentati
 
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
-import androidx.compose.animation.graphics.ExperimentalAnimationGraphicsApi
-import androidx.compose.animation.graphics.res.animatedVectorResource
-import androidx.compose.animation.graphics.res.rememberAnimatedVectorPainter
-import androidx.compose.animation.graphics.vector.AnimatedImageVector
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -36,7 +31,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.graphicsLayer
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
@@ -46,9 +40,7 @@ import com.example.caloriecounter.R
 import com.example.caloriecounter.main_screens.data.day_calorie_data.DayCalorieData
 import com.example.caloriecounter.main_screens.screens.eating_screen.data.meal_db.Meal
 import com.example.caloriecounter.main_screens.screens.eating_screen.presentation.EatingScreenVM
-import kotlinx.coroutines.delay
 
-@OptIn(ExperimentalAnimationGraphicsApi::class)
 @Composable
 fun AllDishesContent(
     onDishClick: () -> Unit = {},
@@ -65,7 +57,7 @@ fun AllDishesContent(
                 .background(MaterialTheme.colorScheme.background)
         ) {
             items(dishes, key = { dish -> dish.id }) { dish ->
-                var openAddDishSheet by rememberSaveable { mutableStateOf(false) }
+                var openAddDishSheet by remember { mutableStateOf(false) }
                 if(openAddDishSheet) {
                     AddDishBottomSheet(
                         onDismissRequest = { openAddDishSheet = false },
@@ -123,7 +115,7 @@ fun AllDishesContent(
                                 text = "${dish.calories} kcal",
                             )
 
-                            var openInfoDialog by rememberSaveable { mutableStateOf(false) }
+                            var openInfoDialog by remember { mutableStateOf(false) }
                             if(openInfoDialog) {
                                 DishInfoDialog(
                                     dish = dish,

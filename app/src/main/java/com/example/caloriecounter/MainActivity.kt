@@ -1,6 +1,5 @@
 package com.example.caloriecounter
 
-import android.app.AlarmManager
 import android.content.Context
 import android.content.res.Configuration
 import android.os.Bundle
@@ -8,6 +7,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import androidx.navigation.compose.rememberNavController
 import com.example.caloriecounter.app.data.preferences_data_store.PreferencesDataStoreManager
 import com.example.caloriecounter.auth.google_auth.GoogleAuthUiClient
 import com.example.caloriecounter.navigation.NavGraph
@@ -53,12 +53,14 @@ class MainActivity : ComponentActivity() {
             CalorieCounterTheme(
                 preferencesDataStoreManager = preferencesDataStoreManager
             ) {
+                val navController = rememberNavController()
                 NavGraph(
                     googleAuthUiClient = googleAuthUiClient,
                     firebaseAuth = firebaseAuth,
                     sharedPreferences = sharedPreferences,
                     ccAlarmManager = ccAlarmManager,
-                    preferencesDataStoreManager = preferencesDataStoreManager
+                    preferencesDataStoreManager = preferencesDataStoreManager,
+                    navController = navController
                 )
             }
         }

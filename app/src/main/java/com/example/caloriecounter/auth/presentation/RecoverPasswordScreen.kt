@@ -23,6 +23,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -69,19 +70,11 @@ fun RecoverPasswordScreen(
                 .padding(
                     top = innerPadding.calculateTopPadding(),
                     bottom = innerPadding.calculateBottomPadding(),
-                    start = 16.dp,
-                    end = 16.dp
                 ),
             verticalArrangement = Arrangement.spacedBy(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Spacer(modifier = Modifier.height(16.dp))
-            
-            Text(
-                text = "To recover your password, enter your email",
-                fontSize = 18.sp,
-                fontWeight = FontWeight.Bold
-            )
 
             var email by rememberSaveable { mutableStateOf("") }
             var emailError by rememberSaveable { mutableStateOf(false) }
@@ -93,7 +86,9 @@ fun RecoverPasswordScreen(
                 value = email,
                 onValueChange = { email = it },
                 isError = emailError,
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp),
                 label = { Text(text = "Email") }
             )
 
@@ -113,7 +108,8 @@ fun RecoverPasswordScreen(
                 },
                 modifier = Modifier
                     .height(48.dp)
-                    .fillMaxWidth(),
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp),
                 shape = RoundedCornerShape(10.dp)
             ) {
                 Text(text = "Recover my password")

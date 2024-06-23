@@ -4,14 +4,10 @@ import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
-import android.util.Log
-import com.example.caloriecounter.navigation_drawer_screens.meal_time_screen.data.meal_time_db.MealTimeDao
 import com.example.caloriecounter.navigation_drawer_screens.meal_time_screen.data.repository.MealTimeScreenRepositoryImpl
-import com.example.caloriecounter.navigation_drawer_screens.meal_time_screen.presentation.MealTimeScreenVM
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
-import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 import java.util.Calendar
 import javax.inject.Inject
@@ -32,7 +28,7 @@ class CCAlarmManager @Inject constructor(
                 }
                 val pendingIntent = PendingIntent.getBroadcast(
                     context,
-                    meal.id,
+                    meal.id.hashCode(),
                     intent,
                     PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
                 )
@@ -47,6 +43,9 @@ class CCAlarmManager @Inject constructor(
                     set(Calendar.MINUTE, minutes)
                     set(Calendar.SECOND, 0)
                     set(Calendar.MILLISECOND, 0)
+                    if(timeInMillis <= System.currentTimeMillis()) {
+                        add(Calendar.DAY_OF_MONTH, 1)
+                    }
                 }
 
                 alarmManager.setRepeating(

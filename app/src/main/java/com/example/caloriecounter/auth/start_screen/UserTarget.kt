@@ -1,4 +1,4 @@
-package com.example.caloriecounter.start_screen
+package com.example.caloriecounter.auth.start_screen
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
