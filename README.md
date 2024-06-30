@@ -32,3 +32,5 @@
 - You can use one of 5 different ui color theme
 ### Calculations
 - All calcultions made with Harris-Benedict formula
+### Design
+- Insipired by this [design](https://www.behance.net/gallery/91770367/Calorie-Counter-App)
