@@ -4,6 +4,6 @@
 
 # CalorieCounter
 
-### A modern and powerful nutrients, calories, and activities indicators app for Android!
+### A minimalistick and powerful nutrients, calories, and activities indicators app for Android!
 
 </div>
