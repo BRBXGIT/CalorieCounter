@@ -22,7 +22,7 @@
 - Configure how many portions of dish you eat
 - Find dishes by search bar
 ### Activities
-- Create highly customizable activites(calories, time)
+- Create highly customizable activites
 - Add activities to featured
 ### Alarms
 - Customizable schedules for each meal time
