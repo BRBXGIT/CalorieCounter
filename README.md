@@ -1,9 +1,9 @@
-# <img src="docs/app_icon.png" width="96px" height="96px" alt="Sheets Library" align="left" style="margin-right: 24px; margin-bottom: 24px"> Calorie counter app with ROOM, COMPOSE and FIREBASE
+# CalorieCaounter
 
-<p>
-  App that provides convinient and usefull indicators for caloires, water, nutrients and much more
-<p>
+![image](docs/app_icon.svg)
 
-# Get started
-Before you start using this app of course you need to register in it. You can create your accaunt or you can sign in with google which is more convinient i think.
+Introduction
+-----------------
+The WeatherAlarmClock is an alarm clock with a weather reminder. It is inspired by the embarrassing situation of forgetting to watch the weather forecast without an umbrella before going out.
 
+Main functions: alarm clock, weather forecast, timer, recording, city management, city search, automatic positioning, theme switching, scanning QR code, creating QR code, clearing cache, one-click cleaning, etc.
