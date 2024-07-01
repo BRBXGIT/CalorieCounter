@@ -36,3 +36,5 @@
 - All calcultions made with Harris-Benedict formula
 ### Design
 - Insipired by this [design](https://www.behance.net/gallery/91770367/Calorie-Counter-App)
+### App preview
+https://github.com/BRBXGIT/CalorieCounter/assets/79046011/24dd8aa7-5fd6-4531-a7c7-53dbba1890dd
