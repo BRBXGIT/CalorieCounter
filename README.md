@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="docs/app_icon.svg"/>
+<img src="docs/app_icon.svg" width="128" height="128"/>
 
 # CalorieCounter
 
