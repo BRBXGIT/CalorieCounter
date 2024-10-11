@@ -41,7 +41,6 @@ import com.example.caloriecounter.R
 import com.example.caloriecounter.custom_toasts.ErrorMessage
 import com.example.caloriecounter.navigation.AuthScreen
 import com.example.caloriecounter.navigation.AuthScreensGraph
-import com.example.caloriecounter.navigation.HomeScreen
 import com.example.caloriecounter.navigation.MainScreensGraph
 import com.example.caloriecounter.navigation.StartScreen
 import com.example.caloriecounter.ui.theme.dimens
