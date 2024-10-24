@@ -30,7 +30,7 @@
 - Customizable schedules for each meal time
 - Option to enable or disable alarms
 ### Appearance
-- Material You theme
+- Material 3 theme
 - You can use one of 5 different ui color theme
 ### Calculations
 - All calcultions made with Harris-Benedict formula
